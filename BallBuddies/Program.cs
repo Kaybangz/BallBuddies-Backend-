@@ -1,3 +1,6 @@
+using BallBuddies.Data.Context;
+using Microsoft.EntityFrameworkCore;
+
 namespace BallBuddies
 {
     public class Program
@@ -7,11 +10,17 @@ namespace BallBuddies
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            var connectionString = builder.Configuration["ConnectionStrings:SqlConnection"];
+            builder.Services.AddDbContext<BallBuddiesDBContext>(options =>
+            {
+                options.UseSqlServer(connectionString);
+            });
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
 
             var app = builder.Build();
 
