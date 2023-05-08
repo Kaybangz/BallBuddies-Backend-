@@ -1,6 +1,7 @@
 using BallBuddies.Data.Context;
 using BallBuddies.Services.Extensions;
 using Microsoft.EntityFrameworkCore;
+using NLog;
 
 namespace BallBuddies
 {
@@ -11,12 +12,14 @@ namespace BallBuddies
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
             var connectionString = builder.Configuration["ConnectionStrings:SqlConnection"];
             builder.Services.AddDbContext<BallBuddiesDBContext>(options =>
             {
                 options.UseSqlServer(connectionString);
             });
             builder.Services.ConfigureUnitOfWork();
+            builder.Services.ConfigureLoggerService();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

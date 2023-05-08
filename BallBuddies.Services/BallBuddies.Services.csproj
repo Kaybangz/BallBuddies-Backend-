@@ -12,6 +12,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\BallBuddies.Data\BallBuddies.Data.csproj" />
+		<PackageReference Include="NLog.Extensions.Logging" Version="5.2.3" />
 	</ItemGroup>
 
 </Project>
