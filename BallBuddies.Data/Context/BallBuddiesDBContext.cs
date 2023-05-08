@@ -4,5 +4,7 @@ namespace BallBuddies.Data.Context
 {
     public class BallBuddiesDBContext : DbContext
     {
+
     }
+
 }

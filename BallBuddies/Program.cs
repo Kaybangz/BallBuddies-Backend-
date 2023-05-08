@@ -1,4 +1,5 @@
 using BallBuddies.Data.Context;
+using BallBuddies.Services.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace BallBuddies
@@ -15,6 +16,7 @@ namespace BallBuddies
             {
                 options.UseSqlServer(connectionString);
             });
+            builder.Services.ConfigureUnitOfWork();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
