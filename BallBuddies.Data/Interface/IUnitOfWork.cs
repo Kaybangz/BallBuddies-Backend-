@@ -1,7 +1,8 @@
 ﻿namespace BallBuddies.Data.Interface
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
         Task SaveChangesAsync();
+        Task DisposeAsync();
     }
 }

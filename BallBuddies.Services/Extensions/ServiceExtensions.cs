@@ -13,6 +13,7 @@ namespace BallBuddies.Services.Extensions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
+
         public static void ConfigureLoggerService(this IServiceCollection services)
         {
             services.AddSingleton<ILoggerManager, LoggerManager>();

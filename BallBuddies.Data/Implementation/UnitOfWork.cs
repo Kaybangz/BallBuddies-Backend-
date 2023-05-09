@@ -12,9 +12,19 @@ namespace BallBuddies.Data.Implementation
             _dbContext = dbContext;
         }
 
+        public async Task DisposeAsync()
+        {
+            await _dbContext.DisposeAsync();
+        }
+
         public async Task SaveChangesAsync()
         {
             await _dbContext.SaveChangesAsync();
+        }
+
+        void IDisposable.Dispose()
+        {
+            _dbContext.Dispose();
         }
     }
 }

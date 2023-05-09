@@ -18,7 +18,7 @@ namespace BallBuddies.Data.Implementation
         }
 
 
-        public virtual async Task<bool> AddAsync(T entity)
+        public virtual Task<bool> AddAsync(T entity)
         {
             throw new NotImplementedException();
         }
@@ -33,12 +33,12 @@ namespace BallBuddies.Data.Implementation
             return await _DbSet.ToListAsync();
         }
 
-        public virtual async Task<T> GetAsync(string id)
+        public virtual Task<T> GetAsync(string id)
         {
             throw new NotImplementedException();
         }
 
-        public virtual async Task<bool> UpdateAsync(T entity)
+        public virtual Task<bool> UpdateAsync(T entity)
         {
             throw new NotImplementedException();
         }

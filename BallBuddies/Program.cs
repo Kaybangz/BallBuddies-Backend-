@@ -1,5 +1,7 @@
 using BallBuddies.Data.Context;
+using BallBuddies.Models.Entities;
 using BallBuddies.Services.Extensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NLog;
 
@@ -21,6 +23,7 @@ namespace BallBuddies
             builder.Services.ConfigureUnitOfWork();
             builder.Services.ConfigureLoggerService();
 
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -37,6 +40,19 @@ namespace BallBuddies
             }
 
             app.UseHttpsRedirection();
+
+            app.UseAuthentication();
+            builder.Services.AddIdentity<User, IdentityRole>(o =>
+            {
+                o.Password.RequireDigit = true;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequiredLength = 10;
+                o.User.RequireUniqueEmail = true;
+            })
+                .AddEntityFrameworkStores<BallBuddiesDBContext>()
+                .AddDefaultTokenProviders();
 
             app.UseAuthorization();
 
