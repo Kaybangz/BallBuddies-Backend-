@@ -1,4 +1,5 @@
-﻿using BallBuddies.Models.Entities;
+﻿using BallBuddies.Data.Configuration;
+using BallBuddies.Models.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,9 @@ namespace BallBuddies.Data.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+
+            builder.ApplyConfiguration(new RoleConfiguration());
         }
 
     }
