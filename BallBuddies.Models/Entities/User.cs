@@ -4,5 +4,6 @@ namespace BallBuddies.Models.Entities
 {
     public class User : IdentityUser
     {
+
     }
 }

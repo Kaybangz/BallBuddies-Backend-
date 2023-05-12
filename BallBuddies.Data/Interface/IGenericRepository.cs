@@ -1,11 +1,11 @@
 ﻿namespace BallBuddies.Data.Interface
 {
-    public interface IGenericRepository<T> where T : class
+    public interface IGenericRepository<T>
     {
-        Task<IEnumerable<T>> GetAllAsync();
-        Task<T> GetAsync(string id);
-        Task<bool> AddAsync(T entity);
-        Task<bool> UpdateAsync(T entity);
-        Task<bool> DeleteAsync(string id);
+        Task<IEnumerable<T>> FindAll();
+        Task<T> GetById(string id);
+        Task<bool> Create(T entity);
+        Task<bool> Update(T entity);
+        Task<bool> Delete(string id);
     }
 }

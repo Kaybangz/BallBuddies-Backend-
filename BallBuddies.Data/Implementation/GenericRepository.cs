@@ -8,7 +8,6 @@ namespace BallBuddies.Data.Implementation
     {
 
         protected readonly BallBuddiesDBContext _dbContext;
-
         internal DbSet<T> _DbSet { get; set; }
 
         public GenericRepository(BallBuddiesDBContext dbContext)
@@ -18,27 +17,27 @@ namespace BallBuddies.Data.Implementation
         }
 
 
-        public virtual Task<bool> AddAsync(T entity)
+        public virtual async Task<bool> Create(T entity)
         {
-            throw new NotImplementedException();
+            return await _DbSet.AddAsync(entity);
         }
 
-        public Task<bool> DeleteAsync(string id)
+        public virtual async Task<bool> Delete(string id)
         {
-            throw new NotImplementedException();
+            return await _DbSet.Remove(id);
         }
 
-        public virtual async Task<IEnumerable<T>> GetAllAsync()
+        public virtual async Task<IEnumerable<T>> GetAll()
         {
             return await _DbSet.ToListAsync();
         }
 
-        public virtual Task<T> GetAsync(string id)
+        public virtual Task<T> GetById(string id)
         {
             throw new NotImplementedException();
         }
 
-        public virtual Task<bool> UpdateAsync(T entity)
+        public virtual Task<bool> Update(T entity)
         {
             throw new NotImplementedException();
         }

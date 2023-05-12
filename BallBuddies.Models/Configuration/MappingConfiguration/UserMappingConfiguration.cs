@@ -8,8 +8,8 @@ namespace BallBuddies.Models.Configuration.MappingConfiguration
     {
         public UserMappingConfiguration()
         {
-            CreateMap<UserRegistrationDto, User>();
             CreateMap<User, UserRegistrationDto>();
+            CreateMap<UserRegistrationDto, User>();
         }
     }
 }

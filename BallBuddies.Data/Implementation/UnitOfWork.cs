@@ -3,7 +3,7 @@ using BallBuddies.Data.Interface;
 
 namespace BallBuddies.Data.Implementation
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private readonly BallBuddiesDBContext _dbContext;
 
