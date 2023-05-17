@@ -21,7 +21,9 @@ namespace BallBuddies
                 options.UseSqlServer(connectionString);
             });
             builder.Services.ConfigureUnitOfWork();
+            builder.Services.ConfigureUserAuth();
             builder.Services.ConfigureLoggerService();
+            builder.Services.ConfigureUserManager();
 
 
 

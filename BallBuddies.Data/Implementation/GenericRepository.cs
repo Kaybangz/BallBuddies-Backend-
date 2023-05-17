@@ -4,42 +4,52 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BallBuddies.Data.Implementation
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
 
-        protected readonly BallBuddiesDBContext _dbContext;
-        internal DbSet<T> _DbSet { get; set; }
+        private readonly BallBuddiesDBContext _dbContext;
+        private readonly DbSet<TEntity> _dbSet;
 
         public GenericRepository(BallBuddiesDBContext dbContext)
         {
             _dbContext = dbContext;
-            _DbSet = _dbContext.Set<T>();
+            _dbSet = _dbContext.Set<TEntity>();
         }
 
 
-        public virtual async Task<bool> Create(T entity)
+
+        public async Task Add(TEntity entity)
         {
-            return await _DbSet.AddAsync(entity);
+            await _dbSet.AddAsync(entity);
         }
 
-        public virtual async Task<bool> Delete(string id)
+        public virtual async Task Delete(string id, TEntity entity)
         {
-            return await _DbSet.Remove(id);
+            var existingEntity = await _dbSet.FindAsync(id);
+
+            if (existingEntity != null)
+                _dbSet.Remove(existingEntity);
+
         }
 
-        public virtual async Task<IEnumerable<T>> GetAll()
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return await _DbSet.ToListAsync();
+            return await _dbSet.ToListAsync();
         }
 
-        public virtual Task<T> GetById(string id)
+        public virtual async Task<TEntity> GetByIdAsync<TId>(TId id)
         {
-            throw new NotImplementedException();
+#pragma warning disable CS8603 // Possible null reference return.
+            return await _dbSet.FindAsync(id);
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
-        public virtual Task<bool> Update(T entity)
+        public virtual async Task Update(string id, TEntity entity)
         {
-            throw new NotImplementedException();
+            var existingEntity = await _dbSet.FindAsync(id);
+
+            if (existingEntity != null)
+                _dbSet.Update(existingEntity);
         }
     }
 }
