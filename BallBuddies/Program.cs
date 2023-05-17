@@ -33,6 +33,17 @@ namespace BallBuddies
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            builder.Services.AddAuthentication();
+            builder.Services.AddIdentity<User, IdentityRole>(o =>
+            {
+                o.Password.RequireDigit = true;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.User.RequireUniqueEmail = true;
+            })
+                .AddEntityFrameworkStores<BallBuddiesDBContext>()
+                .AddDefaultTokenProviders();
 
 
             var app = builder.Build();
@@ -47,17 +58,6 @@ namespace BallBuddies
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
-            builder.Services.AddIdentity<User, IdentityRole>(o =>
-            {
-                o.Password.RequireDigit = true;
-                o.Password.RequireLowercase = false;
-                o.Password.RequireUppercase = false;
-                o.Password.RequireNonAlphanumeric = false;
-                o.Password.RequiredLength = 10;
-                o.User.RequireUniqueEmail = true;
-            })
-                .AddEntityFrameworkStores<BallBuddiesDBContext>()
-                .AddDefaultTokenProviders();
 
             app.UseAuthorization();
 
