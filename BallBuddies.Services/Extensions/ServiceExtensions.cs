@@ -33,6 +33,7 @@ namespace BallBuddies.Services.Extensions
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
             {
+#pragma warning disable CS8604 // Possible null reference argument.
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
@@ -44,6 +45,7 @@ namespace BallBuddies.Services.Extensions
                     ValidAudience = jwtSettings["validAudience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
                 };
+#pragma warning restore CS8604 // Possible null reference argument.
             });
         }
 

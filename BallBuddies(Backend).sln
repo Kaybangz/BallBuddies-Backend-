@@ -3,13 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BallBuddies", "BallBuddies\BallBuddies.csproj", "{375614F0-EC1C-49AD-B295-4802A6104FD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BallBuddies", "BallBuddies\BallBuddies.csproj", "{375614F0-EC1C-49AD-B295-4802A6104FD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BallBuddies.Data", "BallBuddies.Data\BallBuddies.Data.csproj", "{A0AFB075-7EE6-4FAC-BD72-926E1DB448B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BallBuddies.Data", "BallBuddies.Data\BallBuddies.Data.csproj", "{A0AFB075-7EE6-4FAC-BD72-926E1DB448B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BallBuddies.Services", "BallBuddies.Services\BallBuddies.Services.csproj", "{5A8A6C9D-1569-4C60-B11F-8B97EC0461F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BallBuddies.Services", "BallBuddies.Services\BallBuddies.Services.csproj", "{5A8A6C9D-1569-4C60-B11F-8B97EC0461F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BallBuddies.Models", "BallBuddies.Models\BallBuddies.Models.csproj", "{F0FE3FF9-2B28-4641-ACAA-FC74511B2553}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BallBuddies.Models", "BallBuddies.Models\BallBuddies.Models.csproj", "{F0FE3FF9-2B28-4641-ACAA-FC74511B2553}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A882FC2A-2240-482E-A133-06B79D663C08}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
