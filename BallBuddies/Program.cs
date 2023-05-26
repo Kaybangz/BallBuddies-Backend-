@@ -44,6 +44,7 @@ namespace BallBuddies
             })
                 .AddEntityFrameworkStores<BallBuddiesDBContext>()
                 .AddDefaultTokenProviders();
+            builder.Services.ConfigureJWT(builder.Configuration);
 
 
             var app = builder.Build();
