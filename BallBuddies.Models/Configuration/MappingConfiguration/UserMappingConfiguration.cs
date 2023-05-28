@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BallBuddies.Models.Dtos;
+using BallBuddies.Models.Dtos.Request;
 using BallBuddies.Models.Entities;
 
 namespace BallBuddies.Models.Configuration.MappingConfiguration

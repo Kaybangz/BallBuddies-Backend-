@@ -1,18 +1,26 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BallBuddies.Models.Entities
 {
-    public class Attendance
+    public class Comment
     {
         [Key]
-        public Guid Id { get; set; }
-        public string UserId { get; set; } = null!;
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Enter a comment")]
+        [MaxLength(300, ErrorMessage = "Comment cannot exceed 300 characters")]
+        public string Text { get; set; } = null!;
+
+
+        [ForeignKey("User")]
+        public string? UserId { get; set; }
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public User User { get; set; }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
-
-        public Guid EventId { get; set; }
+        [ForeignKey("Event")]
+        public string? EventId { get; set; }
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public Event Event { get; set; }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.

@@ -1,4 +1,4 @@
-﻿using BallBuddies.Models.Dtos;
+﻿using BallBuddies.Models.Dtos.Request;
 using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 

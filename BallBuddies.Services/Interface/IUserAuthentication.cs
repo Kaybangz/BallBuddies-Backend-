@@ -1,4 +1,4 @@
-﻿using BallBuddies.Models.Dtos;
+﻿using BallBuddies.Models.Dtos.Request;
 using Microsoft.AspNetCore.Identity;
 
 namespace BallBuddies.Services.Interface

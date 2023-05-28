@@ -11,6 +11,10 @@ namespace BallBuddies.Data.Context
         {
         }
 
+        public DbSet<Event> Events { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -18,6 +22,10 @@ namespace BallBuddies.Data.Context
 
 
             builder.ApplyConfiguration(new RoleConfiguration());
+
+            builder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
         }
 
     }

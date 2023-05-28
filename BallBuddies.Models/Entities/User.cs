@@ -12,5 +12,8 @@ namespace BallBuddies.Models.Entities
 
         //A user can attend as many events
         public IEnumerable<Attendance>? Attendances { get; set; }
+
+        //A user can make as many comments as they want
+        public IEnumerable<Comment>? Comments { get; set; }
     }
 }
