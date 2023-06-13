@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BallBuddies.Data.Context;
+using BallBuddies.Data.Interface;
 using BallBuddies.Models.Entities;
 using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.Identity;

@@ -15,9 +15,11 @@ namespace BallBuddies
 
             // Add services to the container.
             LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
-            var connectionString = builder.Configuration["ConnectionStrings:SqlConnection"];
+
+            //Database connection string
             builder.Services.AddDbContext<BallBuddiesDBContext>(options =>
             {
+                var connectionString = builder.Configuration.GetConnectionString("DbConnection");
                 options.UseSqlServer(connectionString);
             });
             builder.Services.ConfigureUnitOfWork();

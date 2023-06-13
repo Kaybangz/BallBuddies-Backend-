@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BallBuddies.Data.Migrations
 {
     [DbContext(typeof(BallBuddiesDBContext))]
-    [Migration("20230528120504_AddedProjectTables")]
-    partial class AddedProjectTables
+    [Migration("20230612181319_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,8 +31,8 @@ namespace BallBuddies.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("EventId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -55,9 +55,9 @@ namespace BallBuddies.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid?>("EventId")
+                    b.Property<int?>("EventId")
                         .IsRequired()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
 
                     b.Property<string>("Text")
                         .IsRequired()
@@ -79,9 +79,11 @@ namespace BallBuddies.Data.Migrations
 
             modelBuilder.Entity("BallBuddies.Models.Entities.Event", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Category")
                         .HasColumnType("int");
@@ -117,6 +119,9 @@ namespace BallBuddies.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<string>("State")
                         .IsRequired()
@@ -231,15 +236,15 @@ namespace BallBuddies.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8bc011f0-cdaa-4475-9c62-4b13bb8ff839",
-                            ConcurrencyStamp = "6a378088-a4c6-4587-a5d0-6973f90630a3",
+                            Id = "8a1cf944-ae48-49a7-a1b8-452d2cf8b628",
+                            ConcurrencyStamp = "e650a465-aa9d-4364-b4fb-4acbd133f1ba",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "3c9e2d59-e5ee-408f-9546-32e06a26315f",
-                            ConcurrencyStamp = "de3dc125-1177-4b8c-a3d1-4a24710ff44d",
+                            Id = "b351ab90-eda3-4905-a63e-f09166fac35a",
+                            ConcurrencyStamp = "9322b4d4-79c6-48b9-acc5-1c0c22cd7e4d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -356,7 +361,7 @@ namespace BallBuddies.Data.Migrations
                     b.HasOne("BallBuddies.Models.Entities.Event", "Event")
                         .WithMany("Attendances")
                         .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("BallBuddies.Models.Entities.User", "User")

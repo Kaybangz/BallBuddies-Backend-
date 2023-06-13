@@ -26,6 +26,18 @@ namespace BallBuddies.Data.Context
             builder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
+
+            builder.Entity<Attendance>()
+                .HasOne(a => a.Event)
+                .WithMany(e => e.Attendances)
+                .HasForeignKey(a => a.EventId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Comment>()
+                .HasOne(a => a.Event)
+                .WithMany(e => e.Comments)
+                .HasForeignKey(a => a.EventId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
     }

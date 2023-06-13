@@ -1,7 +1,7 @@
 ﻿using BallBuddies.Models.Dtos.Request;
 using Microsoft.AspNetCore.Identity;
 
-namespace BallBuddies.Services.Interface
+namespace BallBuddies.Data.Interface
 {
     public interface IUserAuthentication
     {

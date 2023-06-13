@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BallBuddies.Data.Interface;
 using BallBuddies.Models.Dtos.Request;
 using BallBuddies.Models.Entities;
 using BallBuddies.Services.Interface;

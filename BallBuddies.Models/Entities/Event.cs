@@ -7,12 +7,15 @@ namespace BallBuddies.Models.Entities
     public class Event
     {
         [Key]
-        public Guid Id { get; set; }
+        public int Id{ get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "The event name is required")]
         [MaxLength(50, ErrorMessage = "Cannot exceed 50 characters")]
         public string Name { get; set; } = null!;
         [MaxLength(150, ErrorMessage = "Cannot exceed 150 characters")]
         public string? Description { get; set; }
+
+        [Column(TypeName = "decimal(10,2)")]
+        public decimal Price { get; set; }
         public string? EventImageUrl { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Location is required")]
