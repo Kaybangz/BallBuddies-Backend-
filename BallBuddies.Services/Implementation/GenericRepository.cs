@@ -3,7 +3,7 @@ using BallBuddies.Data.Interface;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace BallBuddies.Data.Implementation
+namespace BallBuddies.Services.Implementation
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {

@@ -1,5 +1,5 @@
-﻿using BallBuddies.Models.Dtos.Request;
-using BallBuddies.Services.Interface;
+﻿using BallBuddies.Data.Interface;
+using BallBuddies.Models.Dtos.Request;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BallBuddies.Controllers

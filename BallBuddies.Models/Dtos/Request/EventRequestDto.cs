@@ -1,13 +1,17 @@
 ﻿using BallBuddies.Models.Enums;
-using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace BallBuddies.Models.Entities
+namespace BallBuddies.Models.Dtos.Request
 {
-    public class Event
+    public class EventRequestDto
     {
-        [Key]
-        public int Id{ get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "The event name is required")]
         [MaxLength(50, ErrorMessage = "Cannot exceed 50 characters")]
         public string Name { get; set; } = null!;
@@ -33,18 +37,5 @@ namespace BallBuddies.Models.Entities
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public SportCategory Category { get; set; }
         public EventStatus Status { get; set; }
-
-        //An event can be created by only 1 user
-        [ForeignKey("User")]
-        public string CreatedByUserId { get; set; } = null!;
-        public User CreatedByUser { get; set; } = null!;
-
-
-        //An event can have many attendees
-        public IEnumerable<Attendance>? Attendances { get; set; }
-
-
-        //An event can have many comments
-        public IEnumerable<Comment>? Comments { get; set; }
     }
 }

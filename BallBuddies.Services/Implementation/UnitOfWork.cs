@@ -25,12 +25,22 @@ namespace BallBuddies.Services.Implementation
             _logger = logger;
 
             _userAuthentication = new UserAuthentication(_logger, _mapper, userManager);
+            EventRepo = new EventRepo(_dbContext);
+            AttendanceRepo = new AttendanceRepo(_dbContext);
+            CommentRepo = new CommentRepo(_dbContext);
+
         }
 
         public IUserAuthentication UserAuthentication
         {
             get { return _userAuthentication; }
         }
+
+        public IEventRepo EventRepo { get; private set; }
+
+        public IAttendanceRepo AttendanceRepo { get; private set; }
+
+        public ICommentRepo CommentRepo { get; private set; }
 
         public async Task DisposeAsync()
         {

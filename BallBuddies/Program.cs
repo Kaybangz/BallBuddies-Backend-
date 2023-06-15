@@ -41,11 +41,13 @@ namespace BallBuddies
                 o.Password.RequireDigit = false;
                 o.Password.RequireLowercase = false;
                 o.Password.RequireUppercase = false;
+                o.Password.RequiredLength = 5;
                 o.Password.RequireNonAlphanumeric = false;
                 o.User.RequireUniqueEmail = true;
             })
                 .AddEntityFrameworkStores<BallBuddiesDBContext>()
                 .AddDefaultTokenProviders();
+
             builder.Services.ConfigureJWT(builder.Configuration);
 
 
