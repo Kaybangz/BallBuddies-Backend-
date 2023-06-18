@@ -7,10 +7,6 @@ namespace BallBuddies.Data.Interface
 {
     public interface IEventRepository
     {
-       /* Task<IEnumerable<EventResponseDto>> GetEvents();
-        EventResponseDto GetEventById(int id);
-        void CreateEvent(EventRequestDto eventEntity);
-        void UpdateEvent(EventRequestDto eventEntity);
-        void DeleteEvent(int id);*/
+       IEnumerable<Event> GetAllEvents(bool trackChanges);
     }
 }

@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+	<ProjectReference Include="..\BallBuddies.Presentation\BallBuddies.Presentation.csproj" />
 	<ProjectReference Include="..\BallBuddies.Services\BallBuddies.Services.csproj" />
   </ItemGroup>
 

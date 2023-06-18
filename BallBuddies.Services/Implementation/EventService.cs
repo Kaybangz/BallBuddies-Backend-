@@ -1,6 +1,6 @@
 ﻿using BallBuddies.Data.Interface;
+using BallBuddies.Models.Entities;
 using BallBuddies.Services.Interface;
-
 
 namespace BallBuddies.Services.Implementation
 {
@@ -13,6 +13,21 @@ namespace BallBuddies.Services.Implementation
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
+        }
+
+        public IEnumerable<Event> GetAllEvents(bool trackChanges)
+        {
+            try
+            {
+                var events = _unitOfWork.Event.GetAllEvents(trackChanges);
+
+                return events;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong in the {nameof(GetAllEvents)} service method {ex}");
+                throw;
+            }
         }
     }
 }
