@@ -1,4 +1,5 @@
-﻿using BallBuddies.Data.Interface;
+﻿using AutoMapper;
+using BallBuddies.Data.Interface;
 using BallBuddies.Services.Interface;
 using System;
 
@@ -13,11 +14,13 @@ namespace BallBuddies.Services.Implementation
         private readonly Lazy<ICommentService> _commentService;
 
 
-        public ServiceManager(IUnitOfWork unitOfWork, ILoggerManager logger)
+        public ServiceManager(IUnitOfWork unitOfWork,
+            ILoggerManager logger,
+            IMapper mapper)
         {
-            _eventService = new Lazy<IEventService>(() => new EventService(unitOfWork, logger));
-            _attendanceService = new Lazy<IAttendanceService>(() => new AttendanceService(unitOfWork, logger));
-            _commentService = new Lazy<ICommentService>(() => new CommentService(unitOfWork, logger));
+            _eventService = new Lazy<IEventService>(() => new EventService(unitOfWork, logger, mapper));
+            _attendanceService = new Lazy<IAttendanceService>(() => new AttendanceService(unitOfWork, logger, mapper));
+            _commentService = new Lazy<ICommentService>(() => new CommentService(unitOfWork, logger, mapper));
         }
 
         public IEventService EventService => _eventService.Value;

@@ -1,11 +1,9 @@
-﻿using BallBuddies.Models.Entities;
-using System;
-
+﻿using BallBuddies.Models.Dtos.Response;
 
 namespace BallBuddies.Services.Interface
 {
     public interface IEventService
     {
-        IEnumerable<Event> GetAllEvents(bool trackChanges);
+        IEnumerable<EventResponseDto> GetAllEvents(bool trackChanges);
     }
 }

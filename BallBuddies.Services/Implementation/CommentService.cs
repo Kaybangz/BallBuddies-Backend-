@@ -1,4 +1,5 @@
-﻿using BallBuddies.Data.Interface;
+﻿using AutoMapper;
+using BallBuddies.Data.Interface;
 using BallBuddies.Services.Interface;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,15 @@ namespace BallBuddies.Services.Implementation
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILoggerManager _logger;
+        private readonly IMapper _mapper;
 
-        public CommentService(IUnitOfWork unitOfWork, ILoggerManager logger)
+        public CommentService(IUnitOfWork unitOfWork,
+            ILoggerManager logger,
+            IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
+            _mapper = mapper;
         }
     }
 }
