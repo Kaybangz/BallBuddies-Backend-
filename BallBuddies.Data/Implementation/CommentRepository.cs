@@ -7,15 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BallBuddies.Services.Implementation
+namespace BallBuddies.Data.Implementation
 {
-    public class AttendanceRepo: GenericRepository<Attendance>, IAttendanceRepo
+    public class CommentRepository: GenericRepository<Comment>, ICommentRepository
     {
-        public AttendanceRepo(BallBuddiesDBContext dbContext): base(dbContext)
-        {
-
-        }
-
-
+        public CommentRepository(BallBuddiesDBContext dbContext): base(dbContext)
+        {}
     }
 }

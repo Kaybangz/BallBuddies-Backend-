@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BallBuddies.Data.Interface
 {
-    public interface IAttendanceRepo: IGenericRepository<Attendance>
+    public interface ICommentRepository
     {
     }
 }

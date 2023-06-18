@@ -1,5 +1,6 @@
 ﻿
 using BallBuddies.Data.Interface;
+using BallBuddies.Data.Implementation;
 using BallBuddies.Models.Entities;
 using BallBuddies.Services.Implementation;
 using BallBuddies.Services.Interface;
@@ -9,18 +10,43 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using BallBuddies.Data.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace BallBuddies.Services.Extensions
 {
     public static class ServiceExtensions
     {
-        public static void ConfigureUnitOfWork(this IServiceCollection services) => services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        public static void ConfigureUserAuth(this IServiceCollection services) => services.AddScoped<IUserAuthentication, UserAuthentication>();
+        public static void ConfigureUserManager(this IServiceCollection services) =>
+            services.AddScoped<UserManager<User>>();
 
-        public static void ConfigureLoggerService(this IServiceCollection services) => services.AddSingleton<ILoggerManager, LoggerManager>();
+        public static void ConfigureUnitOfWork(this IServiceCollection services) =>
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        public static void ConfigureUserManager(this IServiceCollection services) => services.AddScoped<UserManager<User>>();
+        public static void ConfigureServiceManager(this IServiceCollection services) => 
+            services.AddScoped<IServiceManager, ServiceManager>();
+
+
+        public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
+            services.AddDbContext<BallBuddiesDBContext>(options =>
+            {
+                options.UseSqlServer(configuration.GetConnectionString("DbConnection"));
+            });
+
+
+        public static void ConfigureIdentity(this IServiceCollection services) =>
+            services.AddIdentity<User, IdentityRole>(o =>
+            {
+                o.Password.RequireDigit = false;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequiredLength = 5;
+                o.Password.RequireNonAlphanumeric = false;
+                o.User.RequireUniqueEmail = true;
+            })
+            .AddEntityFrameworkStores<BallBuddiesDBContext>()
+            .AddDefaultTokenProviders();
 
 
         public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
@@ -49,6 +75,10 @@ namespace BallBuddies.Services.Extensions
 #pragma warning restore CS8604 // Possible null reference argument.
             });
         }
+
+
+        public static void ConfigureLoggerMananger(this IServiceCollection services) => 
+            services.AddSingleton<ILoggerManager, LoggerManager>();
 
 
     }
