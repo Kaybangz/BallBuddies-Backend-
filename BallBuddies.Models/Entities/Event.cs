@@ -35,7 +35,7 @@ namespace BallBuddies.Models.Entities
         public EventStatus Status { get; set; }
 
         //An event can be created by only 1 user
-        [ForeignKey("User")]
+        [ForeignKey("CreatedByUserId")]
         public string CreatedByUserId { get; set; } = null!;
         public User CreatedByUser { get; set; } = null!;
 

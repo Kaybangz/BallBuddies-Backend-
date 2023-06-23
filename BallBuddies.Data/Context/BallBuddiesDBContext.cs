@@ -20,7 +20,7 @@ namespace BallBuddies.Data.Context
         {
             base.OnModelCreating(builder);
 
-
+            /*builder.ApplyConfiguration(new EventConfiguration());*/
             builder.ApplyConfiguration(new RoleConfiguration());
 
             builder.Entity<User>()

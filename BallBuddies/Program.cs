@@ -1,6 +1,6 @@
-using BallBuddies.Data.Context;
 using BallBuddies.Services.Extensions;
-using Microsoft.EntityFrameworkCore;
+using BallBuddies.Services.Interface;
+using Microsoft.AspNetCore.HttpOverrides;
 using NLog;
 
 namespace BallBuddies
@@ -14,14 +14,6 @@ namespace BallBuddies
             // Add services to the container.
             LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
 
-            //Database connection string
-            builder.Services.ConfigureSqlContext(builder.Configuration);
-
-            builder.Services.ConfigureUserManager();
-            builder.Services.ConfigureUnitOfWork();
-            builder.Services.ConfigureServiceManager();
-            builder.Services.ConfigureLoggerMananger();
-            builder.Services.ConfigureIdentity();
 
             builder.Services.AddControllers()
                 .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
@@ -30,7 +22,18 @@ namespace BallBuddies
             builder.Services.AddSwaggerGen();
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddAuthentication();
-            
+
+            //Database connection string
+            builder.Services.ConfigureSqlContext(builder.Configuration);
+
+            builder.Services.ConfigureUserManager();
+            builder.Services.ConfigureUnitOfWork();
+            builder.Services.ConfigureServiceManager();
+            builder.Services.ConfigureLoggerMananger();
+            builder.Services.ConfigureIdentity();
+            builder.Services.ConfigureCors();
+            builder.Services.ConfigureIISIntegration();
+
 
             builder.Services.ConfigureJWT(builder.Configuration);
 
@@ -38,13 +41,30 @@ namespace BallBuddies
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
+            var logger = app.Services.GetRequiredService<ILoggerManager>();
+            app.ConfigureExceptionHandler(logger);
+
+            /*if (app.Environment.IsProduction())
+                app.UseHsts();*/
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.UseDeveloperExceptionPage();
             }
+            else
+                app.UseHsts();
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.All
+            });
+
+            app.UseCors("CorsPolicy");
 
             app.UseAuthentication();
 

@@ -1,10 +1,6 @@
 ﻿using BallBuddies.Data.Context;
 using BallBuddies.Data.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BallBuddies.Data.Implementation
 {
@@ -23,7 +19,6 @@ namespace BallBuddies.Data.Implementation
             _commentRepository = new Lazy<ICommentRepository>(() => new CommentRepository(dbContext));
         }
 
-        public IUserAuthentication UserAuthentication => throw new NotImplementedException();
 
         public IEventRepository Event => _eventRepository.Value;
 
@@ -33,6 +28,6 @@ namespace BallBuddies.Data.Implementation
 
      
 
-        public async Task Save() => await _dbContext.SaveChangesAsync();
+        public async Task SaveAsync() => await _dbContext.SaveChangesAsync();
     }
 }

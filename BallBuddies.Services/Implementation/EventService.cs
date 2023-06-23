@@ -2,6 +2,8 @@
 using BallBuddies.Data.Interface;
 using BallBuddies.Models.Dtos.Request;
 using BallBuddies.Models.Dtos.Response;
+using BallBuddies.Models.Entities;
+using BallBuddies.Models.Exceptions;
 using BallBuddies.Services.Interface;
 
 namespace BallBuddies.Services.Implementation
@@ -21,21 +23,38 @@ namespace BallBuddies.Services.Implementation
             _mapper = mapper;
         }
 
-        public IEnumerable<EventResponseDto> GetAllEvents(bool trackChanges)
+        public EventResponseDto CreateEvent(EventRequestDto eventRequest)
         {
-            try
-            {
-                var events = _unitOfWork.Event.GetAllEvents(trackChanges);
+            var eventEntity = _mapper.Map<Event>(eventRequest);
+
+            _unitOfWork.Event.CreateEvent(eventEntity);
+            _unitOfWork.SaveAsync();
+
+            var eventToReturn = _mapper.Map<EventResponseDto>(eventEntity);
+
+            return eventToReturn;
+        }
+
+        public async Task<IEnumerable<EventResponseDto>> GetAllEventsAsync(bool trackChanges)
+        {
+            
+                var events = await _unitOfWork.Event.GetAllEvents(trackChanges);
 
                 var eventsDto = _mapper.Map<IEnumerable<EventResponseDto>>(events);
 
                 return eventsDto;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Something went wrong in the {nameof(GetAllEvents)} service method {ex}");
-                throw;
-            }
+        }
+
+        public async Task<EventResponseDto> GetEventAsync(int eventId, bool trackChanges)
+        {
+            var myEvent = await _unitOfWork.Event.GetEvent(eventId, trackChanges);
+
+            if (myEvent is null)
+                throw new EventNotFoundException(eventId);
+
+            var eventDto = _mapper.Map<EventResponseDto>(myEvent);
+
+            return eventDto;
         }
     }
 }

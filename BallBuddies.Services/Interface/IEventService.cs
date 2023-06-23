@@ -1,9 +1,12 @@
-﻿using BallBuddies.Models.Dtos.Response;
+﻿using BallBuddies.Models.Dtos.Request;
+using BallBuddies.Models.Dtos.Response;
 
 namespace BallBuddies.Services.Interface
 {
     public interface IEventService
     {
-        IEnumerable<EventResponseDto> GetAllEvents(bool trackChanges);
+        Task<IEnumerable<EventResponseDto>> GetAllEventsAsync(bool trackChanges);
+        Task<EventResponseDto> GetEventAsync(int eventId, bool trackChanges);
+        EventResponseDto CreateEvent(EventRequestDto eventRequest);
     }
 }

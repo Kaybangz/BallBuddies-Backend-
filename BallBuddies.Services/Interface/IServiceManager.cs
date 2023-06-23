@@ -11,5 +11,6 @@ namespace BallBuddies.Services.Interface
         IEventService EventService { get; }
         IAttendanceService AttendanceService { get; }
         ICommentService CommentService { get; }
+        IAuthenticationService AuthenticationService { get; }
     }
 }

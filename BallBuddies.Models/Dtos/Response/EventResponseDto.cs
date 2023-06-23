@@ -5,6 +5,7 @@ namespace BallBuddies.Models.Dtos.Response
 {
 
     public record EventResponseDto(
+        int id,
         string Name,
         string Description,
         decimal Price,

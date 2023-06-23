@@ -1,17 +1,18 @@
 ﻿
-using BallBuddies.Data.Interface;
+using BallBuddies.Data.Context;
 using BallBuddies.Data.Implementation;
+using BallBuddies.Data.Interface;
 using BallBuddies.Models.Entities;
 using BallBuddies.Services.Implementation;
 using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using BallBuddies.Data.Context;
-using Microsoft.EntityFrameworkCore;
 
 namespace BallBuddies.Services.Extensions
 {
@@ -24,7 +25,7 @@ namespace BallBuddies.Services.Extensions
         public static void ConfigureUnitOfWork(this IServiceCollection services) =>
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        public static void ConfigureServiceManager(this IServiceCollection services) => 
+        public static void ConfigureServiceManager(this IServiceCollection services) =>
             services.AddScoped<IServiceManager, ServiceManager>();
 
 
@@ -41,7 +42,6 @@ namespace BallBuddies.Services.Extensions
                 o.Password.RequireDigit = false;
                 o.Password.RequireLowercase = false;
                 o.Password.RequireUppercase = false;
-                o.Password.RequiredLength = 5;
                 o.Password.RequireNonAlphanumeric = false;
                 o.User.RequireUniqueEmail = true;
             })
@@ -77,8 +77,26 @@ namespace BallBuddies.Services.Extensions
         }
 
 
-        public static void ConfigureLoggerMananger(this IServiceCollection services) => 
+        public static void ConfigureLoggerMananger(this IServiceCollection services) =>
             services.AddSingleton<ILoggerManager, LoggerManager>();
+
+
+        public static void ConfigureIISIntegration(this IServiceCollection services) =>
+            services.Configure<IISOptions>(options =>
+            {
+
+            });
+
+        public static void ConfigureCors(this IServiceCollection services) =>
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+
+                builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
+            });
 
 
     }

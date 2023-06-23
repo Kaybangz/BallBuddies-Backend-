@@ -1,12 +1,14 @@
-﻿using BallBuddies.Services.Interface;
+﻿using BallBuddies.Models.Dtos.Request;
+using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace BallBuddies.Presentation.Controllers
 {
-    [Route("api/events")]
+
     [ApiController]
-    public class EventsController: ControllerBase
+    [Route("api/events")]
+    public class EventsController : ControllerBase
     {
         private readonly IServiceManager _service;
 
@@ -16,16 +18,31 @@ namespace BallBuddies.Presentation.Controllers
         [HttpGet]
         public IActionResult GetEvents()
         {
-            try
-            {
-                var events = _service.EventService.GetAllEvents(trackChanges: false);
+            var events = _service.EventService.GetAllEventsAsync(trackChanges: false);
 
-                return Ok(events);
-            }
-            catch
-            {
-                return StatusCode(500, "Internal server error");
-            }
+            return Ok(events);
+
+        }
+
+        [HttpGet("{id:int}", Name = "EventById")]
+        public IActionResult GetEvent(int id)
+        {
+            var myEvent = _service.EventService.GetEventAsync(id, trackChanges: false);
+
+            return Ok(myEvent);
+        }
+
+        [HttpPost("create event", Name = "Create new event")]
+        public IActionResult CreateEvent([FromBody] EventRequestDto eventRequest)
+        {
+            if (eventRequest == null)
+                return BadRequest("EventRequestDto object is null");
+
+            var createdEvent = _service.EventService.CreateEvent(eventRequest);
+
+            return CreatedAtRoute("EventById", new { id = createdEvent.id },
+                createdEvent);
+
         }
     }
 }
