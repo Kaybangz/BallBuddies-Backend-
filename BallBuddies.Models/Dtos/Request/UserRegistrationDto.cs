@@ -2,7 +2,7 @@
 
 namespace BallBuddies.Models.Dtos.Request
 {
-    public record UserRegistrationDto
+    public class UserRegistrationDto
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "Username is required")]
         [MaxLength(50, ErrorMessage = "Username cannot exceed 50 characters")]

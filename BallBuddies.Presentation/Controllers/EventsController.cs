@@ -16,18 +16,18 @@ namespace BallBuddies.Presentation.Controllers
 
 
         [HttpGet]
-        public IActionResult GetEvents()
+        public async Task<IActionResult> GetEvents()
         {
-            var events = _service.EventService.GetAllEventsAsync(trackChanges: false);
+            var events = await _service.EventService.GetAllEventsAsync(trackChanges: false);
 
             return Ok(events);
 
         }
 
         [HttpGet("{id:int}", Name = "EventById")]
-        public IActionResult GetEvent(int id)
+        public async Task<IActionResult> GetEvent(int id)
         {
-            var myEvent = _service.EventService.GetEventAsync(id, trackChanges: false);
+            var myEvent = await _service.EventService.GetEventAsync(id, trackChanges: false);
 
             return Ok(myEvent);
         }
@@ -38,9 +38,9 @@ namespace BallBuddies.Presentation.Controllers
             if (eventRequest == null)
                 return BadRequest("EventRequestDto object is null");
 
-            var createdEvent = _service.EventService.CreateEvent(eventRequest);
+            var createdEvent =  _service.EventService.CreateEvent(eventRequest);
 
-            return CreatedAtRoute("EventById", new { id = createdEvent.id },
+            return CreatedAtRoute("EventById", new { id = createdEvent.Id },
                 createdEvent);
 
         }
