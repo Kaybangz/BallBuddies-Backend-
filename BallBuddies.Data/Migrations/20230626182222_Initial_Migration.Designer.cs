@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BallBuddies.Data.Migrations
 {
     [DbContext(typeof(BallBuddiesDBContext))]
-    [Migration("20230612183755_FixedForeignKeyConstraints")]
-    partial class FixedForeignKeyConstraints
+    [Migration("20230626182222_Initial_Migration")]
+    partial class Initial_Migration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -235,15 +235,15 @@ namespace BallBuddies.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "59c445db-5fc7-44e9-aa45-555eebb5bf53",
-                            ConcurrencyStamp = "e3880174-2df3-4974-bc97-1824b84994d9",
+                            Id = "a2c2bb9b-cc9f-4e1b-9907-c23d3b320a8a",
+                            ConcurrencyStamp = "1f26b79f-afce-4a13-bafe-2012204b3e19",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "ad13fe04-7f1b-43a4-955f-5cbd44c1dc43",
-                            ConcurrencyStamp = "54ddd5bb-eab3-40f6-9c9d-c3c2dd28e62f",
+                            Id = "53a492de-4937-4dda-b1cb-db12241258ed",
+                            ConcurrencyStamp = "7ff91e25-f2e0-4e89-9698-97c3b21c71f5",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

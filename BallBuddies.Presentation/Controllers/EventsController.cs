@@ -33,12 +33,12 @@ namespace BallBuddies.Presentation.Controllers
         }
 
         [HttpPost("create event", Name = "Create new event")]
-        public IActionResult CreateEvent([FromBody] EventRequestDto eventRequest)
+        public async Task<IActionResult> CreateEvent([FromBody] EventRequestDto eventRequest)
         {
             if (eventRequest == null)
                 return BadRequest("EventRequestDto object is null");
 
-            var createdEvent =  _service.EventService.CreateEvent(eventRequest);
+            var createdEvent =  await _service.EventService.CreateEvent(eventRequest);
 
             return CreatedAtRoute("EventById", new { id = createdEvent.Id },
                 createdEvent);

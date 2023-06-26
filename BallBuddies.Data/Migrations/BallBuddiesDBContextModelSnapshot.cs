@@ -93,6 +93,7 @@ namespace BallBuddies.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedByUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
@@ -122,9 +123,6 @@ namespace BallBuddies.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -234,15 +232,15 @@ namespace BallBuddies.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b97f6d68-0467-4e62-9289-a647e7411b57",
-                            ConcurrencyStamp = "d149b3df-68c1-4698-b467-e3badde24b1a",
+                            Id = "a2c2bb9b-cc9f-4e1b-9907-c23d3b320a8a",
+                            ConcurrencyStamp = "1f26b79f-afce-4a13-bafe-2012204b3e19",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "da4e0061-1c54-4aa3-8b2e-91435acb340d",
-                            ConcurrencyStamp = "aba7ed78-cb9c-4bd3-bb84-c9d333b1aed1",
+                            Id = "53a492de-4937-4dda-b1cb-db12241258ed",
+                            ConcurrencyStamp = "7ff91e25-f2e0-4e89-9698-97c3b21c71f5",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -396,7 +394,9 @@ namespace BallBuddies.Data.Migrations
                 {
                     b.HasOne("BallBuddies.Models.Entities.User", "CreatedByUser")
                         .WithMany("Events")
-                        .HasForeignKey("CreatedByUserId");
+                        .HasForeignKey("CreatedByUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CreatedByUser");
                 });

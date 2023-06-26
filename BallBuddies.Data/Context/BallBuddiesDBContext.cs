@@ -1,6 +1,7 @@
 ﻿using BallBuddies.Data.Configuration;
 using BallBuddies.Models.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace BallBuddies.Data.Context
@@ -18,7 +19,7 @@ namespace BallBuddies.Data.Context
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
+            
 
             /*builder.ApplyConfiguration(new EventConfiguration());*/
             builder.ApplyConfiguration(new RoleConfiguration());
@@ -26,6 +27,13 @@ namespace BallBuddies.Data.Context
             builder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
+
+
+            builder.Entity<Event>()
+                .HasOne<User>(e => e.CreatedByUser)
+                .WithMany(u => u.Events)
+                .HasForeignKey(e => e.CreatedByUserId)
+                .IsRequired();
 
             builder.Entity<Attendance>()
                 .HasOne(a => a.Event)
@@ -38,6 +46,9 @@ namespace BallBuddies.Data.Context
                 .WithMany(e => e.Comments)
                 .HasForeignKey(a => a.EventId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+
+            base.OnModelCreating(builder);
         }
 
     }

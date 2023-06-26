@@ -23,12 +23,12 @@ namespace BallBuddies.Services.Implementation
             _mapper = mapper;
         }
 
-        public EventResponseDto CreateEvent(EventRequestDto eventRequest)
+        public async Task<EventResponseDto> CreateEvent(EventRequestDto eventRequest)
         {
             var eventEntity = _mapper.Map<Event>(eventRequest);
 
             _unitOfWork.Event.CreateEvent(eventEntity);
-            _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync();
 
             var eventToReturn = _mapper.Map<EventResponseDto>(eventEntity);
 

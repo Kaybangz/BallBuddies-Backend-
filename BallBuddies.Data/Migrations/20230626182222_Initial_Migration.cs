@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BallBuddies.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class Initial_Migration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -237,7 +237,7 @@ namespace BallBuddies.Data.Migrations
                         column: x => x.EventId,
                         principalTable: "Events",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -245,8 +245,8 @@ namespace BallBuddies.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "8a1cf944-ae48-49a7-a1b8-452d2cf8b628", "e650a465-aa9d-4364-b4fb-4acbd133f1ba", "User", "USER" },
-                    { "b351ab90-eda3-4905-a63e-f09166fac35a", "9322b4d4-79c6-48b9-acc5-1c0c22cd7e4d", "Admin", "ADMIN" }
+                    { "53a492de-4937-4dda-b1cb-db12241258ed", "7ff91e25-f2e0-4e89-9698-97c3b21c71f5", "Admin", "ADMIN" },
+                    { "a2c2bb9b-cc9f-4e1b-9907-c23d3b320a8a", "1f26b79f-afce-4a13-bafe-2012204b3e19", "User", "USER" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -32,10 +32,10 @@ namespace BallBuddies.Models.Entities
         public DateTime EventDate { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public SportCategory Category { get; set; }
-        
+
 
         //An event can be created by only 1 user
-        [ForeignKey("CreatedByUserId")]
+        [ForeignKey("User")]
         public string CreatedByUserId { get; set; } = null!;
         public User CreatedByUser { get; set; } = null!;
 
