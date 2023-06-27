@@ -1,5 +1,7 @@
 ﻿using BallBuddies.Models.Dtos.Request;
+using BallBuddies.Services.ActionFilters;
 using BallBuddies.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -16,6 +18,7 @@ namespace BallBuddies.Presentation.Controllers
 
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetEvents()
         {
             var events = await _service.EventService.GetAllEventsAsync(trackChanges: false);
@@ -33,6 +36,7 @@ namespace BallBuddies.Presentation.Controllers
         }
 
         [HttpPost("create event", Name = "Create new event")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateEvent([FromBody] EventRequestDto eventRequest)
         {
             if (eventRequest == null)

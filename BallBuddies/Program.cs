@@ -3,6 +3,7 @@ using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Diagnostics;
 using NLog;
+using BallBuddies.Services.ActionFilters;
 
 namespace BallBuddies
 {
@@ -23,10 +24,11 @@ namespace BallBuddies
 			builder.Services.ConfigureServiceManager();
 			builder.Services.ConfigureLoggerMananger();
 			builder.Services.ConfigureIdentity();
-			builder.Services.ConfigureCors();
+            builder.Services.ConfigureJWT(builder.Configuration);
+            builder.Services.ConfigureCors();
 			builder.Services.ConfigureIISIntegration();
 
-
+			builder.Services.AddScoped<ValidationFilterAttribute>();
 			builder.Services.AddControllers()
 				.AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -37,8 +39,6 @@ namespace BallBuddies
 
 			
 
-
-			builder.Services.ConfigureJWT(builder.Configuration);
 
 
 			var app = builder.Build();

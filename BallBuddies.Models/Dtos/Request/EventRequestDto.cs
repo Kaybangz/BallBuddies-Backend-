@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BallBuddies.Models.Dtos.Request
 {
-    public class EventRequestDto
+    public record EventRequestDto
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "The event name is required")]
         [MaxLength(50, ErrorMessage = "Cannot exceed 50 characters")]
