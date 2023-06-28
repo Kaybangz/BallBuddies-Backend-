@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
+
 namespace BallBuddies.Services.Extensions
 {
     public static class ServiceExtensions
@@ -75,6 +76,15 @@ namespace BallBuddies.Services.Extensions
 #pragma warning restore CS8604 // Possible null reference argument.
             });
         }
+
+
+
+        public static IMvcBuilder AddCustomCSVFormatter(this IMvcBuilder builder) =>
+            builder.AddMvcOptions(config =>
+            {
+                config.OutputFormatters.Add(new CsvOutputFormatter());
+            });
+
 
 
         public static void ConfigureLoggerMananger(this IServiceCollection services) =>

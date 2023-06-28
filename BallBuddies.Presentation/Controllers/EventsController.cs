@@ -18,7 +18,8 @@ namespace BallBuddies.Presentation.Controllers
 
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> GetEvents()
         {
             var events = await _service.EventService.GetAllEventsAsync(trackChanges: false);
@@ -28,6 +29,8 @@ namespace BallBuddies.Presentation.Controllers
         }
 
         [HttpGet("{id:int}", Name = "EventById")]
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> GetEvent(int id)
         {
             var myEvent = await _service.EventService.GetEventAsync(id, trackChanges: false);
@@ -35,8 +38,10 @@ namespace BallBuddies.Presentation.Controllers
             return Ok(myEvent);
         }
 
-        [HttpPost("create event", Name = "Create new event")]
+        [HttpPost("new", Name = "Create new event")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> CreateEvent([FromBody] EventRequestDto eventRequest)
         {
             if (eventRequest == null)

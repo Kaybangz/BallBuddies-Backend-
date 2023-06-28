@@ -5,6 +5,8 @@ namespace BallBuddies.Models.Entities
     public class User : IdentityUser
     {
         public string? AvatarUrl { get; set; }
+        public string? RefreshToken { get; set; }
+        public DateTime RefreshTokenExpiryTime { get; set; }
 
 
         //A user can organize many sport events

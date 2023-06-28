@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BallBuddies.Services.ActionFilters
 {
@@ -12,10 +7,7 @@ namespace BallBuddies.Services.ActionFilters
     {
         public ValidationFilterAttribute()
         {}
-        public void OnActionExecuted(ActionExecutedContext context)
-        {
-            throw new NotImplementedException();
-        }
+       
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
@@ -35,5 +27,9 @@ namespace BallBuddies.Services.ActionFilters
             if(!context.ModelState.IsValid)
                 context.Result = new UnprocessableEntityObjectResult(context.ModelState);
         }
+
+
+        public void OnActionExecuted(ActionExecutedContext context)
+        {}
     }
 }

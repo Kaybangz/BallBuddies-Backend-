@@ -3,7 +3,7 @@
 
 namespace BallBuddies.Models.Dtos.Response
 {
-
+    [Serializable]
     public record EventResponseDto(
         int Id,
         string Name,

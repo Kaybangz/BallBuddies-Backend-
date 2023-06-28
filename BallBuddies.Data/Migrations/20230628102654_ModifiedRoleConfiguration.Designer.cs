@@ -4,6 +4,7 @@ using BallBuddies.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BallBuddies.Data.Migrations
 {
     [DbContext(typeof(BallBuddiesDBContext))]
-    partial class BallBuddiesDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230628102654_ModifiedRoleConfiguration")]
+    partial class ModifiedRoleConfiguration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -176,12 +179,6 @@ namespace BallBuddies.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("RefreshToken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("RefreshTokenExpiryTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -238,16 +235,16 @@ namespace BallBuddies.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "047f24c7-2380-4a70-afc2-23109a02682c",
-                            ConcurrencyStamp = "f7a7a658-4e6c-43ac-8b73-075de9e394a4",
-                            Name = "User",
+                            Id = "b451af24-72df-498d-8102-323de8705011",
+                            ConcurrencyStamp = "1c9df994-78dd-42f6-b0a3-42c656c152bc",
+                            Name = "user",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "e2152862-7b07-4c29-bb2d-3063186e429e",
-                            ConcurrencyStamp = "c25772d8-ed00-4c5f-9714-936a386d05ed",
-                            Name = "Admin",
+                            Id = "1bd00524-2e1a-4214-8f63-f4115a7b2c0b",
+                            ConcurrencyStamp = "97a687df-bc10-4767-abbf-b2edf4158d56",
+                            Name = "admin",
                             NormalizedName = "ADMIN"
                         });
                 });

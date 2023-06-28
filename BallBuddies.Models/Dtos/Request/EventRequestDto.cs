@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BallBuddies.Models.Dtos.Request
 {
+    [Serializable]
     public record EventRequestDto
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "The event name is required")]

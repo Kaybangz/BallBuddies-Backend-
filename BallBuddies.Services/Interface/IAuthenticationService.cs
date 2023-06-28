@@ -1,4 +1,5 @@
 ﻿using BallBuddies.Models.Dtos.Request;
+using BallBuddies.Models.Dtos.Response;
 using Microsoft.AspNetCore.Identity;
 
 namespace BallBuddies.Services.Interface
@@ -7,6 +8,6 @@ namespace BallBuddies.Services.Interface
     {
         Task<IdentityResult> RegisterUser(UserRegistrationDto userRegistrationDto);
         Task<bool> ValidateUser(UserAuthenticationDto userAuth);
-        Task<string> CreateToken();
+        Task<TokenDto> CreateToken(bool populateExp);
     }
 }

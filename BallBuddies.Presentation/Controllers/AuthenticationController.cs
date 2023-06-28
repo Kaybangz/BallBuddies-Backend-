@@ -1,13 +1,8 @@
 ﻿using BallBuddies.Models.Dtos.Request;
+using BallBuddies.Services.ActionFilters;
 using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BallBuddies.Presentation.Controllers
 {
@@ -19,8 +14,8 @@ namespace BallBuddies.Presentation.Controllers
 
         public AuthenticationController(IServiceManager service) => _service = service;
 
-        [HttpPost]
-        /*[ServiceFilter(typeof(ValidationFilterAttribute))]*/
+        [HttpPost("register", Name = "Register-User")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> RegisterUser([FromBody] UserRegistrationDto userRegistrationDto)
         {
             var result = await _service.AuthenticationService.RegisterUser(userRegistrationDto);
@@ -36,6 +31,19 @@ namespace BallBuddies.Presentation.Controllers
             }
 
             return StatusCode(201);
+        }
+
+
+        [HttpPost("login", Name = "Login")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> AuthenticateUser([FromBody] UserAuthenticationDto user)
+        {
+            if (!await _service.AuthenticationService.ValidateUser(user))
+                return Unauthorized();
+
+            var tokenDto = await _service.AuthenticationService.CreateToken(populateExp: true);
+
+            return Ok(tokenDto);
         }
     }
 }
