@@ -9,5 +9,6 @@ namespace BallBuddies.Services.Interface
         Task<IdentityResult> RegisterUser(UserRegistrationDto userRegistrationDto);
         Task<bool> ValidateUser(UserAuthenticationDto userAuth);
         Task<TokenDto> CreateToken(bool populateExp);
+        Task<TokenDto> RefreshToken(TokenDto tokenDto);
     }
 }

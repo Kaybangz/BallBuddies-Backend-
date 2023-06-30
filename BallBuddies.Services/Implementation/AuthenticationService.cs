@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using BallBuddies.Models.ConfigurationModels;
 using BallBuddies.Models.Dtos.Request;
 using BallBuddies.Models.Dtos.Response;
 using BallBuddies.Models.Entities;
+using BallBuddies.Models.Exceptions;
 using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +21,7 @@ namespace BallBuddies.Services.Implementation
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
+        private readonly JwtConfiguration _jwtConfiguration;
 
         private User? _user;
 
@@ -31,6 +34,8 @@ namespace BallBuddies.Services.Implementation
             _mapper = mapper;
             _userManager = userManager;
             _configuration = configuration;
+            _jwtConfiguration = new JwtConfiguration();
+            _configuration.Bind(_jwtConfiguration.Section, _jwtConfiguration);
         }
 
         public async Task<TokenDto> CreateToken(bool populateExp)
@@ -41,9 +46,11 @@ namespace BallBuddies.Services.Implementation
 
             var refreshToken = GenerateRefreshToken();
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             _user.RefreshToken = refreshToken;
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
-            if(populateExp)
+            if (populateExp)
                 _user.RefreshTokenExpiryTime = DateTime.Now.AddDays(7);
 
             await _userManager.UpdateAsync(_user);
@@ -52,7 +59,6 @@ namespace BallBuddies.Services.Implementation
 
             return new TokenDto(accessToken, refreshToken);
 
-            /*return new JwtSecurityTokenHandler().WriteToken(tokenOptions);*/
         }
 
         public async Task<IdentityResult> RegisterUser(UserRegistrationDto userRegistrationDto)
@@ -120,8 +126,8 @@ namespace BallBuddies.Services.Implementation
 
             var tokenOptions = new JwtSecurityToken
                 (
-                    issuer: jwtSettings["validIssuer"],
-                    audience: jwtSettings["validAudience"],
+                    issuer: _jwtConfiguration.ValidIssuer,
+                    audience: _jwtConfiguration.ValidAudience,
                     claims: claims,
                     expires: DateTime.Now.AddMinutes(Convert.ToDouble(jwtSettings["expires"])),
                     signingCredentials: signingCredentials
@@ -145,8 +151,9 @@ namespace BallBuddies.Services.Implementation
 
         private ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
         {
-            var jwtSettings = _configuration.GetSection("JwtSettings");
+            /*var jwtSettings = _configuration.GetSection("JwtSettings");*/
 
+#pragma warning disable CS8604 // Possible null reference argument.
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateAudience = true,
@@ -155,9 +162,10 @@ namespace BallBuddies.Services.Implementation
                 IssuerSigningKey = new SymmetricSecurityKey
                 (Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SECRET"))),
                 ValidateLifetime = true,
-                ValidIssuer = jwtSettings["validIssuer"],
-                ValidAudience = jwtSettings["validAudience"]
+                ValidIssuer = _jwtConfiguration.ValidIssuer,
+                ValidAudience = _jwtConfiguration.ValidAudience
             };
+#pragma warning restore CS8604 // Possible null reference argument.
 
             var tokenHandler = new JwtSecurityTokenHandler();
             SecurityToken securityToken;
@@ -173,6 +181,26 @@ namespace BallBuddies.Services.Implementation
             }
 
             return principal;
+        }
+
+        public async Task<TokenDto> RefreshToken(TokenDto tokenDto)
+        {
+            var principal = GetPrincipalFromExpiredToken(tokenDto.AccessToken);
+
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            var user = await _userManager.FindByNameAsync(principal.Identity.Name);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+
+            if (user == null ||
+                user.RefreshToken != tokenDto.RefreshToken ||
+                user.RefreshTokenExpiryTime <= DateTime.Now)
+            {
+                throw new RefreshTokenBadRequest();
+            }
+
+            _user = user;
+
+            return await CreateToken(populateExp: false);
         }
     }
 }

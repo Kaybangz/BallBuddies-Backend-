@@ -30,6 +30,11 @@ namespace BallBuddies
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
+            builder.Services.AddMemoryCache();
+            builder.Services.ConfigureRateLimitingOptions();
+            builder.Services.AddHttpContextAccessor();
+
+
             builder.Services.AddControllers(config =>
             {
                 config.RespectBrowserAcceptHeader = true;

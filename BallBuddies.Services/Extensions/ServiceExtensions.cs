@@ -1,7 +1,9 @@
 ﻿
+using AspNetCoreRateLimit;
 using BallBuddies.Data.Context;
 using BallBuddies.Data.Implementation;
 using BallBuddies.Data.Interface;
+using BallBuddies.Models.ConfigurationModels;
 using BallBuddies.Models.Entities;
 using BallBuddies.Services.Implementation;
 using BallBuddies.Services.Interface;
@@ -50,9 +52,37 @@ namespace BallBuddies.Services.Extensions
             .AddDefaultTokenProviders();
 
 
+        public static void ConfigureRateLimitingOptions(this IServiceCollection services)
+        {
+            var rateLimitRules = new List<RateLimitRule>
+            {
+                new RateLimitRule
+                {
+                    Endpoint = "*",
+                    Limit = 30,
+                    Period = "5m"
+                }
+            };
+
+            services.Configure<IpRateLimitOptions>(opt =>
+            {
+                opt.GeneralRules = rateLimitRules;
+            });
+
+            services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+            services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+            services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+            services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+        }
+
+
         public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
         {
-            var jwtSettings = configuration.GetSection("JwtSettings");
+            /*var jwtSettings = configuration.GetSection("JwtSettings");*/
+            var jwtConfiguration = new JwtConfiguration();
+            configuration.Bind(jwtConfiguration.Section, jwtConfiguration);
+
+
             var secretKey = Environment.GetEnvironmentVariable("SECRET");
 
             services.AddAuthentication(opt =>
@@ -69,8 +99,8 @@ namespace BallBuddies.Services.Extensions
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
 
-                    ValidIssuer = jwtSettings["validIssuer"],
-                    ValidAudience = jwtSettings["validAudience"],
+                    ValidIssuer = jwtConfiguration.ValidIssuer,
+                    ValidAudience = jwtConfiguration.ValidAudience,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
                 };
 #pragma warning restore CS8604 // Possible null reference argument.
