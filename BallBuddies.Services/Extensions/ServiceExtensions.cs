@@ -78,7 +78,6 @@ namespace BallBuddies.Services.Extensions
 
         public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
         {
-            /*var jwtSettings = configuration.GetSection("JwtSettings");*/
             var jwtConfiguration = new JwtConfiguration();
             configuration.Bind(jwtConfiguration.Section, jwtConfiguration);
 
@@ -106,6 +105,10 @@ namespace BallBuddies.Services.Extensions
 #pragma warning restore CS8604 // Possible null reference argument.
             });
         }
+
+        public static void AddJwtConfiguration(this IServiceCollection services,
+            IConfiguration configuration) =>
+            services.Configure<JwtConfiguration>(configuration.GetSection("JwtSettings"));
 
 
 

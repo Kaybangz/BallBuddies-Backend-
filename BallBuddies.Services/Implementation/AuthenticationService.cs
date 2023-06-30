@@ -7,6 +7,7 @@ using BallBuddies.Models.Exceptions;
 using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -20,7 +21,7 @@ namespace BallBuddies.Services.Implementation
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
-        private readonly IConfiguration _configuration;
+        private readonly IOptions<JwtConfiguration> _configuration;
         private readonly JwtConfiguration _jwtConfiguration;
 
         private User? _user;
@@ -28,14 +29,15 @@ namespace BallBuddies.Services.Implementation
         public AuthenticationService(ILoggerManager logger,
             IMapper mapper,
             UserManager<User> userManager,
-            IConfiguration configuration)
+            IOptions<JwtConfiguration> configuration)
         {
             _logger = logger;
             _mapper = mapper;
             _userManager = userManager;
             _configuration = configuration;
-            _jwtConfiguration = new JwtConfiguration();
-            _configuration.Bind(_jwtConfiguration.Section, _jwtConfiguration);
+            _jwtConfiguration = _configuration.Value;
+            /*_jwtConfiguration = new JwtConfiguration();
+            _configuration.Bind(_jwtConfiguration.Section, _jwtConfiguration);*/
         }
 
         public async Task<TokenDto> CreateToken(bool populateExp)
@@ -122,14 +124,12 @@ namespace BallBuddies.Services.Implementation
         private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials,
             List<Claim> claims)
         {
-            var jwtSettings = _configuration.GetSection("JwtSettings");
-
             var tokenOptions = new JwtSecurityToken
                 (
                     issuer: _jwtConfiguration.ValidIssuer,
                     audience: _jwtConfiguration.ValidAudience,
                     claims: claims,
-                    expires: DateTime.Now.AddMinutes(Convert.ToDouble(jwtSettings["expires"])),
+                    expires: DateTime.Now.AddMinutes(Convert.ToDouble(_jwtConfiguration.Expires)),
                     signingCredentials: signingCredentials
                 );
 
@@ -151,7 +151,6 @@ namespace BallBuddies.Services.Implementation
 
         private ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
         {
-            /*var jwtSettings = _configuration.GetSection("JwtSettings");*/
 
 #pragma warning disable CS8604 // Possible null reference argument.
             var tokenValidationParameters = new TokenValidationParameters

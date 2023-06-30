@@ -41,7 +41,7 @@ namespace BallBuddies.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Attendances");
+                    b.ToTable("Attendances", (string)null);
                 });
 
             modelBuilder.Entity("BallBuddies.Models.Entities.Comment", b =>
@@ -70,7 +70,7 @@ namespace BallBuddies.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("BallBuddies.Models.Entities.Event", b =>
@@ -128,7 +128,7 @@ namespace BallBuddies.Data.Migrations
 
                     b.HasIndex("CreatedByUserId");
 
-                    b.ToTable("Events");
+                    b.ToTable("Events", (string)null);
                 });
 
             modelBuilder.Entity("BallBuddies.Models.Entities.User", b =>

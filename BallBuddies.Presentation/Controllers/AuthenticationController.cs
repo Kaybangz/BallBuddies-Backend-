@@ -14,7 +14,7 @@ namespace BallBuddies.Presentation.Controllers
 
         public AuthenticationController(IServiceManager service) => _service = service;
 
-        [HttpPost("register", Name = "Register-User")]
+        [HttpPost("register", Name = "Register")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> RegisterUser([FromBody] UserRegistrationDto userRegistrationDto)
         {

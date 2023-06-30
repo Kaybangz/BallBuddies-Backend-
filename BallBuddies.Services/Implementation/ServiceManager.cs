@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using BallBuddies.Data.Interface;
+using BallBuddies.Models.ConfigurationModels;
 using BallBuddies.Models.Entities;
 using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using System;
+using Microsoft.Extensions.Options;
 
 
 namespace BallBuddies.Services.Implementation
@@ -22,7 +23,7 @@ namespace BallBuddies.Services.Implementation
             ILoggerManager logger,
             IMapper mapper,
             UserManager<User> userManager,
-            IConfiguration configuration)
+            IOptions<JwtConfiguration> configuration)
         {
             _eventService = new Lazy<IEventService>(() => 
             new EventService(unitOfWork, logger, mapper));

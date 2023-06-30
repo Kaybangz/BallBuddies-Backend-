@@ -1,3 +1,4 @@
+using AspNetCoreRateLimit;
 using BallBuddies.Services.ActionFilters;
 using BallBuddies.Services.Extensions;
 using BallBuddies.Services.Interface;
@@ -25,6 +26,7 @@ namespace BallBuddies
             builder.Services.ConfigureLoggerMananger();
             builder.Services.ConfigureIdentity();
             builder.Services.ConfigureJWT(builder.Configuration);
+            builder.Services.AddJwtConfiguration(builder.Configuration);
             builder.Services.ConfigureCors();
             builder.Services.ConfigureIISIntegration();
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -115,6 +117,8 @@ namespace BallBuddies
                 ForwardedHeaders = ForwardedHeaders.All
             });
 
+
+            app.UseIpRateLimiting();
             app.UseCors("CorsPolicy");
 
             app.UseAuthentication();
