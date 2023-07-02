@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BallBuddies.Presentation</name>
+    </assembly>
+    <members>
+        <member name="M:BallBuddies.Presentation.Controllers.EventsController.GetEvents">
+            <summary>
+            Gets the list of all events
+            </summary>
+            <returns>The event list</returns>
+            <response code="200">Returns all the events in the database</response>
+            <response code="401">Returns unauthorized access response</response>
+        </member>
+        <member name="M:BallBuddies.Presentation.Controllers.EventsController.GetEvent(System.Int32)">
+            <summary>
+            Gets an event by ID
+            </summary>
+            <param name="id"></param>
+            <returns>A single event</returns>
+            /// <response code="200">Returns a single event with the Id</response>
+            <response code="401">Returns unauthorized access response</response>
+        </member>
+        <member name="M:BallBuddies.Presentation.Controllers.EventsController.CreateEvent(BallBuddies.Models.Dtos.Request.EventRequestDto)">
+            <summary>
+            Creates a new event
+            </summary>
+            <param name="eventRequest"></param>
+            <returns>A newly created event</returns>
+            <response code="201">Returns the newly created event</response>
+            <response code="400">If the item is null</response>
+            <response code="401">Returns unauthorized access response</response>
+            <response code="422">If the model is invalid</response>
+        </member>
+        <member name="M:BallBuddies.Presentation.Controllers.EventsController.UpdateEvent(System.Int32,BallBuddies.Models.Dtos.Request.EventRequestDto)">
+            <summary>
+            Updates an event
+            </summary>
+            <returns>No content</returns>
+            <response code="404">Returns NotFound error</response>
+            <response code="401">Returns unauthorized access response</response>
+        </member>
+        <member name="M:BallBuddies.Presentation.Controllers.EventsController.DeleteEvent(System.Int32)">
+            <summary>
+            Deletes an event
+            </summary>
+            <returns>No content</returns>
+            <response code="404">Returns NotFound error</response>
+            <response code="401">Returns unauthorized access response</response>
+        </member>
+    </members>
+</doc>

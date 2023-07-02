@@ -8,6 +8,7 @@ namespace BallBuddies.Services.Interface
 {
     public interface IServiceManager
     {
+        IUserService UserService { get; }
         IEventService EventService { get; }
         IAttendanceService AttendanceService { get; }
         ICommentService CommentService { get; }

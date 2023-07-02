@@ -21,7 +21,6 @@ namespace BallBuddies.Services.Extensions
 {
     public static class ServiceExtensions
     {
-
         public static void ConfigureUserManager(this IServiceCollection services) =>
             services.AddScoped<UserManager<User>>();
 

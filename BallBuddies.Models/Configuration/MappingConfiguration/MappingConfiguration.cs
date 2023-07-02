@@ -9,12 +9,10 @@ namespace BallBuddies.Models.Configuration.MappingConfiguration
     {
         public MappingConfiguration()
         {
-            CreateMap<User, UserRegistrationDto>();
-            CreateMap<UserRegistrationDto, User>();
-            CreateMap<Event, EventRequestDto>();
-            CreateMap<EventRequestDto, Event>();
-            CreateMap<Event, EventResponseDto>();
-            CreateMap<EventResponseDto, Event>();
+            CreateMap<User, UserModelResponseDto>().ReverseMap();
+            CreateMap<User, UserRegistrationDto>().ReverseMap();
+            CreateMap<Event, EventRequestDto>().ReverseMap();
+            CreateMap<Event, EventResponseDto>().ReverseMap();
         }
     }
 }

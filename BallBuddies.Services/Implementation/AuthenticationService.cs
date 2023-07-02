@@ -36,8 +36,6 @@ namespace BallBuddies.Services.Implementation
             _userManager = userManager;
             _configuration = configuration;
             _jwtConfiguration = _configuration.Value;
-            /*_jwtConfiguration = new JwtConfiguration();
-            _configuration.Bind(_jwtConfiguration.Section, _jwtConfiguration);*/
         }
 
         public async Task<TokenDto> CreateToken(bool populateExp)

@@ -12,11 +12,12 @@ namespace BallBuddies.Services.Implementation
 {
     public class ServiceManager : IServiceManager
     {
-
+        private readonly Lazy<IUserService> _userService;
         private readonly Lazy<IEventService> _eventService;
         private readonly Lazy<IAttendanceService> _attendanceService;
         private readonly Lazy<ICommentService> _commentService;
         private readonly Lazy<IAuthenticationService> _authenticationService;
+
 
 
         public ServiceManager(IUnitOfWork unitOfWork,
@@ -25,6 +26,10 @@ namespace BallBuddies.Services.Implementation
             UserManager<User> userManager,
             IOptions<JwtConfiguration> configuration)
         {
+
+            _userService = new Lazy<IUserService>(() => 
+            new UserService(unitOfWork, logger, mapper));
+
             _eventService = new Lazy<IEventService>(() => 
             new EventService(unitOfWork, logger, mapper));
 
@@ -38,6 +43,8 @@ namespace BallBuddies.Services.Implementation
             new AuthenticationService(logger, mapper, userManager, configuration));
         }
 
+
+        public IUserService UserService => _userService.Value;
         public IEventService EventService => _eventService.Value;
         public IAttendanceService AttendanceService => _attendanceService.Value;
         public ICommentService CommentService => _commentService.Value;

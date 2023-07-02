@@ -51,15 +51,20 @@ namespace BallBuddies
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
 
-            builder.Services.AddSwaggerGen(c =>
+            builder.Services.AddSwaggerGen(s =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo
+                s.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "BallBuddies_Api",
                     Version = "v1"
                 });
 
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                var xmlFile = $"{typeof(Presentation.AssemblyReference).Assembly.GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                s.IncludeXmlComments(xmlPath);
+
+
+                s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
                     Name = "Authorization",
                     Type = SecuritySchemeType.ApiKey,
@@ -70,7 +75,7 @@ namespace BallBuddies
                     "Enter 'Bearer' [space] and then your token in the text input below. \r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
                 });
 
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                s.AddSecurityRequirement(new OpenApiSecurityRequirement {
                     {
                         new OpenApiSecurityScheme {
                             Reference = new OpenApiReference {
@@ -86,10 +91,6 @@ namespace BallBuddies
 
 
             builder.Services.AddAuthentication();
-
-
-
-
 
             var app = builder.Build();
 
