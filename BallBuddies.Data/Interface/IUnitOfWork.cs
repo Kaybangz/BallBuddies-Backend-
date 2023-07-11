@@ -2,15 +2,15 @@
 
 namespace BallBuddies.Data.Interface
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork
     {
-        IUserAuthentication UserAuthentication { get; }
-        IEventRepo EventRepo { get; }
-        IAttendanceRepo AttendanceRepo { get; }
-        ICommentRepo CommentRepo { get; }
+        IUserRepository User { get; }
+        IEventRepository Event { get; }
+        IAttendanceRepository Attendance { get; }
+        ICommentRepository Comment { get; }
 
 
-        Task SaveChangesAsync();
-        Task DisposeAsync();
+        Task SaveAsync();
+       
     }
 }

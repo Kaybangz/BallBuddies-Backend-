@@ -1,16 +1,13 @@
 ﻿using BallBuddies.Models.Enums;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BallBuddies.Models.Dtos.Request
 {
-    public class EventRequestDto
+    [Serializable]
+    public record EventRequestDto
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "The event name is required")]
         [MaxLength(50, ErrorMessage = "Cannot exceed 50 characters")]
@@ -36,6 +33,8 @@ namespace BallBuddies.Models.Dtos.Request
         public DateTime EventDate { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public SportCategory Category { get; set; }
-        public EventStatus Status { get; set; }
+
+
+        public string CreatedByUserId { get; set; } = null!;
     }
 }

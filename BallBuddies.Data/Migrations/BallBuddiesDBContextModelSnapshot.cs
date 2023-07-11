@@ -52,6 +52,9 @@ namespace BallBuddies.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("EventId")
                         .HasColumnType("int");
 
@@ -124,9 +127,6 @@ namespace BallBuddies.Data.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedByUserId");
@@ -178,6 +178,12 @@ namespace BallBuddies.Data.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RefreshTokenExpiryTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -235,15 +241,15 @@ namespace BallBuddies.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "dbab82b3-1f65-49b8-81fa-80c68a76adb1",
-                            ConcurrencyStamp = "3d8f4002-2a9b-4f7a-8a52-7f3e0b2bd7c2",
+                            Id = "047f24c7-2380-4a70-afc2-23109a02682c",
+                            ConcurrencyStamp = "d2658f9f-f71e-42cb-bf12-f846cc776059",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "a841c6ea-68cb-47a4-8e1a-e19e66ea82e4",
-                            ConcurrencyStamp = "dca3e7d8-23aa-439d-8499-fe23d4088398",
+                            Id = "e2152862-7b07-4c29-bb2d-3063186e429e",
+                            ConcurrencyStamp = "b1ec64bb-b6ae-463c-be71-71306a8c12b4",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
