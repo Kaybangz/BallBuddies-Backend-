@@ -22,27 +22,27 @@ namespace BallBuddies.Services.Implementation
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<User>> GetAllUsersAsync(bool trackChanges)
+        public async Task<IEnumerable<UserModelResponseDto>> GetAllUsersAsync(bool trackChanges)
         {
-            /*var users = await _unitOfWork.User.GetAllUsers(trackChanges);
+            var users = await _unitOfWork.User.GetAllUsers(trackChanges);
 
             var usersDto = _mapper.Map<IEnumerable<UserModelResponseDto>>(users);
 
-            return usersDto;*/
-            throw new Exception();
+            return usersDto;
         }
 
-        public async Task<User> GetUserAsync(string Id, bool trackChanges)
+
+
+        public async Task<UserModelResponseDto> GetUserAsync(string Id, bool trackChanges)
         {
-            /*var user = await _unitOfWork.User.GetUser(Id, trackChanges);
+            var user = await _unitOfWork.User.GetUser(Id, trackChanges);
 
             if (user is null)
                 throw new UserNotFoundException(Id);
 
             var userDto = _mapper.Map<UserModelResponseDto>(user);
 
-            return userDto;*/
-            throw new Exception();
+            return userDto;
         }
     }
 }

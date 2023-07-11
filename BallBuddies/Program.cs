@@ -3,6 +3,7 @@ using BallBuddies.Services.ActionFilters;
 using BallBuddies.Services.Extensions;
 using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using NLog;
 
@@ -37,6 +38,9 @@ namespace BallBuddies
             builder.Services.AddHttpContextAccessor();
 
 
+            builder.Services.Configure<ApiBehaviorOptions>(options => 
+            options.SuppressModelStateInvalidFilter = true
+            ) ;
             builder.Services.AddControllers(config =>
             {
                 config.RespectBrowserAcceptHeader = true;
@@ -56,7 +60,14 @@ namespace BallBuddies
                 s.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "BallBuddies_Api",
-                    Version = "v1"
+                    Version = "v1",
+                    Description = "BallBuddies API by Caleb Okechukwu",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Caleb Okechukwu",
+                        Email = "devcaleb96@gmail.com",
+                        Url = new Uri("https://www.linkedIn.com/in/igcaleb"),
+                    }
                 });
 
                 var xmlFile = $"{typeof(Presentation.AssemblyReference).Assembly.GetName().Name}.xml";
@@ -91,6 +102,7 @@ namespace BallBuddies
 
 
             builder.Services.AddAuthentication();
+
 
             var app = builder.Build();
 

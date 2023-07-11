@@ -6,7 +6,7 @@ namespace BallBuddies.Services.Interface
 {
     public interface IUserService
     {
-        Task<IEnumerable<User>> GetAllUsersAsync(bool trackChanges);
-        Task<User> GetUserAsync(string Id, bool trackChanges);
+        Task<IEnumerable<UserModelResponseDto>> GetAllUsersAsync(bool trackChanges);
+        Task<UserModelResponseDto> GetUserAsync(string Id, bool trackChanges);
     }
 }

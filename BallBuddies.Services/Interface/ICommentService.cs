@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+using BallBuddies.Models.Dtos.Response;
 
 namespace BallBuddies.Services.Interface
 {
     public interface ICommentService
     {
+        Task<IEnumerable<CommentResponseDto>> GetEventCommentsAsync(int eventId, bool trackChanges);
     }
 }

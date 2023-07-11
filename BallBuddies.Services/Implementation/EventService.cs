@@ -37,7 +37,7 @@ namespace BallBuddies.Services.Implementation
 
         public async Task DeleteEventAsync(int eventId, bool trackChanges)
         {
-            var existingEvent = await _unitOfWork.Event.GetEventAsync(eventId, trackChanges);
+            var existingEvent = await _unitOfWork.Event.GetEvent(eventId, trackChanges);
 
             if (existingEvent is null)
                 throw new EventNotFoundException(eventId);
@@ -50,7 +50,7 @@ namespace BallBuddies.Services.Implementation
         public async Task<IEnumerable<EventResponseDto>> GetAllEventsAsync(bool trackChanges)
         {
             
-                var events = await _unitOfWork.Event.GetAllEventsAsync(trackChanges);
+                var events = await _unitOfWork.Event.GetAllEvents(trackChanges);
 
                 var eventsDto = _mapper.Map<IEnumerable<EventResponseDto>>(events);
 
@@ -60,12 +60,12 @@ namespace BallBuddies.Services.Implementation
         public async Task<EventResponseDto> GetEventAsync(int eventId, 
             bool trackChanges)
         {
-            var myEvent = await _unitOfWork.Event.GetEventAsync(eventId, trackChanges);
+            var eventExists = await CheckIfEventExists(eventId, trackChanges);
 
-            if (myEvent is null)
+            if (eventExists is null)
                 throw new EventNotFoundException(eventId);
 
-            var eventDto = _mapper.Map<EventResponseDto>(myEvent);
+            var eventDto = _mapper.Map<EventResponseDto>(eventExists);
 
             return eventDto;
         }
@@ -74,7 +74,7 @@ namespace BallBuddies.Services.Implementation
             EventRequestDto eventRequest, 
             bool trackChanges)
         {
-            var existingEvent = await _unitOfWork.Event.GetEventAsync(eventId, trackChanges);
+            var existingEvent = await _unitOfWork.Event.GetEvent(eventId, trackChanges);
 
             if(existingEvent is null)
                 throw new EventNotFoundException(eventId);
@@ -84,6 +84,17 @@ namespace BallBuddies.Services.Implementation
             _unitOfWork.Event.UpdateEvent(updatedEvent);
 
             await _unitOfWork.SaveAsync();
+        }
+
+
+        private async Task<Event> CheckIfEventExists(int eventId, bool trackChanges)
+        {
+            var eventEntity = await _unitOfWork.Event.GetEvent(eventId, trackChanges);
+
+            if(eventEntity is null)
+                throw new EventNotFoundException(eventId);
+
+            return eventEntity;
         }
     }
 }

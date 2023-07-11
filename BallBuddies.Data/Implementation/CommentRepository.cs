@@ -1,11 +1,7 @@
 ﻿using BallBuddies.Data.Context;
 using BallBuddies.Data.Interface;
 using BallBuddies.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace BallBuddies.Data.Implementation
 {
@@ -13,5 +9,10 @@ namespace BallBuddies.Data.Implementation
     {
         public CommentRepository(BallBuddiesDBContext dbContext): base(dbContext)
         {}
+
+        public async Task<IEnumerable<Comment>> GetAllEventComments(int eventId, bool trackChanges) => 
+            await FindByCondition(c => c.EventId.Equals(eventId), trackChanges)
+            .OrderBy(c => c.CreatedAt)
+            .ToListAsync();
     }
 }

@@ -8,5 +8,20 @@ namespace BallBuddies.Data.Implementation
     {
         public AttendanceRepository(BallBuddiesDBContext dbContext): base(dbContext)
         {}
+
+        public void AddAttendance()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Attendance> GetAttendances(bool trackChanges)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveAttendance()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

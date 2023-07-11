@@ -1,13 +1,11 @@
 ﻿using BallBuddies.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BallBuddies.Data.Interface
 {
     public interface IAttendanceRepository
     {
+        IEnumerable<Attendance> GetAttendances(bool trackChanges);
+        void AddAttendance();
+        void RemoveAttendance();
     }
 }

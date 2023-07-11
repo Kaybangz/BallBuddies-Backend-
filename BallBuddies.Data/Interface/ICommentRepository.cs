@@ -1,13 +1,12 @@
-﻿using BallBuddies.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+using BallBuddies.Models.Entities;
 
 namespace BallBuddies.Data.Interface
 {
     public interface ICommentRepository
     {
+        Task<IEnumerable<Comment>> GetAllEventComments(int eventId, bool trackChanges);
+        /*Task CreateCommentForEvent(Comment comment);*/
     }
 }

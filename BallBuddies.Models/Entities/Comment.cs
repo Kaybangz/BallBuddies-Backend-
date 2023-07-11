@@ -12,6 +12,8 @@ namespace BallBuddies.Models.Entities
         [MaxLength(300, ErrorMessage = "Comment cannot exceed 300 characters")]
         public string Text { get; set; } = null!;
 
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+
 
         [ForeignKey("User")]
         public string UserId { get; set; } = null!;

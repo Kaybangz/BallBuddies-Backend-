@@ -4,6 +4,7 @@ using BallBuddies.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BallBuddies.Data.Migrations
 {
     [DbContext(typeof(BallBuddiesDBContext))]
-    partial class BallBuddiesDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230702124826_AddedCreatedAtColumnToCommentsTable")]
+    partial class AddedCreatedAtColumnToCommentsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,14 +244,14 @@ namespace BallBuddies.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "047f24c7-2380-4a70-afc2-23109a02682c",
+                            Id = "e8940db1-4ae5-4031-a39a-7c4784a3fa43",
                             ConcurrencyStamp = "d2658f9f-f71e-42cb-bf12-f846cc776059",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "e2152862-7b07-4c29-bb2d-3063186e429e",
+                            Id = "8042f784-d488-4858-9da8-b455946660c4",
                             ConcurrencyStamp = "b1ec64bb-b6ae-463c-be71-71306a8c12b4",
                             Name = "Admin",
                             NormalizedName = "ADMIN"

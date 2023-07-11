@@ -19,8 +19,9 @@ namespace BallBuddies.Presentation.Controllers
 
 
 
+
         /// <summary>
-        /// Gets the list of all events
+        /// Gets a list of all events
         /// </summary>
         /// <returns>The event list</returns>
         /// <response code="200">Returns all the events in the database</response>
@@ -37,6 +38,9 @@ namespace BallBuddies.Presentation.Controllers
             return Ok(events);
 
         }
+
+
+
 
 
         /// <summary>
@@ -57,6 +61,8 @@ namespace BallBuddies.Presentation.Controllers
 
             return Ok(myEvent);
         }
+
+
 
 
 
@@ -84,10 +90,12 @@ namespace BallBuddies.Presentation.Controllers
 
             var createdEvent =  await _service.EventService.CreateEventAsync(eventRequest);
 
-            return CreatedAtRoute("EventById", new { id = createdEvent.Id },
+            return CreatedAtRoute("GetSingleEvent", new { id = createdEvent.Id },
                 createdEvent);
 
         }
+
+
 
 
 
@@ -132,8 +140,8 @@ namespace BallBuddies.Presentation.Controllers
         {
             await _service.EventService.DeleteEventAsync(Id, trackChanges: false);
 
-            /*return NoContent();*/
-            return Ok("Deleted successfully");
+            return NoContent();
+
         }
     }
 }

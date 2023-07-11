@@ -4,9 +4,33 @@
         <name>BallBuddies.Presentation</name>
     </assembly>
     <members>
+        <member name="M:BallBuddies.Presentation.Controllers.AuthenticationController.RegisterUser(BallBuddies.Models.Dtos.Request.UserRegistrationDto)">
+            <summary>
+            Registers a new user
+            </summary>
+            <returns>New user registered</returns>
+            <response code="200">Returns Registration successful</response>
+            <response code="422">Returns password required </response>
+            <response code="400">Returns duplicate username</response>
+        </member>
+        <member name="M:BallBuddies.Presentation.Controllers.AuthenticationController.AuthenticateUser(BallBuddies.Models.Dtos.Request.UserAuthenticationDto)">
+            <summary>
+            Logs in a user
+            </summary>
+            <returns>A generated access token and refresh token</returns>
+            <response code="200">Returns Login successful</response>
+            <response code="401">Returns unauthorized access</response>
+        </member>
+        <member name="M:BallBuddies.Presentation.Controllers.CommentsController.GetAllEventComments(System.Int32)">
+            <summary>
+            Gets all comments for an event
+            </summary>
+            <returns>A list of event comments</returns>
+            <response code="200">Returns a list of event comments</response>
+        </member>
         <member name="M:BallBuddies.Presentation.Controllers.EventsController.GetEvents">
             <summary>
-            Gets the list of all events
+            Gets a list of all events
             </summary>
             <returns>The event list</returns>
             <response code="200">Returns all the events in the database</response>
@@ -46,6 +70,30 @@
             </summary>
             <returns>No content</returns>
             <response code="404">Returns NotFound error</response>
+            <response code="401">Returns unauthorized access response</response>
+        </member>
+        <member name="M:BallBuddies.Presentation.Controllers.TokenController.Refresh(BallBuddies.Models.Dtos.Response.TokenDto)">
+            <summary>
+            Validates access token and refresh token
+            </summary>
+            <returns>The access token and refresh token</returns>
+            <response code="200">Returns the access token and refresh token</response>
+            <response code="500">Returns invalid client request</response>
+        </member>
+        <member name="M:BallBuddies.Presentation.Controllers.UsersController.GetUsers">
+            <summary>
+            Gets a list of all users
+            </summary>
+            <returns>The user list</returns>
+            <response code="200">Returns all the users in the database</response>
+            <response code="401">Returns unauthorized access response</response>
+        </member>
+        <member name="M:BallBuddies.Presentation.Controllers.UsersController.GetUser(System.String)">
+            <summary>
+            Gets a user by Id
+            </summary>
+            <returns>A single user</returns>
+            <response code="200">Returns a single user from the database</response>
             <response code="401">Returns unauthorized access response</response>
         </member>
     </members>
