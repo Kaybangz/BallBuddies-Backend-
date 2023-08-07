@@ -10,6 +10,7 @@ namespace BallBuddies.Models.Configuration.MappingConfiguration
         public MappingConfiguration()
         {
             CreateMap<User, UserModelResponseDto>().ReverseMap();
+            CreateMap<User, UserModelRequestDto>().ReverseMap();
             CreateMap<User, UserRegistrationDto>().ReverseMap();
             CreateMap<Event, EventRequestDto>().ReverseMap();
             CreateMap<Event, EventResponseDto>().ReverseMap();

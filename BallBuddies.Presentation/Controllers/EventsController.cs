@@ -41,8 +41,6 @@ namespace BallBuddies.Presentation.Controllers
 
 
 
-
-
         /// <summary>
         /// Gets an event by ID
         /// </summary>
@@ -61,7 +59,6 @@ namespace BallBuddies.Presentation.Controllers
 
             return Ok(myEvent);
         }
-
 
 
 
@@ -97,31 +94,29 @@ namespace BallBuddies.Presentation.Controllers
 
 
 
-
-
         /// <summary>
         /// Updates an event
         /// </summary>
         /// <returns>No content</returns>
         /// <response code="404">Returns NotFound error</response>
         /// <response code="401">Returns unauthorized access response</response>
-        [HttpPut("{id:int}", Name = "UpdateEvent")]
+        /// <response code="200">Returns success message</response>
+        [HttpPut("{id}", Name = "UpdateEvent")]
+        [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(401)]
         /*[Authorize(Roles = "Admin")]
         [Authorize(Roles = "User")]*/
-        public async Task<IActionResult> UpdateEvent(int Id,
-            [FromBody] EventRequestDto eventRequest)
+        public async Task<IActionResult> UpdateEvent(int id,
+            [FromBody] EventUpdateRequestDto eventUpdateRequest)
         {
-            if (eventRequest is null)
+            if (eventUpdateRequest is null)
                 return BadRequest("EventRequestDto object is null...");
 
-            await _service.EventService.UpdateEventAsync(Id, eventRequest, trackChanges: true);
+            await _service.EventService.UpdateEventAsync(id, eventUpdateRequest, trackChanges: true);
 
-            return Ok("Event Updated!");
+            return NoContent();
         }
-
-
 
 
 
@@ -131,14 +126,16 @@ namespace BallBuddies.Presentation.Controllers
         /// <returns>No content</returns>
         /// <response code="404">Returns NotFound error</response>
         /// <response code="401">Returns unauthorized access response</response>
-        [HttpDelete("{id:int}", Name = "DeleteEvent")]
+        /// <response code="200">Returns success response</response>
+        [HttpDelete("{id}", Name = "DeleteEvent")]
         [ProducesResponseType(404)]
         [ProducesResponseType(401)]
+        [ProducesResponseType(200)]
         /*[Authorize(Roles = "Admin")]
         [Authorize(Roles = "User")]*/
-        public async Task<IActionResult> DeleteEvent(int Id)
+        public async Task<IActionResult> DeleteEvent(int id)
         {
-            await _service.EventService.DeleteEventAsync(Id, trackChanges: false);
+            await _service.EventService.DeleteEventAsync(id, trackChanges: false);
 
             return NoContent();
 

@@ -11,10 +11,7 @@ namespace BallBuddies.Data.Implementation
         public UserRepository(BallBuddiesDBContext dbContext): base(dbContext)
         {}
 
-        public void DeleteUser(User user)
-        {
-            throw new NotImplementedException();
-        }
+        public void DeleteUser(User user) => Delete(user);
 
 #pragma warning disable CS8603 // Possible null reference return.
         public async Task<User> GetUser(string userId, bool trackChanges) =>
@@ -27,9 +24,11 @@ namespace BallBuddies.Data.Implementation
             .OrderBy(u => u.UserName)
             .ToListAsync();
 
-        public void UpdateUser(User user)
+        public void UpdateUser(User user) => Update(user);
+
+        /*public void UpdateUser(string eventId, User user)
         {
-            throw new NotImplementedException();
-        }
+            throw new NotImplementedException();   
+        }*/
     }
 }

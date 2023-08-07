@@ -5,6 +5,8 @@ using BallBuddies.Models.Dtos.Response;
 using BallBuddies.Models.Entities;
 using BallBuddies.Models.Exceptions;
 using BallBuddies.Services.Interface;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace BallBuddies.Services.Implementation
 {
@@ -13,14 +15,18 @@ namespace BallBuddies.Services.Implementation
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
+        /*private readonly IHttpContextAccessor _httpContextAccessor;*/
 
         public EventService(IUnitOfWork unitOfWork,
             ILoggerManager logger,
-            IMapper mapper)
+            IMapper mapper
+           /*IHttpContextAccessor httpContextAccessor*/
+            )
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _mapper = mapper;
+            /*_httpContextAccessor = httpContextAccessor;*/
         }
 
         public async Task<EventResponseDto> CreateEventAsync(EventRequestDto eventRequest)
@@ -37,7 +43,10 @@ namespace BallBuddies.Services.Implementation
 
         public async Task DeleteEventAsync(int eventId, bool trackChanges)
         {
+            /*var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;*/
+
             var existingEvent = await _unitOfWork.Event.GetEvent(eventId, trackChanges);
+            
 
             if (existingEvent is null)
                 throw new EventNotFoundException(eventId);
@@ -71,7 +80,7 @@ namespace BallBuddies.Services.Implementation
         }
 
         public async Task UpdateEventAsync(int eventId, 
-            EventRequestDto eventRequest, 
+            EventUpdateRequestDto eventUpdateRequest, 
             bool trackChanges)
         {
             var existingEvent = await _unitOfWork.Event.GetEvent(eventId, trackChanges);
@@ -79,12 +88,13 @@ namespace BallBuddies.Services.Implementation
             if(existingEvent is null)
                 throw new EventNotFoundException(eventId);
 
-            var updatedEvent = _mapper.Map(eventRequest, existingEvent);
+            var updatedEvent = _mapper.Map(eventUpdateRequest, existingEvent);
 
             _unitOfWork.Event.UpdateEvent(updatedEvent);
 
             await _unitOfWork.SaveAsync();
         }
+
 
 
         private async Task<Event> CheckIfEventExists(int eventId, bool trackChanges)

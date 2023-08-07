@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BallBuddies.Data.Interface;
+using BallBuddies.Models.Dtos.Request;
 using BallBuddies.Models.Dtos.Response;
 using BallBuddies.Models.Entities;
 using BallBuddies.Models.Exceptions;
@@ -22,6 +23,18 @@ namespace BallBuddies.Services.Implementation
             _mapper = mapper;
         }
 
+        public async Task DeleteUserAsync(string userId, bool trackChanges)
+        {
+            var existingUser = await _unitOfWork.User.GetUser(userId, trackChanges);
+
+            if (existingUser != null)
+                throw new UserNotFoundException(userId);
+
+            _unitOfWork.User.DeleteUser(existingUser);
+
+            await _unitOfWork.SaveAsync();
+        }
+
         public async Task<IEnumerable<UserModelResponseDto>> GetAllUsersAsync(bool trackChanges)
         {
             var users = await _unitOfWork.User.GetAllUsers(trackChanges);
@@ -33,16 +46,32 @@ namespace BallBuddies.Services.Implementation
 
 
 
-        public async Task<UserModelResponseDto> GetUserAsync(string Id, bool trackChanges)
+        public async Task<UserModelResponseDto> GetUserAsync(string userId, bool trackChanges)
         {
-            var user = await _unitOfWork.User.GetUser(Id, trackChanges);
+            var user = await _unitOfWork.User.GetUser(userId, trackChanges);
 
             if (user is null)
-                throw new UserNotFoundException(Id);
+                throw new UserNotFoundException(userId);
 
             var userDto = _mapper.Map<UserModelResponseDto>(user);
 
             return userDto;
+        }
+
+        public async Task UpdateUserAsync(string userId,
+            UserModelRequestDto userModelRequestDto,
+            bool trackChanges)
+        {
+            var existingUser = await _unitOfWork.User.GetUser(userId, trackChanges);
+
+            if(existingUser is null)
+                throw new UserNotFoundException(userId);
+
+            var updatedUser = _mapper.Map(userModelRequestDto, existingUser);
+
+            _unitOfWork.User.UpdateUser(updatedUser);
+
+            await _unitOfWork.SaveAsync();
         }
     }
 }

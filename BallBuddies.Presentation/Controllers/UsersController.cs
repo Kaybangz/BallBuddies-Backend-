@@ -1,4 +1,6 @@
-﻿using BallBuddies.Services.Interface;
+﻿using BallBuddies.Models.Dtos.Request;
+using BallBuddies.Models.Dtos.Response;
+using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,14 +42,34 @@ namespace BallBuddies.Presentation.Controllers
         /// <returns>A single user</returns>
         /// <response code="200">Returns a single user from the database</response>
         /// <response code="401">Returns unauthorized access response</response>
-        [HttpGet("{id:Guid}", Name = "GetSingleUser")]
+        [HttpGet("{id}", Name = "GetSingleUser")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
-        public async Task<IActionResult> GetUser(string Id)
+        public async Task<IActionResult> GetUser(string id)
         {
-            var user = await _service.UserService.GetUserAsync(Id, trackChanges: false);
+            var user = await _service.UserService.GetUserAsync(id, trackChanges: false);
 
             return Ok(user);
+        }
+
+        /// <summary>
+        /// Updates a user
+        /// </summary>
+        /// <returns>Updates a single user</returns>
+        /// <response code="200">Updates a single user in the database</response>
+        /// <response code="401">Returns unauthorized access response</response>
+        [HttpPut("{id}", Name = "UpdateUser")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        public async Task<ActionResult<UserModelResponseDto>> UpdateUser(string id,
+            [FromBody] UserModelRequestDto userModelRequestDto)
+        {
+            if (userModelRequestDto == null)
+                return BadRequest("UserModelRequestDto object is null...");
+
+            await _service.UserService.UpdateUserAsync(id, userModelRequestDto, trackChanges: true);
+
+            return NoContent();
         }
     }
 }

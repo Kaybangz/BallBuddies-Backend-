@@ -56,13 +56,14 @@
             <response code="401">Returns unauthorized access response</response>
             <response code="422">If the model is invalid</response>
         </member>
-        <member name="M:BallBuddies.Presentation.Controllers.EventsController.UpdateEvent(System.Int32,BallBuddies.Models.Dtos.Request.EventRequestDto)">
+        <member name="M:BallBuddies.Presentation.Controllers.EventsController.UpdateEvent(System.Int32,BallBuddies.Models.Dtos.Request.EventUpdateRequestDto)">
             <summary>
             Updates an event
             </summary>
             <returns>No content</returns>
             <response code="404">Returns NotFound error</response>
             <response code="401">Returns unauthorized access response</response>
+            <response code="200">Returns success message</response>
         </member>
         <member name="M:BallBuddies.Presentation.Controllers.EventsController.DeleteEvent(System.Int32)">
             <summary>
@@ -71,6 +72,7 @@
             <returns>No content</returns>
             <response code="404">Returns NotFound error</response>
             <response code="401">Returns unauthorized access response</response>
+            <response code="200">Returns success response</response>
         </member>
         <member name="M:BallBuddies.Presentation.Controllers.TokenController.Refresh(BallBuddies.Models.Dtos.Response.TokenDto)">
             <summary>
@@ -94,6 +96,14 @@
             </summary>
             <returns>A single user</returns>
             <response code="200">Returns a single user from the database</response>
+            <response code="401">Returns unauthorized access response</response>
+        </member>
+        <member name="M:BallBuddies.Presentation.Controllers.UsersController.UpdateUser(System.String,BallBuddies.Models.Dtos.Request.UserModelRequestDto)">
+            <summary>
+            Updates a user
+            </summary>
+            <returns>Updates a single user</returns>
+            <response code="200">Updates a single user in the database</response>
             <response code="401">Returns unauthorized access response</response>
         </member>
     </members>
