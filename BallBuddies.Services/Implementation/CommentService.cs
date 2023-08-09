@@ -22,14 +22,14 @@ namespace BallBuddies.Services.Implementation
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<CommentResponseDto>> GetEventCommentsAsync(int eventId, bool trackChanges)
+        public async Task<IEnumerable<CommentResponseDto>> GetCommentsAsync(int eventId, bool trackChanges)
         {
             var currentEvent = await _unitOfWork.Event.GetEvent(eventId, trackChanges);
 
             if (currentEvent is null)
                 throw new EventNotFoundException(eventId);
 
-            var commentsFromDb = await _unitOfWork.Comment.GetAllEventComments(eventId, trackChanges);
+            var commentsFromDb = await _unitOfWork.Comment.GetComments(eventId, trackChanges);
 
             var commentsDto = _mapper.Map<IEnumerable<CommentResponseDto>>(commentsFromDb);
 

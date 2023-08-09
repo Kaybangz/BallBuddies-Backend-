@@ -71,5 +71,24 @@ namespace BallBuddies.Presentation.Controllers
 
             return NoContent();
         }
+
+
+
+
+        /// <summary>
+        /// Deletes a user
+        /// </summary>
+        /// <returns>Deletes a single user</returns>
+        /// <response code="200">Deletes a single user from the database</response>
+        /// <response code="401">Returns unauthorized access response</response>
+        /*[HttpDelete("{id}", Name = "DeleteUser")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            await _service.UserService.DeleteUserAsync(id, trackChanges: false);
+
+            return NoContent();
+        }*/
     }
 }

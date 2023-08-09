@@ -23,7 +23,7 @@ namespace BallBuddies.Presentation.Controllers
         [ProducesResponseType(200)]
         public async Task<IActionResult> GetAllEventComments(int eventId)
         {
-            var comments = await _service.CommentService.GetEventCommentsAsync(eventId, trackChanges: false);
+            var comments = await _service.CommentService.GetCommentsAsync(eventId, trackChanges: false);
 
             return Ok(comments);
         }

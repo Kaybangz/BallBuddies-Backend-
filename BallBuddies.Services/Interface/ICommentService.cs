@@ -6,6 +6,6 @@ namespace BallBuddies.Services.Interface
 {
     public interface ICommentService
     {
-        Task<IEnumerable<CommentResponseDto>> GetEventCommentsAsync(int eventId, bool trackChanges);
+        Task<IEnumerable<CommentResponseDto>> GetCommentsAsync(int eventId, bool trackChanges);
     }
 }
