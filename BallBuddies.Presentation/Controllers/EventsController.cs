@@ -83,7 +83,7 @@ namespace BallBuddies.Presentation.Controllers
         public async Task<IActionResult> CreateEvent([FromBody] EventRequestDto eventRequest)
         {
             if (eventRequest == null)
-                return BadRequest("EventRequestDto object is null");
+                return BadRequest("Event request dto is null.");
 
             var createdEvent =  await _service.EventService.CreateEventAsync(eventRequest);
 
@@ -111,7 +111,7 @@ namespace BallBuddies.Presentation.Controllers
             [FromBody] EventUpdateRequestDto eventUpdateRequest)
         {
             if (eventUpdateRequest is null)
-                return BadRequest("EventRequestDto object is null...");
+                return BadRequest("Event request dto is null.");
 
             await _service.EventService.UpdateEventAsync(id, eventUpdateRequest, trackChanges: true);
 

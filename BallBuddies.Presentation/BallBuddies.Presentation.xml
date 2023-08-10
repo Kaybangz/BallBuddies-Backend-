@@ -35,6 +35,14 @@
             <returns>A single event comment</returns>
             <response code="200">Returns a single event comment</response>
         </member>
+        <member name="M:BallBuddies.Presentation.Controllers.CommentsController.CreateCommentForEvent(System.Int32,BallBuddies.Models.Dtos.Request.CommentRequestDto)">
+            <summary>
+            Create comment for an event
+            </summary>
+            <returns>A created comment</returns>
+            <response code="200">Returns a created event comment</response>
+            <response code="400">Returns comment request dto is null</response> 
+        </member>
         <member name="M:BallBuddies.Presentation.Controllers.EventsController.GetEvents">
             <summary>
             Gets a list of all events

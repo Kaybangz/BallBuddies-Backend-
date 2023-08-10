@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using BallBuddies.Data.Interface;
+using BallBuddies.Models.Dtos.Request;
 using BallBuddies.Models.Dtos.Response;
+using BallBuddies.Models.Entities;
 using BallBuddies.Models.Exceptions;
 using BallBuddies.Services.Interface;
 using System.Threading.Tasks;
@@ -22,6 +24,24 @@ namespace BallBuddies.Services.Implementation
             _mapper = mapper;
         }
 
+        public async Task<CommentResponseDto> CreateCommentForEventAsync(int eventId, CommentRequestDto commentRequestDto, bool trackChanges)
+        {
+            var currentEvent = await _unitOfWork.Event.GetEvent(eventId, trackChanges);
+
+            if (currentEvent is null)
+                throw new EventNotFoundException(eventId);
+
+            var commentEntity = _mapper.Map<Comment>(commentRequestDto);
+
+            _unitOfWork.Comment.CreateCommentForEvent(eventId, commentEntity);
+
+            await _unitOfWork.SaveAsync();
+
+            var commentToReturn = _mapper.Map<CommentResponseDto>(commentEntity);
+
+            return commentToReturn;
+        }
+
         public async Task<CommentResponseDto> GetCommentAsync(int eventId, int commentId, bool trackChanges)
         {
             var currentEvent = await _unitOfWork.Event.GetEvent(eventId, trackChanges);
@@ -29,12 +49,12 @@ namespace BallBuddies.Services.Implementation
             if (currentEvent is null)
                 throw new EventNotFoundException(eventId);
 
-            var commentDb = _unitOfWork.Comment.GetComment(eventId, commentId, trackChanges);
+            var commentFromDb = _unitOfWork.Comment.GetComment(eventId, commentId, trackChanges);
 
-            if(commentDb is null)
+            if(commentFromDb is null)
                 throw new CommentNotFoundException(commentId);
 
-            var comment = _mapper.Map<CommentResponseDto>(commentDb);
+            var comment = _mapper.Map<CommentResponseDto>(commentFromDb);
 
             return comment;
         }

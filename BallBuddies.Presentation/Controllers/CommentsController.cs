@@ -1,4 +1,5 @@
-﻿using BallBuddies.Services.Interface;
+﻿using BallBuddies.Models.Dtos.Request;
+using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BallBuddies.Presentation.Controllers
@@ -19,7 +20,7 @@ namespace BallBuddies.Presentation.Controllers
         /// </summary>
         /// <returns>A list of event comments</returns>
         /// <response code="200">Returns a list of event comments</response>
-        [HttpGet(Name = "Comments")]
+        [HttpGet(Name = "GetAllEventComments")]
         [ProducesResponseType(200)]
         public async Task<IActionResult> GetAllEventComments(int eventId)
         {
@@ -34,7 +35,7 @@ namespace BallBuddies.Presentation.Controllers
         /// </summary>
         /// <returns>A single event comment</returns>
         /// <response code="200">Returns a single event comment</response>
-        [HttpGet("{id:int}", Name = "Comment")]
+        [HttpGet("{id:int}", Name = "GetSingleEventComment")]
         [ProducesResponseType(200)]
         public async Task<IActionResult> GetEventComment(int eventId, int id)
         {
@@ -42,5 +43,32 @@ namespace BallBuddies.Presentation.Controllers
 
             return Ok(comment);
         }
+
+        /// <summary>
+        /// Create comment for an event
+        /// </summary>
+        /// <returns>A created comment</returns>
+        /// <response code="200">Returns a created event comment</response>
+        /// <response code="400">Returns comment request dto is null</response> 
+        [HttpPost(Name = "New comment")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> CreateCommentForEvent(int eventId,
+            [FromBody] CommentRequestDto commentRequest)
+        {
+            if (commentRequest is null)
+                return BadRequest("Comment request dto is null");
+
+            var commentToReturn = await _service.CommentService.CreateCommentForEventAsync(eventId,
+                commentRequest,
+                trackChanges: false);
+
+            return CreatedAtRoute("GetSingleEventComment", new
+            {
+                eventId,
+                id = commentToReturn.Id
+            }, commentToReturn);
+        }
+
     }
 }
