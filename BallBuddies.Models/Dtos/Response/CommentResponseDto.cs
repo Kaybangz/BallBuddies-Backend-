@@ -3,6 +3,7 @@
     public record CommentResponseDto(
         int Id,
         string Text,
-        DateTime CreatedAt
+        DateTime CreatedAt,
+        string userId
         );
 }

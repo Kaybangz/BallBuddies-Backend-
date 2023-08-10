@@ -28,6 +28,13 @@
             <returns>A list of event comments</returns>
             <response code="200">Returns a list of event comments</response>
         </member>
+        <member name="M:BallBuddies.Presentation.Controllers.CommentsController.GetEventComment(System.Int32,System.Int32)">
+            <summary>
+            Gets single comment for an event
+            </summary>
+            <returns>A single event comment</returns>
+            <response code="200">Returns a single event comment</response>
+        </member>
         <member name="M:BallBuddies.Presentation.Controllers.EventsController.GetEvents">
             <summary>
             Gets a list of all events

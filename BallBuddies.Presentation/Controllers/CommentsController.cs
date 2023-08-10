@@ -27,5 +27,20 @@ namespace BallBuddies.Presentation.Controllers
 
             return Ok(comments);
         }
+
+
+        /// <summary>
+        /// Gets single comment for an event
+        /// </summary>
+        /// <returns>A single event comment</returns>
+        /// <response code="200">Returns a single event comment</response>
+        [HttpGet("{id:int}", Name = "Comment")]
+        [ProducesResponseType(200)]
+        public async Task<IActionResult> GetEventComment(int eventId, int id)
+        {
+            var comment = await _service.CommentService.GetCommentAsync(eventId, id, trackChanges: false);
+
+            return Ok(comment);
+        }
     }
 }

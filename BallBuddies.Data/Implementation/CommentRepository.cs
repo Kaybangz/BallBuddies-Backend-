@@ -10,9 +10,10 @@ namespace BallBuddies.Data.Implementation
         public CommentRepository(BallBuddiesDBContext dbContext): base(dbContext)
         {}
 
-        public Task CreateCommentForEvent(int eventId, Comment comment)
+        public async Task CreateCommentForEvent(int eventId, Comment comment)
         {
-            throw new NotImplementedException();
+            comment.EventId = eventId;
+            Create(comment);
         }
 
         public Task DeleteCommentForEvent(int eventId, int commentId)
@@ -25,14 +26,8 @@ namespace BallBuddies.Data.Implementation
             .OrderBy(c => c.CreatedAt)
             .ToListAsync();
 
-        public Task<Comment> GetComment(int eventId, int commentId, bool trackChanges)
-        {
-            throw new NotImplementedException();
-        }
-
-        /*public Task<IEnumerable<Comment>> GetComments(int eventId, bool trackChanges)
-        {
-            throw new NotImplementedException();
-        }*/
+        public async Task<Comment> GetComment(int eventId, int commentId, bool trackChanges) =>
+            await FindByCondition(c => c.EventId.Equals(eventId) && c.Id.Equals(commentId), trackChanges)
+            .SingleOrDefaultAsync();
     }
 }
