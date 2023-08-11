@@ -43,6 +43,13 @@
             <response code="200">Returns a created event comment</response>
             <response code="400">Returns comment request dto is null</response> 
         </member>
+        <member name="M:BallBuddies.Presentation.Controllers.CommentsController.DeleteCommentForEvent(System.Int32,System.Int32)">
+            <summary>
+            Delete comment for an event
+            </summary>
+            <returns>Returns no content</returns>
+            <response code="200">Returns no content</response>
+        </member>
         <member name="M:BallBuddies.Presentation.Controllers.EventsController.GetEvents">
             <summary>
             Gets a list of all events

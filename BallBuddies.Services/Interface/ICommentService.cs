@@ -14,5 +14,7 @@ namespace BallBuddies.Services.Interface
         Task<CommentResponseDto> CreateCommentForEventAsync(int eventId,
             CommentRequestDto commentRequestDto,
             bool trackChanges);
+
+        Task DeleteCommentForEvent(int eventId, int commentId, bool trackChanges);
     }
 }

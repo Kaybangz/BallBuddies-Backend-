@@ -16,10 +16,8 @@ namespace BallBuddies.Data.Implementation
             Create(comment);
         }
 
-        public Task DeleteCommentForEvent(int eventId, int commentId)
-        {
-            throw new NotImplementedException();
-        }
+        public void DeleteCommentForEvent(Comment comment) => Delete(comment);
+            
 
         public async Task<IEnumerable<Comment>> GetComments(int eventId, bool trackChanges) => 
             await FindByCondition(c => c.EventId.Equals(eventId), trackChanges)

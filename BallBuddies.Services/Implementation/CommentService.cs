@@ -38,6 +38,17 @@ namespace BallBuddies.Services.Implementation
             return commentToReturn;
         }
 
+        public async Task DeleteCommentForEvent(int eventId, int commentId, bool trackChanges)
+        {
+            await CheckIfEventExist(eventId, trackChanges);
+
+            var commentForEvent = await GetCommentForEventAndCheckIfItExists(eventId, commentId, trackChanges);
+
+            _unitOfWork.Comment.DeleteCommentForEvent(commentForEvent);
+
+            await _unitOfWork.SaveAsync();
+        }
+
         public async Task<CommentResponseDto> GetCommentAsync(int eventId, int commentId, bool trackChanges)
         {
             await CheckIfEventExist(eventId, trackChanges);

@@ -70,5 +70,23 @@ namespace BallBuddies.Presentation.Controllers
             }, commentToReturn);
         }
 
+
+
+        /// <summary>
+        /// Delete comment for an event
+        /// </summary>
+        /// <returns>Returns no content</returns>
+        /// <response code="200">Returns no content</response>
+        /// <response code="500">Returns Event does not exist in the database</response>
+        [HttpDelete("{id:int}", Name = "Delete comment")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> DeleteCommentForEvent(int eventId, int id)
+        {
+            await _service.CommentService.DeleteCommentForEvent(eventId, id, trackChanges: false);
+
+            return NoContent();
+        }
+
     }
 }
