@@ -5,7 +5,6 @@ using BallBuddies.Models.Dtos.Response;
 using BallBuddies.Models.Entities;
 using BallBuddies.Models.Exceptions;
 using BallBuddies.Services.Interface;
-using System.Threading.Tasks;
 
 namespace BallBuddies.Services.Implementation
 {
@@ -26,10 +25,7 @@ namespace BallBuddies.Services.Implementation
 
         public async Task<CommentResponseDto> CreateCommentForEventAsync(int eventId, CommentRequestDto commentRequestDto, bool trackChanges)
         {
-            var currentEvent = await _unitOfWork.Event.GetEvent(eventId, trackChanges);
-
-            if (currentEvent is null)
-                throw new EventNotFoundException(eventId);
+            await CheckIfEventExist(eventId, trackChanges);
 
             var commentEntity = _mapper.Map<Comment>(commentRequestDto);
 
@@ -44,15 +40,10 @@ namespace BallBuddies.Services.Implementation
 
         public async Task<CommentResponseDto> GetCommentAsync(int eventId, int commentId, bool trackChanges)
         {
-            var currentEvent = await _unitOfWork.Event.GetEvent(eventId, trackChanges);
+            await CheckIfEventExist(eventId, trackChanges);
 
-            if (currentEvent is null)
-                throw new EventNotFoundException(eventId);
+            var commentFromDb = await GetCommentForEventAndCheckIfItExists(eventId, commentId, trackChanges);
 
-            var commentFromDb = _unitOfWork.Comment.GetComment(eventId, commentId, trackChanges);
-
-            if(commentFromDb is null)
-                throw new CommentNotFoundException(commentId);
 
             var comment = _mapper.Map<CommentResponseDto>(commentFromDb);
 
@@ -61,16 +52,36 @@ namespace BallBuddies.Services.Implementation
 
         public async Task<IEnumerable<CommentResponseDto>> GetCommentsAsync(int eventId, bool trackChanges)
         {
-            var currentEvent = await _unitOfWork.Event.GetEvent(eventId, trackChanges);
-
-            if (currentEvent is null)
-                throw new EventNotFoundException(eventId);
+            await CheckIfEventExist(eventId, trackChanges);
 
             var commentsFromDb = await _unitOfWork.Comment.GetComments(eventId, trackChanges);
 
             var commentsDto = _mapper.Map<IEnumerable<CommentResponseDto>>(commentsFromDb);
 
             return commentsDto;
+        }
+
+
+        private async Task CheckIfEventExist(int eventId, bool trackChanges)
+        {
+            var existingEvent = await _unitOfWork.Event.GetEvent(eventId, trackChanges);
+
+            if(existingEvent is null)
+                throw new EventNotFoundException(eventId);
+
+        }
+
+
+        private async Task<Comment> GetCommentForEventAndCheckIfItExists(int eventId,
+            int commentId,
+            bool trackChanges)
+        {
+            var commentDb = await _unitOfWork.Comment.GetComment(eventId, commentId, trackChanges);
+
+            if (commentDb is null)
+                throw new CommentNotFoundException(commentId);
+
+            return commentDb;
         }
     }
 }

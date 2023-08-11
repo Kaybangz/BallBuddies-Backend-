@@ -1,4 +1,5 @@
 ﻿using BallBuddies.Models.Dtos.Request;
+using BallBuddies.Services.ActionFilters;
 using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,11 +54,10 @@ namespace BallBuddies.Presentation.Controllers
         [HttpPost(Name = "New comment")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateCommentForEvent(int eventId,
             [FromBody] CommentRequestDto commentRequest)
         {
-            if (commentRequest is null)
-                return BadRequest("Comment request dto is null");
 
             var commentToReturn = await _service.CommentService.CreateCommentForEventAsync(eventId,
                 commentRequest,

@@ -45,11 +45,7 @@ namespace BallBuddies.Services.Implementation
         {
             /*var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;*/
 
-            var existingEvent = await _unitOfWork.Event.GetEvent(eventId, trackChanges);
-            
-
-            if (existingEvent is null)
-                throw new EventNotFoundException(eventId);
+            var existingEvent = await CheckIfEventExists(eventId, trackChanges);
             
             _unitOfWork.Event.DeleteEvent(existingEvent);
 
@@ -69,12 +65,9 @@ namespace BallBuddies.Services.Implementation
         public async Task<EventResponseDto> GetEventAsync(int eventId, 
             bool trackChanges)
         {
-            var eventExists = await CheckIfEventExists(eventId, trackChanges);
+            var existingEvent = await CheckIfEventExists(eventId, trackChanges);
 
-            if (eventExists is null)
-                throw new EventNotFoundException(eventId);
-
-            var eventDto = _mapper.Map<EventResponseDto>(eventExists);
+            var eventDto = _mapper.Map<EventResponseDto>(existingEvent);
 
             return eventDto;
         }
@@ -83,10 +76,7 @@ namespace BallBuddies.Services.Implementation
             EventUpdateRequestDto eventUpdateRequest, 
             bool trackChanges)
         {
-            var existingEvent = await _unitOfWork.Event.GetEvent(eventId, trackChanges);
-
-            if(existingEvent is null)
-                throw new EventNotFoundException(eventId);
+            var existingEvent = await CheckIfEventExists(eventId, trackChanges);
 
             var updatedEvent = _mapper.Map(eventUpdateRequest, existingEvent);
 

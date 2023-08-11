@@ -82,8 +82,6 @@ namespace BallBuddies.Presentation.Controllers
         [Authorize(Roles = "User")]*/
         public async Task<IActionResult> CreateEvent([FromBody] EventRequestDto eventRequest)
         {
-            if (eventRequest == null)
-                return BadRequest("Event request dto is null.");
 
             var createdEvent =  await _service.EventService.CreateEventAsync(eventRequest);
 
@@ -105,13 +103,12 @@ namespace BallBuddies.Presentation.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(401)]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         /*[Authorize(Roles = "Admin")]
         [Authorize(Roles = "User")]*/
         public async Task<IActionResult> UpdateEvent(int id,
             [FromBody] EventUpdateRequestDto eventUpdateRequest)
         {
-            if (eventUpdateRequest is null)
-                return BadRequest("Event request dto is null.");
 
             await _service.EventService.UpdateEventAsync(id, eventUpdateRequest, trackChanges: true);
 

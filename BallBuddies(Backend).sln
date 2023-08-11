@@ -16,7 +16,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BallBuddies.Presentation", "BallBuddies.Presentation\BallBuddies.Presentation.csproj", "{B40FBED3-54F9-46C7-9121-24BA1BA28F84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BallBuddies.Presentation", "BallBuddies.Presentation\BallBuddies.Presentation.csproj", "{B40FBED3-54F9-46C7-9121-24BA1BA28F84}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ActionFilters", "ActionFilters", "{7E1BCFBC-A45F-45F4-8D3C-1E5AAFD2CFEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
