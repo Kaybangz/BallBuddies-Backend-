@@ -33,7 +33,7 @@ namespace BallBuddies.Services.Implementation
 
         }
 
-        public Task DeleteEventAttendanceAsync(string eventId, int attendanceId, bool trackChanges)
+        public Task DeleteEventAttendanceAsync(Guid eventId, Guid attendanceId, bool trackChanges)
         {
             throw new NotImplementedException();
         }

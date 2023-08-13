@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BallBuddies.Data.Migrations
 {
     [DbContext(typeof(BallBuddiesDBContext))]
-    [Migration("20230628110950_AdditionalFieldsForUserEntity")]
-    partial class AdditionalFieldsForUserEntity
+    [Migration("20230813191454_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,8 +31,8 @@ namespace BallBuddies.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -49,14 +49,15 @@ namespace BallBuddies.Data.Migrations
 
             modelBuilder.Entity("BallBuddies.Models.Entities.Comment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Text")
                         .IsRequired()
@@ -78,11 +79,9 @@ namespace BallBuddies.Data.Migrations
 
             modelBuilder.Entity("BallBuddies.Models.Entities.Event", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Category")
                         .HasColumnType("int");
@@ -103,16 +102,14 @@ namespace BallBuddies.Data.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<DateTime>("EventDate")
+                    b.Property<DateTime>("EventEndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EventImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                    b.Property<DateTime>("EventStartDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -123,6 +120,11 @@ namespace BallBuddies.Data.Migrations
                         .HasColumnType("decimal(10,2)");
 
                     b.Property<string>("State")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Venue")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
@@ -241,15 +243,15 @@ namespace BallBuddies.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "047f24c7-2380-4a70-afc2-23109a02682c",
-                            ConcurrencyStamp = "f7a7a658-4e6c-43ac-8b73-075de9e394a4",
+                            Id = "8fb5b53e-6639-4bd3-a7f4-2c26c3653240",
+                            ConcurrencyStamp = "f1d63e42-5372-4763-9e87-c011d07ecb8c",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "e2152862-7b07-4c29-bb2d-3063186e429e",
-                            ConcurrencyStamp = "c25772d8-ed00-4c5f-9714-936a386d05ed",
+                            Id = "c638274d-8310-4376-b273-51ff837e69cc",
+                            ConcurrencyStamp = "45554ad9-8a14-467b-b4cb-71d3d9b92136",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

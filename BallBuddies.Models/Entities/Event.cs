@@ -29,9 +29,8 @@ namespace BallBuddies.Models.Entities
         [Required(AllowEmptyStrings = false, ErrorMessage = "City is required")]
         [MaxLength(150, ErrorMessage = "Cannot exceed 150 characters")]
         public string City { get; set; } = null!;
-        public DateOnly EventDate { get; set; }
-        public TimeOnly StartTime { get; set; }
-        public TimeOnly EndTime { get; set; }
+        public DateTime EventStartDate { get; set; }
+        public DateTime EventEndDate { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public SportCategory Category { get; set; }
 

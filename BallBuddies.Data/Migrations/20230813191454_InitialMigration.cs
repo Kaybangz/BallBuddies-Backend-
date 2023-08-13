@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BallBuddies.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial_Migration : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,6 +33,8 @@ namespace BallBuddies.Data.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     AvatarUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RefreshTokenExpiryTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -163,16 +165,16 @@ namespace BallBuddies.Data.Migrations
                 name: "Events",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
                     Price = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     EventImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Location = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    Venue = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     State = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     City = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    EventDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EventStartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EventEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Category = table.Column<int>(type: "int", nullable: false),
                     CreatedByUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
@@ -194,7 +196,7 @@ namespace BallBuddies.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    EventId = table.Column<int>(type: "int", nullable: false)
+                    EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -217,11 +219,11 @@ namespace BallBuddies.Data.Migrations
                 name: "Comments",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Text = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    EventId = table.Column<int>(type: "int", nullable: false)
+                    EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -245,8 +247,8 @@ namespace BallBuddies.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "53a492de-4937-4dda-b1cb-db12241258ed", "7ff91e25-f2e0-4e89-9698-97c3b21c71f5", "Admin", "ADMIN" },
-                    { "a2c2bb9b-cc9f-4e1b-9907-c23d3b320a8a", "1f26b79f-afce-4a13-bafe-2012204b3e19", "User", "USER" }
+                    { "8fb5b53e-6639-4bd3-a7f4-2c26c3653240", "f1d63e42-5372-4763-9e87-c011d07ecb8c", "User", "USER" },
+                    { "c638274d-8310-4376-b273-51ff837e69cc", "45554ad9-8a14-467b-b4cb-71d3d9b92136", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
