@@ -16,7 +16,7 @@ namespace BallBuddies.Presentation.Controllers
 
 
         [HttpGet(Name = "GetEventAttendances")]
-        public async Task<IActionResult> GetEventAttendances(int eventId)
+        public async Task<IActionResult> GetEventAttendances(Guid eventId)
         {
             var attendances = await _service.AttendanceService.GetEventAttendancesAsync(eventId, trackChanges: false);
 

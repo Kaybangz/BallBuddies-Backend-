@@ -26,10 +26,10 @@ namespace BallBuddies.Services.Implementation
             _mapper = mapper;
         }
 
-        public async Task<AttendanceResponseDto> AddEventAttendanceAsync(int eventId, AttendanceResponseDto dto, bool trackChanges)
+        public async Task<AttendanceResponseDto> AddEventAttendanceAsync(Guid eventId, AttendanceResponseDto dto, bool trackChanges)
         {
-            await CheckIfEventExist(eventId, trackChanges);
-
+            /*await CheckIfEventExist(eventId, trackChanges);*/
+            throw new NotImplementedException();
 
         }
 
@@ -38,7 +38,7 @@ namespace BallBuddies.Services.Implementation
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<AttendanceResponseDto>> GetEventAttendancesAsync(int eventId, bool trackChanges)
+        public async Task<IEnumerable<AttendanceResponseDto>> GetEventAttendancesAsync(Guid eventId, bool trackChanges)
         {
             await CheckIfEventExist(eventId, trackChanges);
 
@@ -50,7 +50,7 @@ namespace BallBuddies.Services.Implementation
         }
 
 
-        private async Task CheckIfEventExist(int eventId, bool trackChanges)
+        private async Task CheckIfEventExist(Guid eventId, bool trackChanges)
         {
             var existingEvent = await _unitOfWork.Event.GetEvent(eventId, trackChanges);
 

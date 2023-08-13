@@ -5,13 +5,13 @@ namespace BallBuddies.Services.Interface
 {
     public interface IAttendanceService
     {
-        Task<IEnumerable<AttendanceResponseDto>> GetEventAttendancesAsync(int eventId, bool trackChanges);
-        Task<AttendanceResponseDto> AddEventAttendanceAsync(int eventId,
+        Task<IEnumerable<AttendanceResponseDto>> GetEventAttendancesAsync(Guid eventId, bool trackChanges);
+        Task<AttendanceResponseDto> AddEventAttendanceAsync(Guid eventId,
             AttendanceResponseDto dto,
             bool trackChanges);
 
-        Task DeleteEventAttendanceAsync(string eventId,
-            int attendanceId,
+        Task DeleteEventAttendanceAsync(Guid eventId,
+            Guid attendanceId,
             bool trackChanges);
     }
 }

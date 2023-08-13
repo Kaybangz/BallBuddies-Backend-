@@ -10,13 +10,13 @@ namespace BallBuddies.Data.Implementation
         public AttendanceRepository(BallBuddiesDBContext dbContext): base(dbContext)
         {}
 
-        public void AddEventAttendance(int eventId, Attendance attendance)
+        public void AddEventAttendance(Guid eventId, Attendance attendance)
         {
             attendance.EventId = eventId;
             Create(attendance);
         }
 
-        public async Task<IEnumerable<Attendance>> GetEventAttendances(int eventId, bool trackChanges) =>
+        public async Task<IEnumerable<Attendance>> GetEventAttendances(Guid eventId, bool trackChanges) =>
             await FindByCondition(a => a.EventId.Equals(eventId), trackChanges)
             .ToListAsync();
 
