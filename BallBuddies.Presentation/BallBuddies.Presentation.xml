@@ -49,6 +49,7 @@
             </summary>
             <returns>Returns no content</returns>
             <response code="200">Returns no content</response>
+            <response code="500">Returns Event does not exist in the database</response>
         </member>
         <member name="M:BallBuddies.Presentation.Controllers.EventsController.GetEvents">
             <summary>

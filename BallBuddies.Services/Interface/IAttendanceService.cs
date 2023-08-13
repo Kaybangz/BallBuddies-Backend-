@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BallBuddies.Models.Dtos.Response;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace BallBuddies.Services.Interface
 {
     public interface IAttendanceService
     {
+        Task<IEnumerable<AttendanceResponseDto>> GetEventAttendancesAsync(int eventId, bool trackChanges);
     }
 }

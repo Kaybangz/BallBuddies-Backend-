@@ -13,5 +13,14 @@ namespace BallBuddies.Presentation.Controllers
         private readonly IServiceManager _service;
 
         public AttendanceController(IServiceManager service) => _service = service;
+
+
+        [HttpGet(Name = "GetEventAttendances")]
+        public async Task<IActionResult> GetEventAttendances(int eventId)
+        {
+            var attendances = await _service.AttendanceService.GetEventAttendancesAsync(eventId, trackChanges: false);
+
+            return Ok(attendances);
+        }
     }
 }

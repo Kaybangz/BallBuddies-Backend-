@@ -1,6 +1,7 @@
 ﻿using BallBuddies.Data.Context;
 using BallBuddies.Data.Interface;
 using BallBuddies.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace BallBuddies.Data.Implementation
 {
@@ -9,17 +10,16 @@ namespace BallBuddies.Data.Implementation
         public AttendanceRepository(BallBuddiesDBContext dbContext): base(dbContext)
         {}
 
-        public void AddAttendance()
+        public Task AddEventAttendance(int eventId, Attendance attendance)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Attendance> GetAttendances(bool trackChanges)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IEnumerable<Attendance>> GetEventAttendances(int eventId, bool trackChanges) =>
+            await FindByCondition(a => a.EventId.Equals(eventId), trackChanges)
+            .ToListAsync();
 
-        public void RemoveAttendance()
+        public void RemoveEventAttendance(Attendance attendance)
         {
             throw new NotImplementedException();
         }
