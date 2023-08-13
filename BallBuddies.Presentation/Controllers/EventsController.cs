@@ -53,7 +53,7 @@ namespace BallBuddies.Presentation.Controllers
         [Authorize(Roles = "User")]*/
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
-        public async Task<IActionResult> GetEvent(int id)
+        public async Task<IActionResult> GetEvent(Guid id)
         {
             var myEvent = await _service.EventService.GetEventAsync(id, trackChanges: false);
 
@@ -80,10 +80,10 @@ namespace BallBuddies.Presentation.Controllers
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         /*[Authorize(Roles = "Admin")]
         [Authorize(Roles = "User")]*/
-        public async Task<IActionResult> CreateEvent([FromBody] EventRequestDto eventRequest)
+        public async Task<IActionResult> CreateEvent(string userId, [FromBody] EventRequestDto eventRequest)
         {
 
-            var createdEvent =  await _service.EventService.CreateEventAsync(eventRequest);
+            var createdEvent =  await _service.EventService.CreateEventAsync(userId, eventRequest);
 
             return CreatedAtRoute("GetSingleEvent", new { id = createdEvent.Id },
                 createdEvent);
@@ -99,14 +99,14 @@ namespace BallBuddies.Presentation.Controllers
         /// <response code="404">Returns NotFound error</response>
         /// <response code="401">Returns unauthorized access response</response>
         /// <response code="200">Returns success message</response>
-        [HttpPut("{id}", Name = "UpdateEvent")]
+        [HttpPut("{id:Guid}", Name = "UpdateEvent")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(401)]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         /*[Authorize(Roles = "Admin")]
         [Authorize(Roles = "User")]*/
-        public async Task<IActionResult> UpdateEvent(int id,
+        public async Task<IActionResult> UpdateEvent(Guid id,
             [FromBody] EventUpdateRequestDto eventUpdateRequest)
         {
 
@@ -124,13 +124,13 @@ namespace BallBuddies.Presentation.Controllers
         /// <response code="404">Returns NotFound error</response>
         /// <response code="401">Returns unauthorized access response</response>
         /// <response code="200">Returns success response</response>
-        [HttpDelete("{id}", Name = "DeleteEvent")]
+        [HttpDelete("{id:Guid}", Name = "DeleteEvent")]
         [ProducesResponseType(404)]
         [ProducesResponseType(401)]
         [ProducesResponseType(200)]
         /*[Authorize(Roles = "Admin")]
         [Authorize(Roles = "User")]*/
-        public async Task<IActionResult> DeleteEvent(int id)
+        public async Task<IActionResult> DeleteEvent(Guid id)
         {
             await _service.EventService.DeleteEventAsync(id, trackChanges: false);
 

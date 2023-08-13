@@ -6,9 +6,9 @@ namespace BallBuddies.Data.Interface
 {
     public interface ICommentRepository
     {
-        Task<IEnumerable<Comment>> GetComments(int eventId, bool trackChanges);
-        Task<Comment> GetComment(int eventId, int commentId, bool trackChanges);
-        void CreateCommentForEvent(int eventId, Comment comment);
+        Task<IEnumerable<Comment>> GetComments(Guid eventId, bool trackChanges);
+        Task<Comment> GetComment(Guid eventId, Guid commentId, bool trackChanges);
+        void CreateCommentForEvent(Guid eventId, Comment comment);
         void DeleteCommentForEvent(Comment comment);
     }
 }

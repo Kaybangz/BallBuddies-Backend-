@@ -23,7 +23,7 @@ namespace BallBuddies.Presentation.Controllers
         /// <response code="200">Returns a list of event comments</response>
         [HttpGet(Name = "GetAllEventComments")]
         [ProducesResponseType(200)]
-        public async Task<IActionResult> GetAllEventComments(int eventId)
+        public async Task<IActionResult> GetAllEventComments(Guid eventId)
         {
             var comments = await _service.CommentService.GetCommentsAsync(eventId, trackChanges: false);
 
@@ -36,9 +36,9 @@ namespace BallBuddies.Presentation.Controllers
         /// </summary>
         /// <returns>A single event comment</returns>
         /// <response code="200">Returns a single event comment</response>
-        [HttpGet("{id:int}", Name = "GetSingleEventComment")]
+        [HttpGet("{id:Guid}", Name = "GetSingleEventComment")]
         [ProducesResponseType(200)]
-        public async Task<IActionResult> GetEventComment(int eventId, int id)
+        public async Task<IActionResult> GetEventComment(Guid eventId, Guid id)
         {
             var comment = await _service.CommentService.GetCommentAsync(eventId, id, trackChanges: false);
 
@@ -55,7 +55,7 @@ namespace BallBuddies.Presentation.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> CreateCommentForEvent(int eventId,
+        public async Task<IActionResult> CreateCommentForEvent(Guid eventId,
             [FromBody] CommentRequestDto commentRequest)
         {
 
@@ -78,10 +78,10 @@ namespace BallBuddies.Presentation.Controllers
         /// <returns>Returns no content</returns>
         /// <response code="200">Returns no content</response>
         /// <response code="500">Returns Event does not exist in the database</response>
-        [HttpDelete("{id:int}", Name = "Delete comment")]
+        [HttpDelete("{id:Guid}", Name = "Delete comment")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> DeleteCommentForEvent(int eventId, int id)
+        public async Task<IActionResult> DeleteCommentForEvent(Guid eventId, Guid id)
         {
             await _service.CommentService.DeleteCommentForEvent(eventId, id, trackChanges: false);
 

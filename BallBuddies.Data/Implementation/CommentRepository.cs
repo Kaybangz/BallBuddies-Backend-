@@ -10,7 +10,7 @@ namespace BallBuddies.Data.Implementation
         public CommentRepository(BallBuddiesDBContext dbContext): base(dbContext)
         {}
 
-        public void CreateCommentForEvent(int eventId, Comment comment)
+        public void CreateCommentForEvent(Guid eventId, Comment comment)
         {
             comment.EventId = eventId;
             Create(comment);
@@ -19,12 +19,12 @@ namespace BallBuddies.Data.Implementation
         public void DeleteCommentForEvent(Comment comment) => Delete(comment);
             
 
-        public async Task<IEnumerable<Comment>> GetComments(int eventId, bool trackChanges) => 
+        public async Task<IEnumerable<Comment>> GetComments(Guid eventId, bool trackChanges) => 
             await FindByCondition(c => c.EventId.Equals(eventId), trackChanges)
             .OrderBy(c => c.CreatedAt)
             .ToListAsync();
 
-        public async Task<Comment> GetComment(int eventId, int commentId, bool trackChanges) =>
+        public async Task<Comment> GetComment(Guid eventId, Guid commentId, bool trackChanges) =>
             await FindByCondition(c => c.EventId.Equals(eventId) && c.Id.Equals(commentId), trackChanges)
             .SingleOrDefaultAsync();
 

@@ -23,7 +23,7 @@ namespace BallBuddies.Services.Implementation
             _mapper = mapper;
         }
 
-        public async Task<CommentResponseDto> CreateCommentForEventAsync(int eventId, CommentRequestDto commentRequestDto, bool trackChanges)
+        public async Task<CommentResponseDto> CreateCommentForEventAsync(Guid eventId, CommentRequestDto commentRequestDto, bool trackChanges)
         {
             await CheckIfEventExist(eventId, trackChanges);
 
@@ -38,7 +38,7 @@ namespace BallBuddies.Services.Implementation
             return commentToReturn;
         }
 
-        public async Task DeleteCommentForEvent(int eventId, int commentId, bool trackChanges)
+        public async Task DeleteCommentForEvent(Guid eventId, Guid commentId, bool trackChanges)
         {
             await CheckIfEventExist(eventId, trackChanges);
 
@@ -49,7 +49,7 @@ namespace BallBuddies.Services.Implementation
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task<CommentResponseDto> GetCommentAsync(int eventId, int commentId, bool trackChanges)
+        public async Task<CommentResponseDto> GetCommentAsync(Guid eventId, Guid commentId, bool trackChanges)
         {
             await CheckIfEventExist(eventId, trackChanges);
 
@@ -61,7 +61,7 @@ namespace BallBuddies.Services.Implementation
             return comment;
         }
 
-        public async Task<IEnumerable<CommentResponseDto>> GetCommentsAsync(int eventId, bool trackChanges)
+        public async Task<IEnumerable<CommentResponseDto>> GetCommentsAsync(Guid eventId, bool trackChanges)
         {
             await CheckIfEventExist(eventId, trackChanges);
 
@@ -73,7 +73,7 @@ namespace BallBuddies.Services.Implementation
         }
 
 
-        private async Task CheckIfEventExist(int eventId, bool trackChanges)
+        private async Task CheckIfEventExist(Guid eventId, bool trackChanges)
         {
             var existingEvent = await _unitOfWork.Event.GetEvent(eventId, trackChanges);
 
@@ -83,8 +83,8 @@ namespace BallBuddies.Services.Implementation
         }
 
 
-        private async Task<Comment> GetCommentForEventAndCheckIfItExists(int eventId,
-            int commentId,
+        private async Task<Comment> GetCommentForEventAndCheckIfItExists(Guid eventId,
+            Guid commentId,
             bool trackChanges)
         {
             var commentDb = await _unitOfWork.Comment.GetComment(eventId, commentId, trackChanges);

@@ -7,14 +7,14 @@ namespace BallBuddies.Services.Interface
 {
     public interface ICommentService
     {
-        Task<IEnumerable<CommentResponseDto>> GetCommentsAsync(int eventId, bool trackChanges);
+        Task<IEnumerable<CommentResponseDto>> GetCommentsAsync(Guid eventId, bool trackChanges);
 
-        Task<CommentResponseDto> GetCommentAsync(int eventId, int commentId, bool trackChanges);
+        Task<CommentResponseDto> GetCommentAsync(Guid eventId, Guid commentId, bool trackChanges);
 
-        Task<CommentResponseDto> CreateCommentForEventAsync(int eventId,
+        Task<CommentResponseDto> CreateCommentForEventAsync(Guid eventId,
             CommentRequestDto commentRequestDto,
             bool trackChanges);
 
-        Task DeleteCommentForEvent(int eventId, int commentId, bool trackChanges);
+        Task DeleteCommentForEvent(Guid eventId, Guid commentId, bool trackChanges);
     }
 }
