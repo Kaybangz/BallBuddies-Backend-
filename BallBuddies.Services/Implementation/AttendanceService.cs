@@ -26,6 +26,18 @@ namespace BallBuddies.Services.Implementation
             _mapper = mapper;
         }
 
+        public async Task<AttendanceResponseDto> AddEventAttendanceAsync(int eventId, AttendanceResponseDto dto, bool trackChanges)
+        {
+            await CheckIfEventExist(eventId, trackChanges);
+
+
+        }
+
+        public Task DeleteEventAttendanceAsync(string eventId, int attendanceId, bool trackChanges)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<AttendanceResponseDto>> GetEventAttendancesAsync(int eventId, bool trackChanges)
         {
             await CheckIfEventExist(eventId, trackChanges);

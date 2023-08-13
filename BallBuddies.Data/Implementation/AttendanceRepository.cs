@@ -10,18 +10,16 @@ namespace BallBuddies.Data.Implementation
         public AttendanceRepository(BallBuddiesDBContext dbContext): base(dbContext)
         {}
 
-        public Task AddEventAttendance(int eventId, Attendance attendance)
+        public void AddEventAttendance(int eventId, Attendance attendance)
         {
-            throw new NotImplementedException();
+            attendance.EventId = eventId;
+            Create(attendance);
         }
 
         public async Task<IEnumerable<Attendance>> GetEventAttendances(int eventId, bool trackChanges) =>
             await FindByCondition(a => a.EventId.Equals(eventId), trackChanges)
             .ToListAsync();
 
-        public void RemoveEventAttendance(Attendance attendance)
-        {
-            throw new NotImplementedException();
-        }
+        public void RemoveEventAttendance(Attendance attendance) => Delete(attendance);
     }
 }

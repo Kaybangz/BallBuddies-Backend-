@@ -29,11 +29,11 @@ namespace BallBuddies.Services.Implementation
             /*_httpContextAccessor = httpContextAccessor;*/
         }
 
-        public async Task<EventResponseDto> CreateEventAsync(EventRequestDto eventRequest)
+        public async Task<EventResponseDto> CreateEventAsync(string userId, EventRequestDto eventRequest)
         {
             var eventEntity = _mapper.Map<Event>(eventRequest);
 
-            _unitOfWork.Event.CreateEvent(eventEntity);
+            _unitOfWork.Event.CreateEvent(userId, eventEntity);
             await _unitOfWork.SaveAsync();
 
             var eventToReturn = _mapper.Map<EventResponseDto>(eventEntity);
@@ -41,7 +41,7 @@ namespace BallBuddies.Services.Implementation
             return eventToReturn;
         }
 
-        public async Task DeleteEventAsync(int eventId, bool trackChanges)
+        public async Task DeleteEventAsync(Guid eventId, bool trackChanges)
         {
             /*var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;*/
 
@@ -62,7 +62,7 @@ namespace BallBuddies.Services.Implementation
                 return eventsDto;
         }
 
-        public async Task<EventResponseDto> GetEventAsync(int eventId, 
+        public async Task<EventResponseDto> GetEventAsync(Guid eventId, 
             bool trackChanges)
         {
             var existingEvent = await CheckIfEventExists(eventId, trackChanges);
@@ -72,7 +72,7 @@ namespace BallBuddies.Services.Implementation
             return eventDto;
         }
 
-        public async Task UpdateEventAsync(int eventId, 
+        public async Task UpdateEventAsync(Guid eventId, 
             EventUpdateRequestDto eventUpdateRequest, 
             bool trackChanges)
         {
@@ -87,7 +87,7 @@ namespace BallBuddies.Services.Implementation
 
 
 
-        private async Task<Event> CheckIfEventExists(int eventId, bool trackChanges)
+        private async Task<Event> CheckIfEventExists(Guid eventId, bool trackChanges)
         {
             var eventEntity = await _unitOfWork.Event.GetEvent(eventId, trackChanges);
 

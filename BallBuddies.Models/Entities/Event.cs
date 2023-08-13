@@ -7,7 +7,7 @@ namespace BallBuddies.Models.Entities
     public class Event
     {
         [Key]
-        public int Id{ get; set; }
+        public Guid Id{ get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "The event name is required")]
         [MaxLength(50, ErrorMessage = "Cannot exceed 50 characters")]
         public string Name { get; set; } = null!;
@@ -20,7 +20,7 @@ namespace BallBuddies.Models.Entities
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Location is required")]
         [MaxLength(150, ErrorMessage = "Cannot exceed 150 characters")]
-        public string Location { get; set; } = null!;
+        public string Venue { get; set; } = null!;
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "State is required")]
         [MaxLength(150, ErrorMessage = "Cannot exceed 150 characters")]
@@ -29,7 +29,9 @@ namespace BallBuddies.Models.Entities
         [Required(AllowEmptyStrings = false, ErrorMessage = "City is required")]
         [MaxLength(150, ErrorMessage = "Cannot exceed 150 characters")]
         public string City { get; set; } = null!;
-        public DateTime EventDate { get; set; }
+        public DateOnly EventDate { get; set; }
+        public TimeOnly StartTime { get; set; }
+        public TimeOnly EndTime { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public SportCategory Category { get; set; }
 
