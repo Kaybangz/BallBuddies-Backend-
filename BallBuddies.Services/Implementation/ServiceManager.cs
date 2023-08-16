@@ -3,6 +3,7 @@ using BallBuddies.Data.Interface;
 using BallBuddies.Models.ConfigurationModels;
 using BallBuddies.Models.Entities;
 using BallBuddies.Services.Interface;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -23,15 +24,16 @@ namespace BallBuddies.Services.Implementation
         public ServiceManager(IUnitOfWork unitOfWork,
             ILoggerManager logger,
             IMapper mapper,
+            IHttpContextAccessor httpContextAccessor,
             UserManager<User> userManager,
             IOptions<JwtConfiguration> configuration)
         {
 
             _userService = new Lazy<IUserService>(() => 
-            new UserService(unitOfWork, logger, mapper));
+            new UserService(unitOfWork, logger, mapper, httpContextAccessor));
 
             _eventService = new Lazy<IEventService>(() => 
-            new EventService(unitOfWork, logger, mapper));
+            new EventService(unitOfWork, logger, mapper, httpContextAccessor));
 
             _attendanceService = new Lazy<IAttendanceService>(() =>
             new AttendanceService(unitOfWork, logger, mapper));

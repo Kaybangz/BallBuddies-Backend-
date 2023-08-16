@@ -5,6 +5,7 @@ using BallBuddies.Models.Dtos.Response;
 using BallBuddies.Models.Entities;
 using BallBuddies.Models.Exceptions;
 using BallBuddies.Services.Interface;
+using Microsoft.AspNetCore.Http;
 
 namespace BallBuddies.Services.Implementation
 {
@@ -13,14 +14,17 @@ namespace BallBuddies.Services.Implementation
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public UserService(IUnitOfWork unitOfWork,
             ILoggerManager logger,
-            IMapper mapper)
+            IMapper mapper,
+            IHttpContextAccessor httpContextAccessor)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task DeleteUserAsync(string userId, bool trackChanges)
@@ -30,10 +34,13 @@ namespace BallBuddies.Services.Implementation
             if (existingUser != null)
                 throw new UserNotFoundException(userId);
 
+#pragma warning disable CS8604 // Possible null reference argument.
             _unitOfWork.User.DeleteUser(existingUser);
+#pragma warning restore CS8604 // Possible null reference argument.
 
             await _unitOfWork.SaveAsync();
         }
+
 
         public async Task<IEnumerable<UserModelResponseDto>> GetAllUsersAsync(bool trackChanges)
         {

@@ -78,12 +78,12 @@ namespace BallBuddies.Presentation.Controllers
         [ProducesResponseType(422)]
         [ProducesResponseType(401)]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        /*[Authorize(Roles = "Admin")]
-        [Authorize(Roles = "User")]*/
-        public async Task<IActionResult> CreateEvent(string userId, [FromBody] EventRequestDto eventRequest)
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> CreateEvent( [FromBody] EventRequestDto eventRequest)
         {
 
-            var createdEvent =  await _service.EventService.CreateEventAsync(userId, eventRequest);
+            var createdEvent =  await _service.EventService.CreateEventAsync(eventRequest, trackChanges: true);
 
             return CreatedAtRoute("GetSingleEvent", new { id = createdEvent.Id },
                 createdEvent);

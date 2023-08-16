@@ -68,7 +68,7 @@
             /// <response code="200">Returns a single event with the Id</response>
             <response code="401">Returns unauthorized access response</response>
         </member>
-        <member name="M:BallBuddies.Presentation.Controllers.EventsController.CreateEvent(System.String,BallBuddies.Models.Dtos.Request.EventRequestDto)">
+        <member name="M:BallBuddies.Presentation.Controllers.EventsController.CreateEvent(BallBuddies.Models.Dtos.Request.EventRequestDto)">
             <summary>
             Creates a new event
             </summary>

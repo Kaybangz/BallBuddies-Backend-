@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-
+using BallBuddies.Models.Entities;
 
 namespace BallBuddies.Models.Dtos.Request
 {
@@ -21,7 +21,7 @@ namespace BallBuddies.Models.Dtos.Request
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Location is required")]
         [MaxLength(150, ErrorMessage = "Cannot exceed 150 characters")]
-        public string Location { get; set; } = null!;
+        public string Venue { get; set; } = null!;
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "State is required")]
         [MaxLength(150, ErrorMessage = "Cannot exceed 150 characters")]
@@ -30,11 +30,12 @@ namespace BallBuddies.Models.Dtos.Request
         [Required(AllowEmptyStrings = false, ErrorMessage = "City is required")]
         [MaxLength(150, ErrorMessage = "Cannot exceed 150 characters")]
         public string City { get; set; } = null!;
-        public DateTime EventDate { get; set; }
+        public DateTime EventStartDate { get; set; }
+        public DateTime EventEndDate { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public SportCategory Category { get; set; }
 
 
-        public string CreatedByUserId { get; set; } = null!;
+        /*public string CreatedByUserId { get; set; } = null!;*/
     }
 }

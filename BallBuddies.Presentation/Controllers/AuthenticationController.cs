@@ -1,6 +1,7 @@
 ﻿using BallBuddies.Models.Dtos.Request;
 using BallBuddies.Services.ActionFilters;
 using BallBuddies.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -9,6 +10,7 @@ namespace BallBuddies.Presentation.Controllers
     [ApiController]
     [Route("api/authentication")]
     [ApiExplorerSettings(GroupName = "v1")]
+    [AllowAnonymous]
     public class AuthenticationController: ControllerBase
     {
         private readonly IServiceManager _service;
@@ -24,7 +26,7 @@ namespace BallBuddies.Presentation.Controllers
         /// <response code="200">Returns Registration successful</response>
         /// <response code="422">Returns password required </response>
         /// <response code="400">Returns duplicate username</response>
-        [HttpPost("register", Name = "Register")]
+        [HttpPost("Register", Name = "Register")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ProducesResponseType(200)]
         [ProducesResponseType(422)]
@@ -55,7 +57,7 @@ namespace BallBuddies.Presentation.Controllers
         /// <returns>A generated access token and refresh token</returns>
         /// <response code="200">Returns Login successful</response>
         /// <response code="401">Returns unauthorized access</response>
-        [HttpPost("login", Name = "Login")]
+        [HttpPost("Login", Name = "Login")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
