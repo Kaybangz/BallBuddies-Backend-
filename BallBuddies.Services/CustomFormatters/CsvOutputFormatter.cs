@@ -58,13 +58,13 @@ namespace BallBuddies.Services
                 $"\"{eventResponse.Description}," +
                 $"\"{eventResponse.Price}\"," +
                 $"\"{eventResponse.EventImageUrl}\"," +
-                $"\"{eventResponse.Location}\"," +
+                $"\"{eventResponse.Venue}\"," +
                 $"\"{eventResponse.State}\"," +
                 $"\"{eventResponse.City}\"," +
-                $"\"{eventResponse.EventDate}\"," +
+                $"\"{eventResponse.EventStartDate}\"," +
+                $"\"{eventResponse.EventEndDate}\"," +
                 $"\"{eventResponse.CreatedAt}\"," +
-                $"\"{eventResponse.Category}\"," +
-                $"\"{eventResponse.CreatedByUserId}\"");
+                $"\"{eventResponse.Category}\",");
         }
     }
 }

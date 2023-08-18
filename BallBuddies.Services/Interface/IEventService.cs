@@ -7,8 +7,8 @@ namespace BallBuddies.Services.Interface
     {
         Task<IEnumerable<EventResponseDto>> GetAllEventsAsync(bool trackChanges);
         Task<EventResponseDto> GetEventAsync(Guid eventId, bool trackChanges);
-        Task<EventResponseDto> CreateEventAsync(EventRequestDto eventRequest, bool trackChanges);
-        Task UpdateEventAsync(Guid eventId, EventUpdateRequestDto eventUpdateRequest, bool trackChanges);
+        Task<EventResponseDto> CreateEventAsync(EventRequestDto eventRequestDto, bool trackChanges);
+        Task UpdateEventAsync(Guid eventId, EventUpdateRequestDto eventUpdateRequestDto, bool trackChanges);
         Task DeleteEventAsync(Guid eventId, bool trackChanges);
     }
 }

@@ -72,7 +72,7 @@
             <summary>
             Creates a new event
             </summary>
-            <param name="eventRequest"></param>
+            <param name="eventRequestDto"></param>
             <returns>A newly created event</returns>
             <response code="201">Returns the newly created event</response>
             <response code="400">If the item is null</response>
@@ -83,6 +83,8 @@
             <summary>
             Updates an event
             </summary>
+            <param name="id"></param>
+            <param name="eventUpdateRequestDto"></param>
             <returns>No content</returns>
             <response code="404">Returns NotFound error</response>
             <response code="401">Returns unauthorized access response</response>
@@ -92,6 +94,7 @@
             <summary>
             Deletes an event
             </summary>
+            <param name="id"></param>
             <returns>No content</returns>
             <response code="404">Returns NotFound error</response>
             <response code="401">Returns unauthorized access response</response>

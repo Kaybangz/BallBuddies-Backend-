@@ -66,7 +66,7 @@ namespace BallBuddies.Presentation.Controllers
         /// <summary>
         /// Creates a new event
         /// </summary>
-        /// <param name="eventRequest"></param>
+        /// <param name="eventRequestDto"></param>
         /// <returns>A newly created event</returns>
         /// <response code="201">Returns the newly created event</response>
         /// <response code="400">If the item is null</response>
@@ -80,10 +80,12 @@ namespace BallBuddies.Presentation.Controllers
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [Authorize(Roles = "Admin")]
         [Authorize(Roles = "User")]
-        public async Task<IActionResult> CreateEvent( [FromBody] EventRequestDto eventRequest)
+        public async Task<IActionResult> CreateEvent( [FromBody] EventRequestDto eventRequestDto)
         {
+            if (eventRequestDto is null)
+                return BadRequest("Event data is invalid.");
 
-            var createdEvent =  await _service.EventService.CreateEventAsync(eventRequest, trackChanges: true);
+            var createdEvent =  await _service.EventService.CreateEventAsync(eventRequestDto, trackChanges: true);
 
             return CreatedAtRoute("GetSingleEvent", new { id = createdEvent.Id },
                 createdEvent);
@@ -95,6 +97,8 @@ namespace BallBuddies.Presentation.Controllers
         /// <summary>
         /// Updates an event
         /// </summary>
+        /// <param name="id"></param>
+        /// <param name="eventUpdateRequestDto"></param>
         /// <returns>No content</returns>
         /// <response code="404">Returns NotFound error</response>
         /// <response code="401">Returns unauthorized access response</response>
@@ -107,10 +111,12 @@ namespace BallBuddies.Presentation.Controllers
         /*[Authorize(Roles = "Admin")]
         [Authorize(Roles = "User")]*/
         public async Task<IActionResult> UpdateEvent(Guid id,
-            [FromBody] EventUpdateRequestDto eventUpdateRequest)
+            [FromBody] EventUpdateRequestDto eventUpdateRequestDto)
         {
+            if(eventUpdateRequestDto is null)
+                return BadRequest("Event data is invalid.");
 
-            await _service.EventService.UpdateEventAsync(id, eventUpdateRequest, trackChanges: true);
+            await _service.EventService.UpdateEventAsync(id, eventUpdateRequestDto, trackChanges: true);
 
             return NoContent();
         }
@@ -120,6 +126,7 @@ namespace BallBuddies.Presentation.Controllers
         /// <summary>
         /// Deletes an event
         /// </summary>
+        /// <param name="id"></param>
         /// <returns>No content</returns>
         /// <response code="404">Returns NotFound error</response>
         /// <response code="401">Returns unauthorized access response</response>

@@ -105,6 +105,7 @@ namespace BallBuddies.Services.Implementation
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
             var claims = new List<Claim>
             {
+                new Claim(ClaimTypes.NameIdentifier, _user.Id),
                 new Claim(ClaimTypes.Name, _user.UserName),
                 new Claim(ClaimTypes.Email, _user.Email),
             };

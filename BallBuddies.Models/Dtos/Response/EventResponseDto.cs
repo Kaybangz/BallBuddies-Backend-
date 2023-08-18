@@ -10,13 +10,12 @@ namespace BallBuddies.Models.Dtos.Response
         string Description,
         decimal Price,
         string EventImageUrl,
-        string Location,
+        string Venue,
         string State,
         string City,
-        DateTime EventDate,
+        DateTime EventStartDate,
+        DateTime EventEndDate,
         DateTime CreatedAt,
-        SportCategory Category,
-
-        string CreatedByUserId
+        SportCategory Category
         );
 }
