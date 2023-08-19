@@ -7,7 +7,7 @@ namespace BallBuddies.Data.Interface
     {
         Task<IEnumerable<Event>> GetAllEvents(bool trackChanges);
         Task<Event> GetEvent(Guid eventId, bool trackChanges);
-        void CreateEvent(string userId,Event createdEvent);
+        void CreateEvent(string userId, Event createdEvent);
         void UpdateEvent(Event updatedEvent);
         void DeleteEvent(Event eventToDelete);
     }

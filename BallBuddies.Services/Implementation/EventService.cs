@@ -47,6 +47,22 @@ namespace BallBuddies.Services.Implementation
             //Configure this part
             var eventEntity = _mapper.Map<Event>(eventRequestDto);
 
+            /*var eventEntity = new Event
+            {
+                Name = eventRequestDto.Name,
+                Description = eventRequestDto.Description,
+                Price = eventRequestDto.Price,
+                EventImageUrl = eventRequestDto.EventImageUrl,
+                Venue = eventRequestDto.Venue,
+                State = eventRequestDto.State,
+                City = eventRequestDto.City,
+                EventStartDate = eventRequestDto.EventStartDate,
+                EventEndDate = eventRequestDto.EventEndDate,
+                CreatedAt = DateTime.Now,
+                Category = eventRequestDto.Category,
+                CreatedByUserId = userId
+            };*/
+
             _unitOfWork.Event.CreateEvent(userId, eventEntity);
             await _unitOfWork.SaveAsync();
 
