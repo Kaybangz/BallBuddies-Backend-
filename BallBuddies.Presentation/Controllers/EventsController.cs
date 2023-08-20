@@ -29,6 +29,7 @@ namespace BallBuddies.Presentation.Controllers
         [HttpGet(Name = "GetAllEvents")]
         /*[Authorize(Roles = "Admin")]
         [Authorize(Roles = "User")]*/
+        [AllowAnonymous]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         public async Task<IActionResult> GetEvents()
@@ -49,8 +50,8 @@ namespace BallBuddies.Presentation.Controllers
         /// /// <response code="200">Returns a single event with the Id</response>
         /// <response code="401">Returns unauthorized access response</response>
         [HttpGet("{id:int}", Name = "GetSingleEvent")]
-        /*[Authorize(Roles = "Admin")]
-        [Authorize(Roles = "User")]*/
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "User")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         public async Task<IActionResult> GetEvent(Guid id)
@@ -78,7 +79,6 @@ namespace BallBuddies.Presentation.Controllers
         [ProducesResponseType(422)]
         [ProducesResponseType(401)]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        [Authorize(Roles = "Admin")]
         [Authorize(Roles = "User")]
         public async Task<IActionResult> CreateEvent( [FromBody] EventRequestDto eventRequestDto)
         {
@@ -108,8 +108,7 @@ namespace BallBuddies.Presentation.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(401)]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        /*[Authorize(Roles = "Admin")]
-        [Authorize(Roles = "User")]*/
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> UpdateEvent(Guid id,
             [FromBody] EventUpdateRequestDto eventUpdateRequestDto)
         {
@@ -135,8 +134,7 @@ namespace BallBuddies.Presentation.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(401)]
         [ProducesResponseType(200)]
-        /*[Authorize(Roles = "Admin")]
-        [Authorize(Roles = "User")]*/
+        [Authorize(Roles = "User, Admin")]
         public async Task<IActionResult> DeleteEvent(Guid id)
         {
             await _service.EventService.DeleteEventAsync(id, trackChanges: false);

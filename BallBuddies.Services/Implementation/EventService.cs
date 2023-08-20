@@ -17,20 +17,17 @@ namespace BallBuddies.Services.Implementation
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        /*private readonly UserManager<User> _userManager;*/
 
         public EventService(IUnitOfWork unitOfWork,
             ILoggerManager logger,
             IMapper mapper,
            IHttpContextAccessor httpContextAccessor
-           /*UserManager<User> userManager*/
             )
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _mapper = mapper;
             _httpContextAccessor = httpContextAccessor;
-            /*_userManager = userManager;*/
         }
 
         public async Task<EventResponseDto> CreateEventAsync(EventRequestDto eventRequestDto,
