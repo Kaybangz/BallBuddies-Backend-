@@ -49,7 +49,7 @@ namespace BallBuddies.Presentation.Controllers
         /// <returns>A single event</returns>
         /// /// <response code="200">Returns a single event with the Id</response>
         /// <response code="401">Returns unauthorized access response</response>
-        [HttpGet("{id:int}", Name = "GetSingleEvent")]
+        [HttpGet("{id:Guid}", Name = "GetSingleEvent")]
         [Authorize(Roles = "Admin")]
         [Authorize(Roles = "User")]
         [ProducesResponseType(200)]
