@@ -5,6 +5,7 @@ using BallBuddies.Models.Dtos.Response;
 using BallBuddies.Models.Entities;
 using BallBuddies.Models.Exceptions;
 using BallBuddies.Services.Interface;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
@@ -70,10 +71,18 @@ namespace BallBuddies.Services.Implementation
 
         public async Task DeleteEventAsync(Guid eventId, bool trackChanges)
         {
-            /*var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;*/
+            var userId = _httpContextAccessor
+                .HttpContext
+                ?.User
+                .FindFirst(ClaimTypes.NameIdentifier)
+                ?.Value;
 
             var existingEvent = await CheckIfEventExists(eventId, trackChanges);
-            
+
+            if (existingEvent.CreatedByUserId != userId)
+                throw new UnauthorizedAccessException("You do not have permission to " +
+                    "delete this event.");
+
             _unitOfWork.Event.DeleteEvent(existingEvent);
 
             await _unitOfWork.SaveAsync();
@@ -103,7 +112,18 @@ namespace BallBuddies.Services.Implementation
             EventUpdateRequestDto eventUpdateRequestDto, 
             bool trackChanges)
         {
+            var userId = _httpContextAccessor
+                .HttpContext
+                ?.User
+                .FindFirst(ClaimTypes.NameIdentifier)
+                ?.Value;
+
+
             var existingEvent = await CheckIfEventExists(eventId, trackChanges);
+
+            if (existingEvent.CreatedByUserId != userId)
+                throw new UnauthorizedAccessException("You do not have permission to " +
+                    "update this event.");
 
             var updatedEvent = _mapper.Map(eventUpdateRequestDto, existingEvent);
 
