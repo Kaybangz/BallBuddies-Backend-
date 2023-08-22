@@ -39,7 +39,7 @@ namespace BallBuddies.Services.Implementation
             new AttendanceService(unitOfWork, logger, mapper));
 
             _commentService = new Lazy<ICommentService>(() => 
-            new CommentService(unitOfWork, logger, mapper));
+            new CommentService(unitOfWork, logger, mapper, httpContextAccessor));
 
             _authenticationService = new Lazy<IAuthenticationService>(() =>
             new AuthenticationService(logger, mapper, userManager, configuration));

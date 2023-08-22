@@ -8,7 +8,7 @@ namespace BallBuddies.Data.Interface
     {
         Task<IEnumerable<Comment>> GetComments(Guid eventId, bool trackChanges);
         Task<Comment> GetComment(Guid eventId, Guid commentId, bool trackChanges);
-        void CreateCommentForEvent(Guid eventId, Comment comment);
+        void CreateCommentForEvent(string userId, Guid eventId, Comment comment);
         void DeleteCommentForEvent(Comment comment);
     }
 }

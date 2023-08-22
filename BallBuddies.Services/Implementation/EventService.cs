@@ -40,26 +40,10 @@ namespace BallBuddies.Services.Implementation
                 .FindFirst(ClaimTypes.NameIdentifier)
                 ?.Value;
 
-            /*var user = await _unitOfWork.User.GetUser(userId, trackChanges);*/
+            
 
-            //Configure this part
             var eventEntity = _mapper.Map<Event>(eventRequestDto);
 
-            /*var eventEntity = new Event
-            {
-                Name = eventRequestDto.Name,
-                Description = eventRequestDto.Description,
-                Price = eventRequestDto.Price,
-                EventImageUrl = eventRequestDto.EventImageUrl,
-                Venue = eventRequestDto.Venue,
-                State = eventRequestDto.State,
-                City = eventRequestDto.City,
-                EventStartDate = eventRequestDto.EventStartDate,
-                EventEndDate = eventRequestDto.EventEndDate,
-                CreatedAt = DateTime.Now,
-                Category = eventRequestDto.Category,
-                CreatedByUserId = userId
-            };*/
 
             _unitOfWork.Event.CreateEvent(userId, eventEntity);
             await _unitOfWork.SaveAsync();
@@ -147,22 +131,6 @@ namespace BallBuddies.Services.Implementation
 
             return eventEntity;
         }
-
-
-        /*private User GetCurrentUser()
-        {
-            *//*var currentUser = _httpContextAccessor.HttpContext?.User;
-            var userId = currentUser.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            return currentUser;*/
-            /*return await _userManager.GetUserAsync(_httpContextAccessor.HttpContext?.User);*/
-
-            /*var currentUser = _httpContextAccessor.HttpContext?.User;
-
-            var userId = currentUser.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            var user = await _unitOfWork.User.GetUser(userId);*//*
-        }*/
 
     }
 }

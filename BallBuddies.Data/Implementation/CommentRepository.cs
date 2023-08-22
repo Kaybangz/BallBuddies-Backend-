@@ -10,8 +10,9 @@ namespace BallBuddies.Data.Implementation
         public CommentRepository(BallBuddiesDBContext dbContext): base(dbContext)
         {}
 
-        public void CreateCommentForEvent(Guid eventId, Comment comment)
+        public void CreateCommentForEvent(string userId, Guid eventId, Comment comment)
         {
+            comment.UserId = userId;
             comment.EventId = eventId;
             Create(comment);
         }

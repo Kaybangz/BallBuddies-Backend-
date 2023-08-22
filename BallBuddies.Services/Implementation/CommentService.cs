@@ -5,6 +5,8 @@ using BallBuddies.Models.Dtos.Response;
 using BallBuddies.Models.Entities;
 using BallBuddies.Models.Exceptions;
 using BallBuddies.Services.Interface;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace BallBuddies.Services.Implementation
 {
@@ -13,23 +15,34 @@ namespace BallBuddies.Services.Implementation
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public CommentService(IUnitOfWork unitOfWork,
             ILoggerManager logger,
-            IMapper mapper)
+            IMapper mapper,
+            IHttpContextAccessor httpContextAccessor)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
+
         }
 
         public async Task<CommentResponseDto> CreateCommentForEventAsync(Guid eventId, CommentRequestDto commentRequestDto, bool trackChanges)
         {
+            var userId = _httpContextAccessor
+                .HttpContext
+                ?.User
+                .FindFirst(ClaimTypes.NameIdentifier)
+                ?.Value;
+
+
             await CheckIfEventExist(eventId, trackChanges);
 
             var commentEntity = _mapper.Map<Comment>(commentRequestDto);
 
-            _unitOfWork.Comment.CreateCommentForEvent(eventId, commentEntity);
+            _unitOfWork.Comment.CreateCommentForEvent(userId, eventId, commentEntity);
 
             await _unitOfWork.SaveAsync();
 
@@ -40,9 +53,20 @@ namespace BallBuddies.Services.Implementation
 
         public async Task DeleteCommentForEvent(Guid eventId, Guid commentId, bool trackChanges)
         {
+            var userId = _httpContextAccessor
+                .HttpContext
+                ?.User
+                .FindFirst(ClaimTypes.NameIdentifier)
+                ?.Value;
+
+
             await CheckIfEventExist(eventId, trackChanges);
 
             var commentForEvent = await GetCommentForEventAndCheckIfItExists(eventId, commentId, trackChanges);
+
+            if(commentForEvent.UserId != userId)
+                throw new UnauthorizedAccessException("You do not have permission to " +
+                    "delete this comment.");
 
             _unitOfWork.Comment.DeleteCommentForEvent(commentForEvent);
 
@@ -73,13 +97,17 @@ namespace BallBuddies.Services.Implementation
         }
 
 
-        private async Task CheckIfEventExist(Guid eventId, bool trackChanges)
+        private async Task<Event> CheckIfEventExist(Guid eventId, bool trackChanges)
         {
             var existingEvent = await _unitOfWork.Event.GetEvent(eventId, trackChanges);
 
             if(existingEvent is null)
+            {
+                _logger.LogError($"Event with Id: {eventId} not found");
                 throw new EventNotFoundException(eventId);
+            }
 
+            return existingEvent;
         }
 
 

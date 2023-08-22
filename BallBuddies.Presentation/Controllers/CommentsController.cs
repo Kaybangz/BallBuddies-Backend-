@@ -1,6 +1,7 @@
 ﻿using BallBuddies.Models.Dtos.Request;
 using BallBuddies.Services.ActionFilters;
 using BallBuddies.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BallBuddies.Presentation.Controllers
@@ -23,6 +24,7 @@ namespace BallBuddies.Presentation.Controllers
         /// <response code="200">Returns a list of event comments</response>
         [HttpGet(Name = "GetAllEventComments")]
         [ProducesResponseType(200)]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllEventComments(Guid eventId)
         {
             var comments = await _service.CommentService.GetCommentsAsync(eventId, trackChanges: false);
@@ -38,6 +40,7 @@ namespace BallBuddies.Presentation.Controllers
         /// <response code="200">Returns a single event comment</response>
         [HttpGet("{id:Guid}", Name = "GetSingleEventComment")]
         [ProducesResponseType(200)]
+        [AllowAnonymous]
         public async Task<IActionResult> GetEventComment(Guid eventId, Guid id)
         {
             var comment = await _service.CommentService.GetCommentAsync(eventId, id, trackChanges: false);
@@ -55,6 +58,7 @@ namespace BallBuddies.Presentation.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> CreateCommentForEvent(Guid eventId,
             [FromBody] CommentRequestDto commentRequest)
         {
@@ -81,6 +85,7 @@ namespace BallBuddies.Presentation.Controllers
         [HttpDelete("{id:Guid}", Name = "Delete comment")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
+        [Authorize(Roles = "User, Admin")]
         public async Task<IActionResult> DeleteCommentForEvent(Guid eventId, Guid id)
         {
             await _service.CommentService.DeleteCommentForEvent(eventId, id, trackChanges: false);

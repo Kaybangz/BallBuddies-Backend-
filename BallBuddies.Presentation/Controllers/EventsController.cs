@@ -27,8 +27,6 @@ namespace BallBuddies.Presentation.Controllers
         /// <response code="200">Returns all the events in the database</response>
         /// <response code="401">Returns unauthorized access response</response>
         [HttpGet(Name = "GetAllEvents")]
-        /*[Authorize(Roles = "Admin")]
-        [Authorize(Roles = "User")]*/
         [AllowAnonymous]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
