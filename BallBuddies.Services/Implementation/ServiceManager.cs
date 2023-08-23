@@ -36,7 +36,7 @@ namespace BallBuddies.Services.Implementation
             new EventService(unitOfWork, logger, mapper, httpContextAccessor));
 
             _attendanceService = new Lazy<IAttendanceService>(() =>
-            new AttendanceService(unitOfWork, logger, mapper));
+            new AttendanceService(unitOfWork, logger, mapper, httpContextAccessor));
 
             _commentService = new Lazy<ICommentService>(() => 
             new CommentService(unitOfWork, logger, mapper, httpContextAccessor));

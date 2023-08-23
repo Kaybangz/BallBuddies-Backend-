@@ -15,7 +15,10 @@ namespace BallBuddies.Data.Implementation
             _dbContext = dbContext;
         }
 
-        public void Create(T entity) =>  _dbContext.Set<T>().Add(entity);
+        public async Task<bool> Any(Expression<Func<T, bool>> predicate) => 
+            await _dbContext.Set<T>().AnyAsync(predicate);
+
+        public async Task Create(T entity) =>  await _dbContext.Set<T>().AddAsync(entity);
 
         public void Delete(T entity) => _dbContext?.Set<T>().Remove(entity);
 

@@ -29,7 +29,9 @@ namespace BallBuddies.Services.Implementation
 
         }
 
-        public async Task<CommentResponseDto> CreateCommentForEventAsync(Guid eventId, CommentRequestDto commentRequestDto, bool trackChanges)
+        public async Task<CommentResponseDto> CreateCommentForEventAsync(Guid eventId,
+            CommentRequestDto commentRequestDto,
+            bool trackChanges)
         {
             var userId = _httpContextAccessor
                 .HttpContext

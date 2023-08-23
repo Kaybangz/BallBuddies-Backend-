@@ -1,13 +1,16 @@
-﻿using BallBuddies.Models.Dtos.Response;
+﻿using BallBuddies.Models.Dtos.Request;
+using BallBuddies.Models.Dtos.Response;
 
 
 namespace BallBuddies.Services.Interface
 {
     public interface IAttendanceService
     {
-        Task<IEnumerable<AttendanceResponseDto>> GetEventAttendancesAsync(Guid eventId, bool trackChanges);
+        Task<IEnumerable<AttendanceResponseDto>> GetEventAttendancesAsync(Guid eventId,
+            bool trackChanges);
+
         Task<AttendanceResponseDto> AddEventAttendanceAsync(Guid eventId,
-            AttendanceResponseDto dto,
+            AttendanceRequestDto attendanceRequestDto,
             bool trackChanges);
 
         Task DeleteEventAttendanceAsync(Guid eventId,

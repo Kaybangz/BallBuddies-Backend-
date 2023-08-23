@@ -12,7 +12,9 @@ namespace BallBuddies.Data.Interface
         void Delete(TEntity entity);*/
         IQueryable<T> FindAll(bool trackChanges);
         IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression, bool trackChanges);
-        void Create(T entity);
+
+        Task<bool> Any(Expression<Func<T, bool>> predicate);
+        Task Create(T entity);
         void Update(T entity);
         void Delete(T entity);
     }

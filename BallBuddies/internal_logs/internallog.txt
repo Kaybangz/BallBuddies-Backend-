@@ -35757,3 +35757,28 @@
 2023-08-22 17:29:31.2280 Trace  Scanning Property LineEnding 'Default' NLog.Targets
 2023-08-22 17:29:31.2418 Trace FileTarget(Name=logfile) has 2 layouts
 2023-08-22 17:29:31.2418 Trace FileTarget(Name=logfile): Using appenderFactory: NLog.Internal.FileAppenders.SingleProcessFileAppender+Factory
+2023-08-22 17:42:11.1570 Info AppDomain Shutting down. LogFactory closing...
+2023-08-22 17:42:11.1570 Debug Stopping file watching for path 'C:\Users\HP\Documents\BallBuddies-Backend-\BallBuddies' filter 'nlog.config'
+2023-08-22 17:42:11.1662 Trace Flushing all 1 targets...
+2023-08-22 17:42:11.1662 Trace ForEachItemInParallel() 1 items
+2023-08-22 17:42:11.1662 Trace FileTarget(Name=logfile): FlushAsync
+2023-08-22 17:42:11.1662 Trace Continuation invoked: 
+2023-08-22 17:42:11.1662 Trace Parallel task completed. 0 items remaining
+2023-08-22 17:42:11.1829 Debug Flush completed
+2023-08-22 17:42:11.1829 Trace FileTarget(Name=logfile): FlushAsync Done
+2023-08-22 17:42:11.1829 Debug Closing logging configuration...
+2023-08-22 17:42:11.1829 Trace Closing FileTarget(Name=logfile)
+2023-08-22 17:42:11.1829 Debug FileTarget(Name=logfile): Closing...
+2023-08-22 17:42:11.1829 Debug FileTarget(Name=logfile): Closed.
+2023-08-22 17:42:11.1829 Trace Closing .\logs\${shortdate}_logfile.txt
+2023-08-22 17:42:11.1829 Trace Closing Layout Renderer: ${literal}
+2023-08-22 17:42:11.1829 Trace Closing Layout Renderer: ${shortdate}
+2023-08-22 17:42:11.1829 Trace Closing Layout Renderer: ${literal}
+2023-08-22 17:42:11.1829 Trace Closing ${longdate} ${level:uppercase=true} ${message}
+2023-08-22 17:42:11.1952 Trace Closing Layout Renderer: ${longdate}
+2023-08-22 17:42:11.1952 Trace Closing Layout Renderer: ${literal}
+2023-08-22 17:42:11.1952 Trace Closing Layout Renderer: ${level}
+2023-08-22 17:42:11.1952 Trace Closing Layout Renderer: ${literal}
+2023-08-22 17:42:11.1952 Trace Closing Layout Renderer: ${message}
+2023-08-22 17:42:11.1952 Debug Finished closing logging configuration.
+2023-08-22 17:42:11.1952 Info LogFactory has been closed.
