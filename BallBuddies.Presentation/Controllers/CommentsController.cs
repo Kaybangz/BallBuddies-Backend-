@@ -63,6 +63,9 @@ namespace BallBuddies.Presentation.Controllers
             [FromBody] CommentRequestDto commentRequest)
         {
 
+            if (commentRequest is null)
+                return BadRequest("Comment date is invalid.");
+
             var commentToReturn = await _service.CommentService.CreateCommentForEventAsync(eventId,
                 commentRequest,
                 trackChanges: false);

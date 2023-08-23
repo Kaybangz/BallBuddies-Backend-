@@ -10,10 +10,8 @@ namespace BallBuddies.Data.Implementation
         public AttendanceRepository(BallBuddiesDBContext dbContext): base(dbContext)
         {}
 
-        public void AddEventAttendance(Attendance attendance, Guid eventId, string userId)
+        public void AddEventAttendance(Attendance attendance)
         {
-            attendance.UserId = userId;
-            attendance.EventId = eventId;
             Create(attendance);
         }
 

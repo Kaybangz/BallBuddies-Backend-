@@ -33,7 +33,7 @@ namespace BallBuddies.Services.Implementation
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<AttendanceResponseDto> AddEventAttendanceAsync(Guid eventId,
+        public async Task<AttendanceResponseDto> AddEventAttendanceAsync(
             AttendanceRequestDto attendanceRequestDto,
             bool trackChanges)
         {
@@ -43,6 +43,8 @@ namespace BallBuddies.Services.Implementation
                 .FindFirst(ClaimTypes.NameIdentifier)?
                 .Value;
 
+            var eventId = attendanceRequestDto.EventId;
+
             var existingEvent = await CheckIfEventExist(eventId, trackChanges);
 
             if(await _unitOfWork.Attendance.IsUserAttendingEvent(userId, eventId))
@@ -50,13 +52,25 @@ namespace BallBuddies.Services.Implementation
                 throw new Exception("User is already attending this event");
             }
 
-            var attendanceDto = _mapper.Map<Attendance>(attendanceRequestDto);
+            var newAttendance = new Attendance
+            {
+                EventId = eventId,
+                UserId = userId,
+            };
+
+            _unitOfWork.Attendance.AddEventAttendance(newAttendance);
+
+            await _unitOfWork.SaveAsync();
+
+            return _mapper.Map<AttendanceResponseDto>(newAttendance);
+
+            /*var attendanceDto = _mapper.Map<Attendance>(attendanceRequestDto);
 
             _unitOfWork.Attendance.AddEventAttendance(attendanceDto, eventId, userId);
 
             await _unitOfWork.SaveAsync();
 
-            return _mapper.Map<AttendanceResponseDto>(attendanceDto);
+            return _mapper.Map<AttendanceResponseDto>(attendanceDto);*/
 
         }
 
