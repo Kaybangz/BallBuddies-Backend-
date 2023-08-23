@@ -1,5 +1,6 @@
 ﻿namespace BallBuddies.Models.Dtos.Response
 {
+    [Serializable]
     public record UserModelResponseDto
     (
         string Id,

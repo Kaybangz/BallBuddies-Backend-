@@ -2,6 +2,7 @@
 
 namespace BallBuddies.Models.Dtos.Request
 {
+    [Serializable]
     public record UserRegistrationDto
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "Username is required")]

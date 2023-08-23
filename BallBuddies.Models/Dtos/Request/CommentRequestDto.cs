@@ -2,6 +2,7 @@
 
 namespace BallBuddies.Models.Dtos.Request
 {
+    [Serializable]
     public record CommentRequestDto
     {
         [Required(ErrorMessage = "Comment text is required.")]

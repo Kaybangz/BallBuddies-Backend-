@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BallBuddies.Models.Dtos.Request
 {
+    [Serializable]
     public record UserAuthenticationDto
     {
         [Required(ErrorMessage = "Username is required")]

@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using BallBuddies.Models.Entities;
 
 namespace BallBuddies.Models.Dtos.Request
 {
