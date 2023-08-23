@@ -45,7 +45,7 @@ namespace BallBuddies.Services.Implementation
 
             var eventId = attendanceRequestDto.EventId;
 
-            var existingEvent = await CheckIfEventExist(eventId, trackChanges);
+            await CheckIfEventExist(eventId, trackChanges);
 
             if(await _unitOfWork.Attendance.IsUserAttendingEvent(userId, eventId))
             {
@@ -74,9 +74,34 @@ namespace BallBuddies.Services.Implementation
 
         }
 
-        public Task DeleteEventAttendanceAsync(Guid eventId, Guid attendanceId, bool trackChanges)
+
+        /*FOR DELETING USER ATTENDANCE*/
+        public async Task DeleteEventAttendanceAsync(AttendanceRequestDto attendanceRequestDto,
+            bool trackChanges)
         {
-            throw new NotImplementedException();
+            var userId = _httpContextAccessor?
+                .HttpContext?
+                .User
+                .FindFirst(ClaimTypes.NameIdentifier)?
+                .Value;
+
+            var eventId = attendanceRequestDto.EventId;
+
+            await CheckIfEventExist(eventId, trackChanges);
+
+            if (!await _unitOfWork.Attendance.IsUserAttendingEvent(userId, eventId))
+            {
+                throw new Exception("User is not attending this event");
+            }
+
+            var attendance = await _unitOfWork.Attendance.GetAttendanceAsync(eventId, userId);
+
+            if (attendance is null)
+                throw new Exception("Attendance record not found.");
+
+            _unitOfWork.Attendance.RemoveEventAttendance(attendance);
+
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task<IEnumerable<AttendanceResponseDto>> GetEventAttendancesAsync(Guid eventId, bool trackChanges)

@@ -27,7 +27,13 @@ namespace BallBuddies.Data.Implementation
             .AsNoTracking() :
             _dbContext.Set<T>();
 
-        public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression, bool trackChanges) =>
+        public async Task<T> FindAsync(Expression<Func<T, bool>> predicate) =>
+            await _dbContext?
+            .Set<T>()
+            .FirstOrDefaultAsync(predicate);
+
+        public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression,
+            bool trackChanges) =>
             !trackChanges ?
             _dbContext.Set<T>()
             .Where(expression)

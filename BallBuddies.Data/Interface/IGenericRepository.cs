@@ -10,6 +10,7 @@ namespace BallBuddies.Data.Interface
         Task Add(TEntity entity);
         void Update(TEntity entity);
         void Delete(TEntity entity);*/
+        Task<T> FindAsync(Expression<Func<T, bool>> predicate);
         IQueryable<T> FindAll(bool trackChanges);
         IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression, bool trackChanges);
 

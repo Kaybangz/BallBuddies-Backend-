@@ -13,8 +13,7 @@ namespace BallBuddies.Services.Interface
             AttendanceRequestDto attendanceRequestDto,
             bool trackChanges);
 
-        Task DeleteEventAttendanceAsync(Guid eventId,
-            Guid attendanceId,
+        Task DeleteEventAttendanceAsync(AttendanceRequestDto attendanceRequestDto,
             bool trackChanges);
     }
 }

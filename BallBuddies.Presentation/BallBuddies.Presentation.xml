@@ -4,6 +4,33 @@
         <name>BallBuddies.Presentation</name>
     </assembly>
     <members>
+        <member name="M:BallBuddies.Presentation.Controllers.AttendanceController.GetEventAttendances(System.Guid)">
+            <summary>
+            Gets all the attendance for an event
+            </summary>
+            <param name="eventId"></param>
+            <returns>New user registered</returns>
+            <response code="200">Returns all the attendance for an event</response>
+            <response code="401">Unauthorized access</response>
+        </member>
+        <member name="M:BallBuddies.Presentation.Controllers.AttendanceController.AddEventAttendance(BallBuddies.Models.Dtos.Request.AttendanceRequestDto)">
+            <summary>
+            Adds user attendance to an event
+            </summary>
+            <param name="attendanceRequestDto"></param>
+            <returns>New user registered</returns>
+            <response code="201">Returns 201 response</response>
+            <response code="401">Unauthorized access</response>
+        </member>
+        <member name="M:BallBuddies.Presentation.Controllers.AttendanceController.RemoveEventAttendance(BallBuddies.Models.Dtos.Request.AttendanceRequestDto)">
+            <summary>
+            Removes user attendance from an event
+            </summary>
+            <param name="attendanceRequestDto"></param>
+            <returns>New user registered</returns>
+            <response code="201">Returns 201 response</response>
+            <response code="401">Unauthorized access</response>
+        </member>
         <member name="M:BallBuddies.Presentation.Controllers.AuthenticationController.RegisterUser(BallBuddies.Models.Dtos.Request.UserRegistrationDto)">
             <summary>
             Registers a new user

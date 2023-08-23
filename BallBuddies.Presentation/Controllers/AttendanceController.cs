@@ -17,7 +17,15 @@ namespace BallBuddies.Presentation.Controllers
         public AttendanceController(IServiceManager service) => _service = service;
 
 
+        /// <summary>
+        /// Gets all the attendance for an event
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <returns>New user registered</returns>
+        /// <response code="200">Returns all the attendance for an event</response>
+        /// <response code="401">Unauthorized access</response>
         [HttpGet(Name = "GetEventAttendances")]
+        [Authorize(Roles = "User, Admin")]
         public async Task<IActionResult> GetEventAttendances(Guid eventId)
         {
             var attendances = await _service.AttendanceService.GetEventAttendancesAsync(eventId, trackChanges: false);
@@ -25,7 +33,18 @@ namespace BallBuddies.Presentation.Controllers
             return Ok(attendances);
         }
 
-        [HttpPost(Name = "AddEventAttendance")]
+
+
+
+
+        /// <summary>
+        /// Adds user attendance to an event
+        /// </summary>
+        /// <param name="attendanceRequestDto"></param>
+        /// <returns>New user registered</returns>
+        /// <response code="201">Returns 201 response</response>
+        /// <response code="401">Unauthorized access</response>
+        [HttpPost(Name = "AttendEvent")]
         [Authorize(Roles = "User")]
         public async Task<IActionResult> AddEventAttendance(
             AttendanceRequestDto attendanceRequestDto)
@@ -33,12 +52,34 @@ namespace BallBuddies.Presentation.Controllers
             if (attendanceRequestDto is null)
                 return BadRequest("Attendance data is invalid");
 
-            var attendanceToReturn = await _service
+            await _service
                 .AttendanceService
                 .AddEventAttendanceAsync(attendanceRequestDto, trackChanges: true);
 
-            return Ok("User has successfully attended event.");
+            return Ok();
 
+        }
+
+
+
+        /// <summary>
+        /// Removes user attendance from an event
+        /// </summary>
+        /// <param name="attendanceRequestDto"></param>
+        /// <returns>New user registered</returns>
+        /// <response code="201">Returns 201 response</response>
+        /// <response code="401">Unauthorized access</response>
+        [HttpDelete(Name = "UnattendEvent")]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> RemoveEventAttendance(AttendanceRequestDto attendanceRequestDto)
+        {
+            if (attendanceRequestDto is null)
+                return BadRequest("Attendance data is invalid");
+
+            await _service.AttendanceService.DeleteEventAttendanceAsync(attendanceRequestDto,
+                trackChanges: true);
+
+            return Ok();
         }
     }
 }
