@@ -92,6 +92,18 @@ namespace BallBuddies.Presentation.Controllers
 
 
 
+        [HttpGet("{userId}/events", Name = "Current_user_events")]
+        [Authorize(Roles = "User, Admin")]
+        public async Task<IActionResult> GetCurrentUserEvents()
+        {
+            var currentUserEvents = await _service.EventService
+                .GetEventsCreatedByUserAsync(trackChanges: false);
+
+            return Ok(currentUserEvents);
+        }
+
+
+
         /// <summary>
         /// Updates an event
         /// </summary>

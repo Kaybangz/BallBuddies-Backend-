@@ -40,12 +40,10 @@ namespace BallBuddies.Services.Implementation
                 .FindFirst(ClaimTypes.NameIdentifier)
                 ?.Value;
 
-            
-
             var eventEntity = _mapper.Map<Event>(eventRequestDto);
 
 
-            _unitOfWork.Event.CreateEvent(userId, eventEntity);
+            await _unitOfWork.Event.CreateEvent(userId, eventEntity);
             await _unitOfWork.SaveAsync();
 
             var eventToReturn = _mapper.Map<EventResponseDto>(eventEntity);
@@ -90,6 +88,22 @@ namespace BallBuddies.Services.Implementation
             var eventDto = _mapper.Map<EventResponseDto>(existingEvent);
 
             return eventDto;
+        }
+
+        public async Task<IEnumerable<EventResponseDto>> GetEventsCreatedByUserAsync(bool trackChanges)
+        {
+            var userId = _httpContextAccessor
+                .HttpContext
+                ?.User
+                .FindFirst(ClaimTypes.NameIdentifier)
+                ?.Value;
+
+            var events = await _unitOfWork
+                .Event
+                .GetEventsCreatedByUser(userId, trackChanges);
+
+            return _mapper.Map<IEnumerable<EventResponseDto>>(events);
+
         }
 
         public async Task UpdateEventAsync(Guid eventId, 

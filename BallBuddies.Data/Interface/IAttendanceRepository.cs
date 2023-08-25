@@ -6,8 +6,11 @@ namespace BallBuddies.Data.Interface
     {
         Task<IEnumerable<Attendance>> GetEventAttendances(Guid eventId, bool trackChanges);
 
+        Task<IEnumerable<Attendance>> GetUserAttendances(string userId, bool trackChanges);
+
         Task<Attendance> GetAttendanceAsync(Guid eventId, string userId);
-        void AddEventAttendance(Attendance attendance);
+
+        Task AddEventAttendance(Attendance attendance);
         void RemoveEventAttendance(Attendance attendance);
 
         Task<bool> IsUserAttendingEvent(string userId, Guid eventId);

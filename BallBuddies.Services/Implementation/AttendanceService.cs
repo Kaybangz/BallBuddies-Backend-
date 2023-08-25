@@ -33,6 +33,8 @@ namespace BallBuddies.Services.Implementation
             _httpContextAccessor = httpContextAccessor;
         }
 
+
+        /*FOR ADDING USER ATTENDANCE*/
         public async Task<AttendanceResponseDto> AddEventAttendanceAsync(
             AttendanceRequestDto attendanceRequestDto,
             bool trackChanges)
@@ -58,7 +60,7 @@ namespace BallBuddies.Services.Implementation
                 UserId = userId,
             };
 
-            _unitOfWork.Attendance.AddEventAttendance(newAttendance);
+            await _unitOfWork.Attendance.AddEventAttendance(newAttendance);
 
             await _unitOfWork.SaveAsync();
 
@@ -104,6 +106,9 @@ namespace BallBuddies.Services.Implementation
             await _unitOfWork.SaveAsync();
         }
 
+
+
+        /*FOR GETTING ALL EVENT ATTENDANCE*/
         public async Task<IEnumerable<AttendanceResponseDto>> GetEventAttendancesAsync(Guid eventId, bool trackChanges)
         {
             await CheckIfEventExist(eventId, trackChanges);
@@ -115,6 +120,20 @@ namespace BallBuddies.Services.Implementation
             return attendanceDto;
         }
 
+        public async Task<IEnumerable<AttendanceResponseDto>> GetUserAttendanceAsync( bool trackChanges)
+        {
+            var userId = _httpContextAccessor?
+                .HttpContext?
+                .User
+                .FindFirst(ClaimTypes.NameIdentifier)?
+                .Value;
+
+            var attendances = await _unitOfWork
+                .Attendance
+                .GetUserAttendances(userId, trackChanges);
+
+            return _mapper.Map<IEnumerable<AttendanceResponseDto>>(attendances);
+        }
 
         private async Task<Event> CheckIfEventExist(Guid eventId, bool trackChanges)
         {

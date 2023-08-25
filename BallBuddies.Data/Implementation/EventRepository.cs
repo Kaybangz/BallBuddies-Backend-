@@ -10,10 +10,10 @@ namespace BallBuddies.Data.Implementation
         public EventRepository(BallBuddiesDBContext dbContext): base(dbContext)
         {}
 
-        public void CreateEvent(string userId, Event createdEvent)
+        public async Task CreateEvent(string userId, Event createdEvent)
         {
             createdEvent.CreatedByUserId = userId;
-            Create(createdEvent);
+            await Create(createdEvent);
         }
 
         public void DeleteEvent(Event eventToDelete) => Delete(eventToDelete);
@@ -28,6 +28,12 @@ namespace BallBuddies.Data.Implementation
         public async Task<Event> GetEvent(Guid eventId, bool trackChanges) =>
             await FindByCondition(e => e.Id.Equals(eventId), trackChanges)
             .SingleOrDefaultAsync();
+
+        public async Task<IEnumerable<Event>> GetEventsCreatedByUser(string userId,
+            bool trackChanges) => 
+            await FindByCondition(e => e.CreatedByUserId.Equals(userId), trackChanges)
+            .ToListAsync();
+       
 
         public void UpdateEvent(Event updatedEvent) =>
             Update(updatedEvent);
