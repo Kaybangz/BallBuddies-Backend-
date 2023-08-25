@@ -65,6 +65,16 @@ namespace BallBuddies.Services.Implementation
             return userDto;
         }
 
+        /*public Task<IEnumerable<AttendanceResponseDto>> GetUserAttendanceAsync(string userId, bool trackChanges)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<EventResponseDto>> GetUserEventsAsync(string userId, bool trackChanges)
+        {
+            throw new NotImplementedException();
+        }
+*/
         public async Task UpdateUserAsync(string userId,
             UserModelRequestDto userModelRequestDto,
             bool trackChanges)

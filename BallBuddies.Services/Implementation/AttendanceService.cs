@@ -120,7 +120,7 @@ namespace BallBuddies.Services.Implementation
             return attendanceDto;
         }
 
-        public async Task<IEnumerable<AttendanceResponseDto>> GetUserAttendanceAsync( bool trackChanges)
+        public async Task<IEnumerable<AttendanceRequestDto>> GetUserAttendanceAsync( bool trackChanges)
         {
             var userId = _httpContextAccessor?
                 .HttpContext?
@@ -132,7 +132,7 @@ namespace BallBuddies.Services.Implementation
                 .Attendance
                 .GetUserAttendances(userId, trackChanges);
 
-            return _mapper.Map<IEnumerable<AttendanceResponseDto>>(attendances);
+            return _mapper.Map<IEnumerable<AttendanceRequestDto>>(attendances);
         }
 
         private async Task<Event> CheckIfEventExist(Guid eventId, bool trackChanges)

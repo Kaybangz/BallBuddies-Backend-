@@ -9,7 +9,7 @@ namespace BallBuddies.Services.Interface
         Task<IEnumerable<AttendanceResponseDto>> GetEventAttendancesAsync(Guid eventId,
             bool trackChanges);
 
-        Task<IEnumerable<AttendanceResponseDto>> GetUserAttendanceAsync(
+        Task<IEnumerable<AttendanceRequestDto>> GetUserAttendanceAsync(
             bool trackChanges);
 
         Task<AttendanceResponseDto> AddEventAttendanceAsync(

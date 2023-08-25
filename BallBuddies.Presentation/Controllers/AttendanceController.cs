@@ -26,10 +26,12 @@ namespace BallBuddies.Presentation.Controllers
         /// <response code="200">Returns all the attendance for an event</response>
         /// <response code="401">Unauthorized access</response>
         [HttpGet("events/{eventId}/attendances", Name = "GetEventAttendances")]
-        [Authorize(Roles = "User, Admin")]
+        /*[Authorize(Roles = "User, Admin")]*/
         public async Task<IActionResult> GetEventAttendances(Guid eventId)
         {
-            var attendances = await _service.AttendanceService.GetEventAttendancesAsync(eventId, trackChanges: false);
+            var attendances = await _service
+                .AttendanceService
+                .GetEventAttendancesAsync(eventId, trackChanges: false);
 
             return Ok(attendances);
         }
@@ -43,7 +45,7 @@ namespace BallBuddies.Presentation.Controllers
         /// Gets all events a user is attending
         /// </summary>
         /// <returns>New user registered</returns>
-        /// <response code="201">Returns 201 response</response>
+        /// <response code="200">Returns 200 status code response</response>
         /// <response code="401">Unauthorized access</response>
         [HttpGet("{userId}/attendances", Name = "GetUserAttendances")]
         [Authorize(Roles = "User")]
@@ -90,8 +92,7 @@ namespace BallBuddies.Presentation.Controllers
         /// Removes user attendance from an event
         /// </summary>
         /// <param name="attendanceRequestDto"></param>
-        /// <returns>201 status code</returns>
-        /// <response code="201">Returns 201 response</response>
+        /// <response code="200">Returns success</response>
         /// <response code="401">Unauthorized access</response>
         [HttpDelete("unattend", Name = "UnattendEvent")]
         [Authorize(Roles = "User")]

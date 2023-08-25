@@ -26,9 +26,15 @@ namespace BallBuddies.Data.Implementation
 
         public void UpdateUser(User user) => Update(user);
 
-        /*public void UpdateUser(string eventId, User user)
-        {
-            throw new NotImplementedException();   
-        }*/
+        /*public async Task<IEnumerable<Event>> GetUserEvents(string userId, bool trackChanges) =>
+            await FindByCondition(u => u.Id.Equals(userId), trackChanges)
+            .SelectMany(u => u.Events).ToListAsync();   
+
+        public async Task<IEnumerable<Attendance>> GetUserAttendance(string userId,
+            bool trackChanges) =>
+            await FindByCondition(u => u.Id.Equals(userId), trackChanges)
+            .SelectMany(u => u.Attendances)
+            .ToListAsync();*/
+
     }
 }

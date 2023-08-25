@@ -6,6 +6,8 @@ namespace BallBuddies.Data.Interface
     {
         Task<IEnumerable<User>> GetAllUsers(bool trackChanges);
         Task<User> GetUser(string id, bool trackChanges);
+        /*Task<IEnumerable<Event>> GetUserEvents(string userId, bool trackChanges);
+        Task<IEnumerable<Attendance>> GetUserAttendance(string userId, bool trackChanges);*/
         void UpdateUser(User user);
         void DeleteUser(User user);
     }

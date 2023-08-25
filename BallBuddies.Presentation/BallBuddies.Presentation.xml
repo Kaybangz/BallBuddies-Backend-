@@ -18,7 +18,7 @@
             Gets all events a user is attending
             </summary>
             <returns>New user registered</returns>
-            <response code="201">Returns 201 response</response>
+            <response code="200">Returns 200 status code response</response>
             <response code="401">Unauthorized access</response>
         </member>
         <member name="M:BallBuddies.Presentation.Controllers.AttendanceController.AddEventAttendance(BallBuddies.Models.Dtos.Request.AttendanceRequestDto)">
@@ -35,8 +35,7 @@
             Removes user attendance from an event
             </summary>
             <param name="attendanceRequestDto"></param>
-            <returns>201 status code</returns>
-            <response code="201">Returns 201 response</response>
+            <response code="200">Returns success</response>
             <response code="401">Unauthorized access</response>
         </member>
         <member name="M:BallBuddies.Presentation.Controllers.AuthenticationController.RegisterUser(BallBuddies.Models.Dtos.Request.UserRegistrationDto)">
