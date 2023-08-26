@@ -2,12 +2,12 @@
 
 ## Table of Contents
 
-* [Introduction](https://github.com/Kaybangz/BallBuddies-Backend-/blob/master/README.md#introduction)
-* [Features](https://github.com/Kaybangz/BallBuddies-Backend-/blob/master/README.md#features)
-* [Technology](https://github.com/Kaybangz/BallBuddies-Backend-/blob/master/README.md#technology-used)
-* [Run locally](https://github.com/Kaybangz/BallBuddies-Backend-/blob/master/README.md#run-locally)
-* [Layout](https://github.com/Kaybangz/BallBuddies-Backend-/blob/master/README.md#layout)
-* [Support](https://github.com/Kaybangz/BallBuddies-Backend-/blob/master/README.md#support)
+* [Introduction](#introduction)
+* [Features](#features)
+* [Technology](#technology-used)
+* [Run locally](#run-locally)
+* [Layout](#layout)
+* [Support](#support)
 
 
 
