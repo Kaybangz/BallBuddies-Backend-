@@ -1,14 +1,16 @@
-
 # **Ball-Buddies Backend Api**
 
 ## Table of Contents
 
-* [Introduction](https://pages.github.com/)
-* [Features](https://pages.github.com/)
-* [Technology](https://pages.github.com/)
-* [Run locally](https://pages.github.com/)
-* [Layout](https://pages.github.com/)
-* [Support](https://pages.github.com/)
+* [Introduction](https://github.com/Kaybangz/BallBuddies-Backend-/blob/master/README.md#introduction)
+* [Features](https://github.com/Kaybangz/BallBuddies-Backend-/blob/master/README.md#features)
+* [Technology](https://github.com/Kaybangz/BallBuddies-Backend-/blob/master/README.md#technology-used)
+* [Run locally](https://github.com/Kaybangz/BallBuddies-Backend-/blob/master/README.md#run-locally)
+* [Layout](https://github.com/Kaybangz/BallBuddies-Backend-/blob/master/README.md#layout)
+* [Support](https://github.com/Kaybangz/BallBuddies-Backend-/blob/master/README.md#support)
+
+
+
 
 
 ## Introduction
