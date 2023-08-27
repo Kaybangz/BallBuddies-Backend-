@@ -18,6 +18,8 @@ namespace BallBuddies.Models.Entities
         public decimal Price { get; set; }
         public string? EventImageUrl { get; set; }
 
+        public int Slots { get; set; }  
+
         [Required(AllowEmptyStrings = false, ErrorMessage = "Location is required")]
         [MaxLength(150, ErrorMessage = "Cannot exceed 150 characters")]
         public string Venue { get; set; } = null!;

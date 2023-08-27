@@ -9,7 +9,6 @@ namespace BallBuddies.Presentation.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    /*[Route("api/events/{eventId}/attendances")]*/
     [ApiExplorerSettings(GroupName = "v1")]
     public class AttendanceController: ControllerBase
     {
@@ -26,7 +25,7 @@ namespace BallBuddies.Presentation.Controllers
         /// <response code="200">Returns all the attendance for an event</response>
         /// <response code="401">Unauthorized access</response>
         [HttpGet("events/{eventId}/attendances", Name = "GetEventAttendances")]
-        /*[Authorize(Roles = "User, Admin")]*/
+        [AllowAnonymous]
         public async Task<IActionResult> GetEventAttendances(Guid eventId)
         {
             var attendances = await _service
@@ -70,7 +69,7 @@ namespace BallBuddies.Presentation.Controllers
         /// <returns>201 status code</returns>
         /// <response code="201">Returns 201 response</response>
         /// <response code="401">Unauthorized access</response>
-        [HttpPost("attend", Name = "AttendEvent")]
+        [HttpPost("{eventId}/attend", Name = "AttendEvent")]
         [Authorize(Roles = "User")]
         public async Task<IActionResult> AddEventAttendance(
             AttendanceRequestDto attendanceRequestDto)
@@ -94,7 +93,7 @@ namespace BallBuddies.Presentation.Controllers
         /// <param name="attendanceRequestDto"></param>
         /// <response code="200">Returns success</response>
         /// <response code="401">Unauthorized access</response>
-        [HttpDelete("unattend", Name = "UnattendEvent")]
+        [HttpDelete("{eventId}/unattend", Name = "UnattendEvent")]
         [Authorize(Roles = "User")]
         public async Task<IActionResult> RemoveEventAttendance(AttendanceRequestDto attendanceRequestDto)
         {

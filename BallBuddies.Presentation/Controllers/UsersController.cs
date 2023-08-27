@@ -1,5 +1,6 @@
 ﻿using BallBuddies.Models.Dtos.Request;
 using BallBuddies.Models.Dtos.Response;
+using BallBuddies.Services.ActionFilters;
 using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,9 +28,9 @@ namespace BallBuddies.Presentation.Controllers
         /*[Authorize(Roles = "Admin")]*/
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
-        public async Task<IActionResult> GetUsers()
+        public IActionResult GetUsers()
         {
-            var users = await _service.UserService.GetAllUsersAsync(trackChanges: false);
+            var users = _service.UserService.GetAllUsersAsync(trackChanges: false);
 
             return Ok(users);
         }
@@ -61,11 +62,12 @@ namespace BallBuddies.Presentation.Controllers
         [HttpPut("{id}", Name = "UpdateUser")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<ActionResult<UserModelResponseDto>> UpdateUser(string id,
             [FromBody] UserModelRequestDto userModelRequestDto)
         {
             if (userModelRequestDto == null)
-                return BadRequest("UserModelRequestDto object is null...");
+                return BadRequest("User data is invalid.");
 
             await _service.UserService.UpdateUserAsync(id, userModelRequestDto, trackChanges: true);
 

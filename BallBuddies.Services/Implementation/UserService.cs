@@ -2,7 +2,6 @@
 using BallBuddies.Data.Interface;
 using BallBuddies.Models.Dtos.Request;
 using BallBuddies.Models.Dtos.Response;
-using BallBuddies.Models.Entities;
 using BallBuddies.Models.Exceptions;
 using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.Http;
@@ -42,11 +41,11 @@ namespace BallBuddies.Services.Implementation
         }
 
 
-        public async Task<IEnumerable<UserModelResponseDto>> GetAllUsersAsync(bool trackChanges)
+        public IQueryable<UserModelResponseDto> GetAllUsersAsync(bool trackChanges)
         {
-            var users = await _unitOfWork.User.GetAllUsers(trackChanges);
+            var users = _unitOfWork.User.GetAllUsers(trackChanges);
 
-            var usersDto = _mapper.Map<IEnumerable<UserModelResponseDto>>(users);
+            var usersDto = _mapper.Map<IQueryable<UserModelResponseDto>>(users);
 
             return usersDto;
         }
@@ -65,16 +64,7 @@ namespace BallBuddies.Services.Implementation
             return userDto;
         }
 
-        /*public Task<IEnumerable<AttendanceResponseDto>> GetUserAttendanceAsync(string userId, bool trackChanges)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<EventResponseDto>> GetUserEventsAsync(string userId, bool trackChanges)
-        {
-            throw new NotImplementedException();
-        }
-*/
+       
         public async Task UpdateUserAsync(string userId,
             UserModelRequestDto userModelRequestDto,
             bool trackChanges)

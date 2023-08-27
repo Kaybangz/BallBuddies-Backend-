@@ -39,13 +39,15 @@ namespace BallBuddies.Data.Context
                 .HasOne(a => a.Event)
                 .WithMany(e => e.Attendances)
                 .HasForeignKey(a => a.EventId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
 
             builder.Entity<Comment>()
                 .HasOne(a => a.Event)
                 .WithMany(e => e.Comments)
                 .HasForeignKey(a => a.EventId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
 
 
             base.OnModelCreating(builder);
