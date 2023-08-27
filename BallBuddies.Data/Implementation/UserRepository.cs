@@ -19,9 +19,10 @@ namespace BallBuddies.Data.Implementation
             .SingleOrDefaultAsync();
 #pragma warning restore CS8603 // Possible null reference return.
 
-        public IQueryable<User> GetAllUsers(bool trackChanges) => 
-            FindAll(trackChanges)
-            .OrderBy(u => u.UserName);
+        public async Task<IEnumerable<User>> GetAllUsers(bool trackChanges) => 
+            await FindAll(trackChanges)
+            .OrderBy(u => u.UserName)
+            .ToListAsync();
 
         public void UpdateUser(User user) => Update(user);
 

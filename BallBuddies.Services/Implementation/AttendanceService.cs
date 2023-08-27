@@ -66,18 +66,10 @@ namespace BallBuddies.Services.Implementation
 
             return _mapper.Map<AttendanceResponseDto>(newAttendance);
 
-            /*var attendanceDto = _mapper.Map<Attendance>(attendanceRequestDto);
-
-            _unitOfWork.Attendance.AddEventAttendance(attendanceDto, eventId, userId);
-
-            await _unitOfWork.SaveAsync();
-
-            return _mapper.Map<AttendanceResponseDto>(attendanceDto);*/
-
         }
 
 
-        /*FOR DELETING USER ATTENDANCE*/
+       
         public async Task DeleteEventAttendanceAsync(AttendanceRequestDto attendanceRequestDto,
             bool trackChanges)
         {
@@ -106,9 +98,18 @@ namespace BallBuddies.Services.Implementation
             await _unitOfWork.SaveAsync();
         }
 
+        public async Task<int> GetAttendanceNumberAsync(Guid eventId, bool trackChanges)
+        {
+            await CheckIfEventExist(eventId, trackChanges);
+
+            var numberOfAttendance = await _unitOfWork.Attendance.GetAttendanceNumber(eventId, trackChanges);
+
+            return numberOfAttendance;
+        }
 
 
-        /*FOR GETTING ALL EVENT ATTENDANCE*/
+
+        
         public async Task<IEnumerable<AttendanceResponseDto>> GetEventAttendancesAsync(Guid eventId, bool trackChanges)
         {
             await CheckIfEventExist(eventId, trackChanges);

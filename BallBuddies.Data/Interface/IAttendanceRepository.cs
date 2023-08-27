@@ -5,6 +5,7 @@ namespace BallBuddies.Data.Interface
     public interface IAttendanceRepository
     {
         Task<IEnumerable<Attendance>> GetEventAttendances(Guid eventId, bool trackChanges);
+        Task<int> GetAttendanceNumber(Guid eventId, bool trackChanges);
 
         Task<IEnumerable<Attendance>> GetUserAttendances(string userId, bool trackChanges);
 

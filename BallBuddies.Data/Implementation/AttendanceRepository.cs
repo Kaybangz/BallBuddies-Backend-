@@ -19,6 +19,11 @@ namespace BallBuddies.Data.Implementation
             string userId) =>
             await FindAsync(a => a.EventId == eventId && a.UserId == userId);
 
+        public async Task<int> GetAttendanceNumber(Guid eventId,
+            bool trackChanges) =>
+            await FindByCondition(a => a.EventId.Equals(eventId), trackChanges)
+            .CountAsync();
+
         public async Task<IEnumerable<Attendance>> GetEventAttendances(Guid eventId,
             bool trackChanges) =>
             await FindByCondition(a => a.EventId.Equals(eventId), trackChanges)

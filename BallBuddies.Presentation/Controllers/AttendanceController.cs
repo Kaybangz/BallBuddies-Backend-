@@ -36,7 +36,17 @@ namespace BallBuddies.Presentation.Controllers
         }
 
 
+        [HttpGet("events/{eventId}/attendances/count", Name = "GetAttendanceNumber")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAttendanceNumber(Guid eventId)
+        {
+            var attendanceNumber = await _service
+                .AttendanceService
+                .GetAttendanceNumberAsync(eventId,
+                trackChanges: false);
 
+            return Ok(attendanceNumber);
+        }
 
 
 

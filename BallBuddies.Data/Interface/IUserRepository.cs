@@ -4,7 +4,7 @@ namespace BallBuddies.Data.Interface
 {
     public interface IUserRepository
     {
-        IQueryable<User> GetAllUsers(bool trackChanges);
+        Task<IEnumerable<User>> GetAllUsers(bool trackChanges);
         Task<User> GetUser(string id, bool trackChanges);
         /*Task<IEnumerable<Event>> GetUserEvents(string userId, bool trackChanges);
         Task<IEnumerable<Attendance>> GetUserAttendance(string userId, bool trackChanges);*/

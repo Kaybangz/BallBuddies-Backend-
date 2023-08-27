@@ -28,9 +28,9 @@ namespace BallBuddies.Presentation.Controllers
         /*[Authorize(Roles = "Admin")]*/
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
-        public IActionResult GetUsers()
+        public async Task<IActionResult> GetUsers()
         {
-            var users = _service.UserService.GetAllUsersAsync(trackChanges: false);
+            var users = await _service.UserService.GetAllUsersAsync(trackChanges: false);
 
             return Ok(users);
         }

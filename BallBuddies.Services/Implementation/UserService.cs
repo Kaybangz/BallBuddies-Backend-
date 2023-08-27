@@ -41,11 +41,11 @@ namespace BallBuddies.Services.Implementation
         }
 
 
-        public IQueryable<UserModelResponseDto> GetAllUsersAsync(bool trackChanges)
+        public async Task<IEnumerable<UserModelResponseDto>> GetAllUsersAsync(bool trackChanges)
         {
-            var users = _unitOfWork.User.GetAllUsers(trackChanges);
+            var users = await _unitOfWork.User.GetAllUsers(trackChanges);
 
-            var usersDto = _mapper.Map<IQueryable<UserModelResponseDto>>(users);
+            var usersDto = _mapper.Map<IEnumerable<UserModelResponseDto>>(users);
 
             return usersDto;
         }
