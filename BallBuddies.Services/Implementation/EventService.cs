@@ -71,15 +71,19 @@ namespace BallBuddies.Services.Implementation
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task<IEnumerable<EventResponseDto>> GetAllEventsAsync(EventParameters eventParameters,
+        public async Task<(IEnumerable<EventResponseDto> eventResponseDto,
+            MetaData metaData)> GetAllEventsAsync(EventParameters eventParameters,
             bool trackChanges)
         {
             
-                var events = await _unitOfWork.Event.GetAllEvents(eventParameters, trackChanges);
+                var eventsWithMetaData = await _unitOfWork
+                .Event
+                .GetAllEvents(eventParameters,
+                trackChanges);
 
-                var eventsDto = _mapper.Map<IEnumerable<EventResponseDto>>(events);
+                var eventsDto = _mapper.Map<IEnumerable<EventResponseDto>>(eventsWithMetaData);
 
-                return eventsDto;
+                return (eventResponseDto: eventsDto, metaData: eventsWithMetaData.MetaData);
         }
 
         public async Task<EventResponseDto> GetEventAsync(Guid eventId, 

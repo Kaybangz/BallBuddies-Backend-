@@ -19,12 +19,24 @@ namespace BallBuddies.Data.Implementation
 
         public void DeleteEvent(Event eventToDelete) => Delete(eventToDelete);
 
-        public async Task<IEnumerable<Event>> GetAllEvents(EventParameters eventParameters, bool trackChanges) =>
-            await FindAll(trackChanges)
-            .OrderBy(e => e.Name)
-            .Skip((eventParameters.PageNumber - 1) * eventParameters.PageSize)
-            .Take(eventParameters.PageSize)
-            .ToListAsync();
+        public async Task<PagedList<Event>> GetAllEvents(EventParameters eventParameters, bool trackChanges)
+        {
+            var events = await FindAll(trackChanges)
+                .OrderBy(e => e.Name)
+                .Skip((eventParameters.PageNumber - 1) * eventParameters.PageSize)
+                .Take(eventParameters.PageSize)
+                .ToListAsync();
+
+            var count = await FindAll(trackChanges)
+                .CountAsync();
+
+            return new PagedList<Event>(events,
+                count,
+                eventParameters.PageNumber,
+                eventParameters.PageSize);
+        } 
+            
+           
 
 
 #pragma warning disable CS8603 // Possible null reference return.

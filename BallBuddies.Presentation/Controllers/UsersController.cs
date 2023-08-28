@@ -59,20 +59,21 @@ namespace BallBuddies.Presentation.Controllers
         /// <returns>Updates a single user</returns>
         /// <response code="200">Updates a single user in the database</response>
         /// <response code="401">Returns unauthorized access response</response>
-        /*[HttpPut("{id}", Name = "UpdateUser")]
+        [HttpPut("update", Name = "UpdateUser")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<ActionResult<UserModelResponseDto>> UpdateUser(string id,
+        [Authorize(Roles = "User, Admin")]
+        public async Task<ActionResult> UpdateUser(
             [FromBody] UserModelRequestDto userModelRequestDto)
         {
             if (userModelRequestDto == null)
-                return BadRequest("User data is invalid.");
+                return BadRequest("User model request data is invalid.");
 
-            await _service.UserService.UpdateUserAsync(id, userModelRequestDto, trackChanges: true);
+            await _service.UserService.UpdateUserAsync(userModelRequestDto, trackChanges: true);
 
             return NoContent();
-        }*/
+        }
 
 
 

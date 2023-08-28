@@ -85,8 +85,8 @@ namespace BallBuddies.Services.Implementation
             return userDto;
         }
 
-       
-        /*public async Task UpdateUserAsync(
+
+        public async Task UpdateUserAsync(
             UserModelRequestDto userModelRequestDto,
             bool trackChanges)
         {
@@ -102,10 +102,10 @@ namespace BallBuddies.Services.Implementation
 
             var updatedUser = _mapper.Map(userModelRequestDto, existingUser);
 
-            _unitOfWork.User.UpdateUser(updatedUser);
+            await _userManager.UpdateAsync(updatedUser);
 
             await _unitOfWork.SaveAsync();
-        }*/
+        }
 
         public async Task<bool> UpdateUserRolesAsync(string userId, UserRolesDto userRolesDto , bool trackChanges)
         {

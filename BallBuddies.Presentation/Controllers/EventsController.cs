@@ -4,7 +4,7 @@ using BallBuddies.Services.ActionFilters;
 using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Text.Json;
 
 namespace BallBuddies.Presentation.Controllers
 {
@@ -33,9 +33,21 @@ namespace BallBuddies.Presentation.Controllers
         [ProducesResponseType(401)]
         public async Task<IActionResult> GetEvents([FromQuery] EventParameters eventParameters)
         {
-            var events = await _service.EventService.GetAllEventsAsync(eventParameters, trackChanges: false);
+            /*var events = await _service.EventService.GetAllEventsAsync(eventParameters, trackChanges: false);*/
+            var pagedResult = await _service
+                .EventService
+                .GetAllEventsAsync(eventParameters,
+                trackChanges: false);
 
-            return Ok(events);
+            Response
+                .Headers
+                .Add("X-Pagination",
+                JsonSerializer
+                .Serialize(pagedResult.metaData));
+
+
+
+            return Ok(pagedResult.eventResponseDto);
 
         }
 

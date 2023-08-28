@@ -5,7 +5,7 @@ namespace BallBuddies.Data.Interface
 {
     public interface IEventRepository
     {
-        Task<IEnumerable<Event>> GetAllEvents(EventParameters eventParameters, bool trackChanges);
+        Task<PagedList<Event>> GetAllEvents(EventParameters eventParameters, bool trackChanges);
         Task<Event> GetEvent(Guid eventId, bool trackChanges);
 
         Task<IEnumerable<Event>> GetEventsCreatedByUser(string userId, bool trackChanges);
