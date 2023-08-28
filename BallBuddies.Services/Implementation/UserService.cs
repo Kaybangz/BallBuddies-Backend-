@@ -8,6 +8,7 @@ using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace BallBuddies.Services.Implementation
 {
@@ -85,31 +86,46 @@ namespace BallBuddies.Services.Implementation
         }
 
        
-        public async Task UpdateUserAsync(string userId,
+        /*public async Task UpdateUserAsync(
             UserModelRequestDto userModelRequestDto,
             bool trackChanges)
         {
-            var existingUser = await _unitOfWork.User.GetUser(userId, trackChanges);
+            var userId = _httpContextAccessor
+                .HttpContext
+                ?.User
+                .FindFirst(ClaimTypes.NameIdentifier)
+                ?.Value;
 
-            if(existingUser is null)
-                throw new UserNotFoundException(userId);
+
+            var existingUser = await _userManager.FindByIdAsync(userId);
+
 
             var updatedUser = _mapper.Map(userModelRequestDto, existingUser);
 
             _unitOfWork.User.UpdateUser(updatedUser);
 
             await _unitOfWork.SaveAsync();
-        }
+        }*/
 
-        public async Task<bool> UpdateUserRolesAsync(string userId, string[] newRoles, bool trackChanges)
+        public async Task<bool> UpdateUserRolesAsync(string userId, UserRolesDto userRolesDto , bool trackChanges)
         {
             var user = await FindUserAsync(userId);
+
+            /*var userDto = _mapper.Map(userModelRequest, user);*/
 
             var existingRoles = await _userManager.GetRolesAsync(user);
 
 
-            var rolesToAdd = newRoles.Except(existingRoles);
-            var rolesToRemove = existingRoles.Except(newRoles);
+            var rolesToAdd = userRolesDto.Roles.Except(existingRoles);
+            /*var rolesToAdd = newRoles.Except(existingRoles);*/
+            var rolesToRemove = existingRoles.Except(userRolesDto.Roles);
+
+
+            await _userManager.AddToRolesAsync(user, rolesToAdd);
+            await _userManager.RemoveFromRolesAsync(user, rolesToRemove);
+
+
+            return true;
 
 
         }

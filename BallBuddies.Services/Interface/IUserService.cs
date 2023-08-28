@@ -11,8 +11,8 @@ namespace BallBuddies.Services.Interface
             bool trackChanges);
         Task<IEnumerable<AttendanceResponseDto>> GetUserAttendanceAsync(string userId,
             bool trackChanges);*/
-        Task UpdateUserAsync(string userId, UserModelRequestDto user, bool trackChanges);
-        Task<bool> UpdateUserRolesAsync(string userId, string[] newRoles, bool trackChanges);
+        /*Task UpdateUserAsync(UserModelRequestDto userModelRequestDto, bool trackChanges);*/
+        Task<bool> UpdateUserRolesAsync(string userId, UserRolesDto userRolesDto, bool trackChanges);
         Task DeleteUserAsync(string userId, bool trackChanges);
     }
 }

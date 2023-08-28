@@ -59,7 +59,7 @@ namespace BallBuddies.Presentation.Controllers
         /// <returns>Updates a single user</returns>
         /// <response code="200">Updates a single user in the database</response>
         /// <response code="401">Returns unauthorized access response</response>
-        [HttpPut("{id}", Name = "UpdateUser")]
+        /*[HttpPut("{id}", Name = "UpdateUser")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
@@ -72,7 +72,33 @@ namespace BallBuddies.Presentation.Controllers
             await _service.UserService.UpdateUserAsync(id, userModelRequestDto, trackChanges: true);
 
             return NoContent();
+        }*/
+
+
+
+
+        /// <summary>
+        /// Updates a user's roles
+        /// </summary>
+        /// <returns>Updates a single user's roles</returns>
+        /// <response code="200">Updates a single user's role in the database</response>
+        /// <response code="401">Returns unauthorized access response</response>
+        [HttpPut("{id}/roles", Name = "UpdateUserRoles")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<ActionResult> UpdateUserRoles(string id,
+           [FromBody] UserRolesDto userRolesDto )
+        {
+            if (userRolesDto == null)
+                return BadRequest("User model request data is invalid.");
+
+            await _service.UserService.UpdateUserRolesAsync(id, userRolesDto, trackChanges: true);
+
+            return NoContent() ;
         }
+
+
 
 
 

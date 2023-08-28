@@ -160,12 +160,12 @@
             <response code="200">Returns a single user from the database</response>
             <response code="401">Returns unauthorized access response</response>
         </member>
-        <member name="M:BallBuddies.Presentation.Controllers.UsersController.UpdateUser(System.String,BallBuddies.Models.Dtos.Request.UserModelRequestDto)">
+        <member name="M:BallBuddies.Presentation.Controllers.UsersController.UpdateUserRoles(System.String,BallBuddies.Models.Dtos.Request.UserRolesDto)">
             <summary>
-            Updates a user
+            Updates a user's roles
             </summary>
-            <returns>Updates a single user</returns>
-            <response code="200">Updates a single user in the database</response>
+            <returns>Updates a single user's roles</returns>
+            <response code="200">Updates a single user's role in the database</response>
             <response code="401">Returns unauthorized access response</response>
         </member>
     </members>
