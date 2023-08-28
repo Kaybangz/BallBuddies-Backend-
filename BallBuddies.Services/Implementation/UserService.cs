@@ -33,16 +33,19 @@ namespace BallBuddies.Services.Implementation
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task DeleteUserAsync(string userId, bool trackChanges)
+        public async Task DeleteUserAsync( bool trackChanges)
         {
-            var existingUser = await _unitOfWork.User.GetUser(userId, trackChanges);
+            var userId = _httpContextAccessor
+                .HttpContext
+                ?.User
+                .FindFirst(ClaimTypes.NameIdentifier)
+                ?.Value;
 
-            if (existingUser != null)
-                throw new UserNotFoundException(userId);
 
-#pragma warning disable CS8604 // Possible null reference argument.
-            _unitOfWork.User.DeleteUser(existingUser);
-#pragma warning restore CS8604 // Possible null reference argument.
+            var existingUser = await _userManager.FindByIdAsync(userId);
+
+
+            await _userManager.DeleteAsync(existingUser);
 
             await _unitOfWork.SaveAsync();
         }
@@ -50,7 +53,6 @@ namespace BallBuddies.Services.Implementation
 
         public async Task<IEnumerable<UserModelResponseDto>> GetAllUsersWithRolesAsync(bool trackChanges)
         {
-            /*var users = await _unitOfWork.User.GetAllUsers(trackChanges);*/
             var users = await _userManager.Users.ToListAsync();
 
             var userDtos = new List<UserModelResponseDto>();

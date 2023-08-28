@@ -13,6 +13,6 @@ namespace BallBuddies.Services.Interface
             bool trackChanges);*/
         Task UpdateUserAsync(UserModelRequestDto userModelRequestDto, bool trackChanges);
         Task<bool> UpdateUserRolesAsync(string userId, UserRolesDto userRolesDto, bool trackChanges);
-        Task DeleteUserAsync(string userId, bool trackChanges);
+        Task DeleteUserAsync( bool trackChanges);
     }
 }
