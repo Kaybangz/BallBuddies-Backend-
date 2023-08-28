@@ -46,6 +46,7 @@ namespace BallBuddies.Services.Extensions
                 o.Password.RequireUppercase = false;
                 o.Password.RequireNonAlphanumeric = false;
                 o.User.RequireUniqueEmail = true;
+                o.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/ ";
             })
             .AddEntityFrameworkStores<BallBuddiesDBContext>()
             .AddDefaultTokenProviders();

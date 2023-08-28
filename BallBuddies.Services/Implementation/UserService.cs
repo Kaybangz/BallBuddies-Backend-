@@ -2,25 +2,31 @@
 using BallBuddies.Data.Interface;
 using BallBuddies.Models.Dtos.Request;
 using BallBuddies.Models.Dtos.Response;
+using BallBuddies.Models.Entities;
 using BallBuddies.Models.Exceptions;
 using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace BallBuddies.Services.Implementation
 {
     public class UserService : IUserService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly UserManager<User> _userManager;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public UserService(IUnitOfWork unitOfWork,
+            UserManager<User> userManager,
             ILoggerManager logger,
             IMapper mapper,
             IHttpContextAccessor httpContextAccessor)
         {
             _unitOfWork = unitOfWork;
+            _userManager = userManager;
             _logger = logger;
             _mapper = mapper;
             _httpContextAccessor = httpContextAccessor;
@@ -41,13 +47,27 @@ namespace BallBuddies.Services.Implementation
         }
 
 
-        public async Task<IEnumerable<UserModelResponseDto>> GetAllUsersAsync(bool trackChanges)
+        public async Task<IEnumerable<UserModelResponseDto>> GetAllUsersWithRolesAsync(bool trackChanges)
         {
-            var users = await _unitOfWork.User.GetAllUsers(trackChanges);
+            /*var users = await _unitOfWork.User.GetAllUsers(trackChanges);*/
+            var users = await _userManager.Users.ToListAsync();
 
-            var usersDto = _mapper.Map<IEnumerable<UserModelResponseDto>>(users);
+            var userDtos = new List<UserModelResponseDto>();
 
-            return usersDto;
+            foreach(var user in users)
+            {
+                var userRoles = await _userManager.GetRolesAsync(user);
+
+                var userDto = _mapper.Map<UserModelResponseDto>(user);
+
+                userDto.Roles = userRoles.ToList();
+
+                userDtos.Add(userDto);
+            }
+
+            
+
+            return userDtos;
         }
 
 
@@ -79,6 +99,29 @@ namespace BallBuddies.Services.Implementation
             _unitOfWork.User.UpdateUser(updatedUser);
 
             await _unitOfWork.SaveAsync();
+        }
+
+        public async Task<bool> UpdateUserRolesAsync(string userId, string[] newRoles, bool trackChanges)
+        {
+            var user = await FindUserAsync(userId);
+
+            var existingRoles = await _userManager.GetRolesAsync(user);
+
+
+            var rolesToAdd = newRoles.Except(existingRoles);
+            var rolesToRemove = existingRoles.Except(newRoles);
+
+
+        }
+
+        public async Task<User> FindUserAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if(user is null)
+                throw new UserNotFoundException(userId);
+
+            return user;
         }
     }
 }

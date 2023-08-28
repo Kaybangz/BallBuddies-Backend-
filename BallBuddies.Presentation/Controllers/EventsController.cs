@@ -1,4 +1,5 @@
 ﻿using BallBuddies.Models.Dtos.Request;
+using BallBuddies.Models.RequestFeatures;
 using BallBuddies.Services.ActionFilters;
 using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
@@ -30,9 +31,9 @@ namespace BallBuddies.Presentation.Controllers
         [AllowAnonymous]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
-        public async Task<IActionResult> GetEvents()
+        public async Task<IActionResult> GetEvents([FromQuery] EventParameters eventParameters)
         {
-            var events = await _service.EventService.GetAllEventsAsync(trackChanges: false);
+            var events = await _service.EventService.GetAllEventsAsync(eventParameters, trackChanges: false);
 
             return Ok(events);
 

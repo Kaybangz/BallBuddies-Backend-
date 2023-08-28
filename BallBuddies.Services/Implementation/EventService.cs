@@ -4,6 +4,7 @@ using BallBuddies.Models.Dtos.Request;
 using BallBuddies.Models.Dtos.Response;
 using BallBuddies.Models.Entities;
 using BallBuddies.Models.Exceptions;
+using BallBuddies.Models.RequestFeatures;
 using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
@@ -70,10 +71,11 @@ namespace BallBuddies.Services.Implementation
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task<IEnumerable<EventResponseDto>> GetAllEventsAsync(bool trackChanges)
+        public async Task<IEnumerable<EventResponseDto>> GetAllEventsAsync(EventParameters eventParameters,
+            bool trackChanges)
         {
             
-                var events = await _unitOfWork.Event.GetAllEvents(trackChanges);
+                var events = await _unitOfWork.Event.GetAllEvents(eventParameters, trackChanges);
 
                 var eventsDto = _mapper.Map<IEnumerable<EventResponseDto>>(events);
 

@@ -63,6 +63,14 @@ namespace BallBuddies.Services.Implementation
 
         public async Task<IdentityResult> RegisterUser(UserRegistrationDto userRegistrationDto)
         {
+            bool IsPhoneAlreadyRegistered = _userManager
+                .Users
+                .Any(u => u.PhoneNumber == userRegistrationDto.PhoneNumber);
+
+            if (IsPhoneAlreadyRegistered)
+                throw new Exception($"Phone number belongs to an existing user");
+
+
             var user = _mapper.Map<User>(userRegistrationDto);
 
             var result = await _userManager.CreateAsync(user, userRegistrationDto.Password);

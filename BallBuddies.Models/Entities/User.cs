@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using BallBuddies.Models.Enums;
+using Microsoft.AspNetCore.Identity;
 
 namespace BallBuddies.Models.Entities
 {
@@ -7,7 +8,6 @@ namespace BallBuddies.Models.Entities
         public string? AvatarUrl { get; set; }
         public string? RefreshToken { get; set; }
         public DateTime RefreshTokenExpiryTime { get; set; }
-
 
         //A user can organize many sport events
         public IEnumerable<Event>? Events { get; set; }

@@ -30,7 +30,7 @@ namespace BallBuddies.Presentation.Controllers
         [ProducesResponseType(401)]
         public async Task<IActionResult> GetUsers()
         {
-            var users = await _service.UserService.GetAllUsersAsync(trackChanges: false);
+            var users = await _service.UserService.GetAllUsersWithRolesAsync(trackChanges: false);
 
             return Ok(users);
         }

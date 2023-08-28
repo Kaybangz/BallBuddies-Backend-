@@ -1,6 +1,7 @@
 ﻿using BallBuddies.Data.Context;
 using BallBuddies.Data.Interface;
 using BallBuddies.Models.Entities;
+using BallBuddies.Models.RequestFeatures;
 using Microsoft.EntityFrameworkCore;
 
 namespace BallBuddies.Data.Implementation
@@ -18,9 +19,11 @@ namespace BallBuddies.Data.Implementation
 
         public void DeleteEvent(Event eventToDelete) => Delete(eventToDelete);
 
-        public async Task<IEnumerable<Event>> GetAllEvents(bool trackChanges) =>
+        public async Task<IEnumerable<Event>> GetAllEvents(EventParameters eventParameters, bool trackChanges) =>
             await FindAll(trackChanges)
             .OrderBy(e => e.Name)
+            .Skip((eventParameters.PageNumber - 1) * eventParameters.PageSize)
+            .Take(eventParameters.PageSize)
             .ToListAsync();
 
 

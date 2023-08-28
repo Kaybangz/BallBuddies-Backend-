@@ -87,7 +87,7 @@
             <response code="200">Returns no content</response>
             <response code="500">Returns Event does not exist in the database</response>
         </member>
-        <member name="M:BallBuddies.Presentation.Controllers.EventsController.GetEvents">
+        <member name="M:BallBuddies.Presentation.Controllers.EventsController.GetEvents(BallBuddies.Models.RequestFeatures.EventParameters)">
             <summary>
             Gets a list of all events
             </summary>

@@ -30,7 +30,7 @@ namespace BallBuddies.Services.Implementation
         {
 
             _userService = new Lazy<IUserService>(() => 
-            new UserService(unitOfWork, logger, mapper, httpContextAccessor));
+            new UserService(unitOfWork, userManager, logger, mapper, httpContextAccessor));
 
             _eventService = new Lazy<IEventService>(() => 
             new EventService(unitOfWork, logger, mapper, httpContextAccessor));

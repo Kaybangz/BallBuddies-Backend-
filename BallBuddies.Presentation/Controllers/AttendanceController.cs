@@ -8,7 +8,7 @@ namespace BallBuddies.Presentation.Controllers
 {
 
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/events")]
     [ApiExplorerSettings(GroupName = "v1")]
     public class AttendanceController: ControllerBase
     {
@@ -24,7 +24,7 @@ namespace BallBuddies.Presentation.Controllers
         /// <returns>New user registered</returns>
         /// <response code="200">Returns all the attendance for an event</response>
         /// <response code="401">Unauthorized access</response>
-        [HttpGet("events/{eventId}/attendances", Name = "GetEventAttendances")]
+        [HttpGet("{eventId}/attendances", Name = "GetEventAttendances")]
         [AllowAnonymous]
         public async Task<IActionResult> GetEventAttendances(Guid eventId)
         {
@@ -36,7 +36,7 @@ namespace BallBuddies.Presentation.Controllers
         }
 
 
-        [HttpGet("events/{eventId}/attendances/count", Name = "GetAttendanceNumber")]
+        [HttpGet("{eventId}/attendances/count", Name = "GetAttendanceNumber")]
         [AllowAnonymous]
         public async Task<IActionResult> GetAttendanceNumber(Guid eventId)
         {
