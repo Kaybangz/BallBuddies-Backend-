@@ -32,6 +32,11 @@ namespace BallBuddies.Services.Implementation
             _httpContextAccessor = httpContextAccessor;
         }
 
+
+
+
+
+
         public async Task<EventResponseDto> CreateEventAsync(EventRequestDto eventRequestDto,
             bool trackChanges)
         {
@@ -52,6 +57,13 @@ namespace BallBuddies.Services.Implementation
             return eventToReturn;
         }
 
+
+
+
+
+
+
+
         public async Task DeleteEventAsync(Guid eventId, bool trackChanges)
         {
             var userId = _httpContextAccessor
@@ -71,6 +83,11 @@ namespace BallBuddies.Services.Implementation
             await _unitOfWork.SaveAsync();
         }
 
+
+
+
+
+
         public async Task<(IEnumerable<EventResponseDto> eventResponseDto,
             MetaData metaData)> GetAllEventsAsync(EventParameters eventParameters,
             bool trackChanges)
@@ -86,6 +103,10 @@ namespace BallBuddies.Services.Implementation
                 return (eventResponseDto: eventsDto, metaData: eventsWithMetaData.MetaData);
         }
 
+
+
+
+
         public async Task<EventResponseDto> GetEventAsync(Guid eventId, 
             bool trackChanges)
         {
@@ -95,6 +116,7 @@ namespace BallBuddies.Services.Implementation
 
             return eventDto;
         }
+
 
         public async Task<IEnumerable<EventResponseDto>> GetEventsCreatedByUserAsync(bool trackChanges)
         {
@@ -111,6 +133,11 @@ namespace BallBuddies.Services.Implementation
             return _mapper.Map<IEnumerable<EventResponseDto>>(events);
 
         }
+
+
+
+
+
 
         public async Task UpdateEventAsync(Guid eventId, 
             EventUpdateRequestDto eventUpdateRequestDto, 

@@ -41,12 +41,16 @@ namespace BallBuddies.Services.Extensions
         public static void ConfigureIdentity(this IServiceCollection services) =>
             services.AddIdentity<User, IdentityRole>(o =>
             {
-                o.Password.RequireDigit = false;
+                o.Password.RequireDigit = true;
                 o.Password.RequireLowercase = false;
                 o.Password.RequireUppercase = false;
                 o.Password.RequireNonAlphanumeric = false;
                 o.User.RequireUniqueEmail = true;
                 o.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/ ";
+                /*o.SignIn.RequireConfirmedAccount = true;*/
+                o.Lockout.AllowedForNewUsers = true;
+                o.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
+                o.Lockout.MaxFailedAccessAttempts = 5;
             })
             .AddEntityFrameworkStores<BallBuddiesDBContext>()
             .AddDefaultTokenProviders();

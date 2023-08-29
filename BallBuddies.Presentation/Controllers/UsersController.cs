@@ -25,9 +25,9 @@ namespace BallBuddies.Presentation.Controllers
         /// <response code="200">Returns all the users in the database</response>
         /// <response code="401">Returns unauthorized access response</response>
         [HttpGet]
-        /*[Authorize(Roles = "Admin")]*/
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
+        /*[Authorize(Roles = "Admin")]*/
         public async Task<IActionResult> GetUsers()
         {
             var users = await _service.UserService.GetAllUsersWithRolesAsync(trackChanges: false);
@@ -46,6 +46,7 @@ namespace BallBuddies.Presentation.Controllers
         [HttpGet("{id}", Name = "GetSingleUser")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
+        /*[Authorize(Roles = "Admin")]*/
         public async Task<IActionResult> GetUser(string id)
         {
             var user = await _service.UserService.GetUserAsync(id, trackChanges: false);
@@ -63,7 +64,7 @@ namespace BallBuddies.Presentation.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        [Authorize(Roles = "User, Admin")]
+        [Authorize(Roles = "User")]
         public async Task<ActionResult> UpdateUser(
             [FromBody] UserModelRequestDto userModelRequestDto)
         {
@@ -88,6 +89,7 @@ namespace BallBuddies.Presentation.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
+        /*[Authorize(Roles = "Admin")]*/
         public async Task<ActionResult> UpdateUserRoles(string id,
            [FromBody] UserRolesDto userRolesDto )
         {
@@ -110,7 +112,7 @@ namespace BallBuddies.Presentation.Controllers
         /// <returns>Deletes a single user</returns>
         /// <response code="200">Deletes a single user from the database</response>
         /// <response code="401">Returns unauthorized access response</response>
-        [HttpDelete(Name = "DeleteUser")]
+        [HttpDelete("my-account", Name = "DeleteUser")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [Authorize(Roles = "User")]

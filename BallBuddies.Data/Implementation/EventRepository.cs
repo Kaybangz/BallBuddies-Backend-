@@ -1,4 +1,5 @@
 ﻿using BallBuddies.Data.Context;
+using BallBuddies.Data.Extensions;
 using BallBuddies.Data.Interface;
 using BallBuddies.Models.Entities;
 using BallBuddies.Models.RequestFeatures;
@@ -19,9 +20,16 @@ namespace BallBuddies.Data.Implementation
 
         public void DeleteEvent(Event eventToDelete) => Delete(eventToDelete);
 
-        public async Task<PagedList<Event>> GetAllEvents(EventParameters eventParameters, bool trackChanges)
+        public async Task<PagedList<Event>> GetAllEvents(EventParameters eventParameters,
+            bool trackChanges)
         {
             var events = await FindAll(trackChanges)
+                .FilterEventsByPrice(eventParameters.MinPrice,
+                eventParameters.MaxPrice,
+                eventParameters.CurrentDate,
+                eventParameters.NextWeekDate,
+                eventParameters.NextMonthDate)
+                .Search(eventParameters.SearchTerm)
                 .OrderBy(e => e.Name)
                 .Skip((eventParameters.PageNumber - 1) * eventParameters.PageSize)
                 .Take(eventParameters.PageSize)
