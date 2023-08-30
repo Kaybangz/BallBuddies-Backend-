@@ -49,7 +49,10 @@ namespace BallBuddies.Presentation.Controllers
         /*[Authorize(Roles = "Admin")]*/
         public async Task<IActionResult> GetUser(string id)
         {
-            var user = await _service.UserService.GetUserAsync(id, trackChanges: false);
+            var user = await _service
+                .UserService
+                .GetUserWithRolesAsync(id,
+                trackChanges: false);
 
             return Ok(user);
         }
@@ -107,18 +110,18 @@ namespace BallBuddies.Presentation.Controllers
 
 
         /// <summary>
-        /// Deletes a user
+        /// Self account deletion by user
         /// </summary>
         /// <returns>Deletes a single user</returns>
         /// <response code="200">Deletes a single user from the database</response>
         /// <response code="401">Returns unauthorized access response</response>
-        [HttpDelete("my-account", Name = "DeleteUser")]
+        [HttpDelete("delete-account", Name = "DeleteUser")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [Authorize(Roles = "User")]
         public async Task<IActionResult> DeleteUser()
         {
-            await _service.UserService.DeleteUserAsync(trackChanges: false);
+            await _service.UserService.UserSelfDeleteAsync(trackChanges: false);
 
             return NoContent();
         }

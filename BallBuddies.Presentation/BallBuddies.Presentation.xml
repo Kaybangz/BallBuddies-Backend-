@@ -178,7 +178,7 @@
         </member>
         <member name="M:BallBuddies.Presentation.Controllers.UsersController.DeleteUser">
             <summary>
-            Deletes a user
+            Self account deletion by user
             </summary>
             <returns>Deletes a single user</returns>
             <response code="200">Deletes a single user from the database</response>

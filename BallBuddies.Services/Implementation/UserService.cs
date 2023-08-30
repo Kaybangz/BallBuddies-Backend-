@@ -33,7 +33,10 @@ namespace BallBuddies.Services.Implementation
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task DeleteUserAsync( bool trackChanges)
+
+
+
+        public async Task UserSelfDeleteAsync( bool trackChanges)
         {
             var userId = _httpContextAccessor
                 .HttpContext
@@ -68,21 +71,25 @@ namespace BallBuddies.Services.Implementation
                 userDtos.Add(userDto);
             }
 
-            
 
             return userDtos;
         }
 
 
 
-        public async Task<UserModelResponseDto> GetUserAsync(string userId, bool trackChanges)
+        public async Task<UserModelResponseDto> GetUserWithRolesAsync(string userId, bool trackChanges)
         {
             var user = await _unitOfWork.User.GetUser(userId, trackChanges);
 
             if (user is null)
                 throw new UserNotFoundException(userId);
 
+            var userRoles = await _userManager.GetRolesAsync(user);
+
             var userDto = _mapper.Map<UserModelResponseDto>(user);
+
+            userDto.Roles = userRoles.ToList();
+            
 
             return userDto;
         }
@@ -109,17 +116,17 @@ namespace BallBuddies.Services.Implementation
             await _unitOfWork.SaveAsync();
         }
 
+
+
         public async Task<bool> UpdateUserRolesAsync(string userId, UserRolesDto userRolesDto , bool trackChanges)
         {
             var user = await FindUserAsync(userId);
-
-            /*var userDto = _mapper.Map(userModelRequest, user);*/
 
             var existingRoles = await _userManager.GetRolesAsync(user);
 
 
             var rolesToAdd = userRolesDto.Roles.Except(existingRoles);
-            /*var rolesToAdd = newRoles.Except(existingRoles);*/
+
             var rolesToRemove = existingRoles.Except(userRolesDto.Roles);
 
 
@@ -140,6 +147,16 @@ namespace BallBuddies.Services.Implementation
                 throw new UserNotFoundException(userId);
 
             return user;
+        }
+
+        public async Task DeleteUserAsync(string userId, bool trackChanges)
+        {
+            var user = await FindUserAsync(userId);
+
+
+            await _userManager.DeleteAsync(user);
+
+            await _unitOfWork.SaveAsync();
         }
     }
 }
