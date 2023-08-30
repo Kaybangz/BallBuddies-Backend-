@@ -92,7 +92,7 @@ namespace BallBuddies.Presentation.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        /*[Authorize(Roles = "Admin")]*/
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateUserRoles(string id,
            [FromBody] UserRolesDto userRolesDto )
         {
@@ -122,6 +122,26 @@ namespace BallBuddies.Presentation.Controllers
         public async Task<IActionResult> DeleteUser()
         {
             await _service.UserService.UserSelfDeleteAsync(trackChanges: false);
+
+            return NoContent();
+        }
+
+
+
+
+        /// <summary>
+        /// User account deletion by Admin
+        /// </summary>
+        /// <returns>Deletes a single user</returns>
+        /// <response code="200">Deletes a single user from the database</response>
+        /// <response code="401">Returns unauthorized access response</response>
+        [HttpDelete(Name = "DeleteUserByAdmin")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteUser(string userId)
+        {
+            await _service.UserService.DeleteUserAsync(userId, trackChanges: false);
 
             return NoContent();
         }
