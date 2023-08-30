@@ -43,17 +43,19 @@ Some of the features include:
 
 * Also change the `JwtSettings/validAudience` to your own local development URL
 
-* Open your terminal and run this command ``` setx SECRET "{enter your secret key}" /M ``` to set a secret key
+* Open your terminal and run this command ``` setx SECRET "{enter your secret key}" /M ``` to set a secret key in your local environment
+  
+* Run application in Swagger UI
 
 ## Layout
 
 ```tree
 ├── Solution Items
-├── BallBuddies
-├── BallBuddies.Data
-├── BallBuddies.Models
-├── BallBuddies.Presentation
-├── BallBuddies.Services
+├   ├── BallBuddies
+├   ├── BallBuddies.Data
+├   ├── BallBuddies.Models
+├   ├── BallBuddies.Presentation
+├   ├── BallBuddies.Services
 
 ```
 
