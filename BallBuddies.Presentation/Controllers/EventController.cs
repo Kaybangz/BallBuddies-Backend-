@@ -12,11 +12,11 @@ namespace BallBuddies.Presentation.Controllers
     [ApiController]
     [Route("api/events")]
     [ApiExplorerSettings(GroupName = "v1")]
-    public class EventsController : ControllerBase
+    public class EventController : ControllerBase
     {
         private readonly IServiceManager _service;
 
-        public EventsController(IServiceManager service) => _service = service;
+        public EventController(IServiceManager service) => _service = service;
 
 
 
@@ -104,16 +104,6 @@ namespace BallBuddies.Presentation.Controllers
         }
 
 
-
-        [HttpGet("{userId}/events", Name = "Current_user_events")]
-        [Authorize(Roles = "User, Admin")]
-        public async Task<IActionResult> GetCurrentUserEvents()
-        {
-            var currentUserEvents = await _service.EventService
-                .GetEventsCreatedByUserAsync(trackChanges: false);
-
-            return Ok(currentUserEvents);
-        }
 
 
 

@@ -4,6 +4,38 @@
         <name>BallBuddies.Presentation</name>
     </assembly>
     <members>
+        <member name="M:BallBuddies.Presentation.Controllers.AdminController.GetUsers">
+            <summary>
+            Gets a list of all users
+            </summary>
+            <returns>The user list</returns>
+            <response code="200">Returns all the users in the database</response>
+            <response code="401">Returns unauthorized access response</response>
+        </member>
+        <member name="M:BallBuddies.Presentation.Controllers.AdminController.GetUser(System.String)">
+            <summary>
+            Gets a user by Id
+            </summary>
+            <returns>A single user</returns>
+            <response code="200">Returns a single user from the database</response>
+            <response code="401">Returns unauthorized access response</response>
+        </member>
+        <member name="M:BallBuddies.Presentation.Controllers.AdminController.UpdateUserRoles(System.String,BallBuddies.Models.Dtos.Request.UserRolesDto)">
+            <summary>
+            Updates a user's roles
+            </summary>
+            <returns>Updates a single user's roles</returns>
+            <response code="200">Updates a single user's role in the database</response>
+            <response code="401">Returns unauthorized access response</response>
+        </member>
+        <member name="M:BallBuddies.Presentation.Controllers.AdminController.DeleteUser(System.String)">
+            <summary>
+            User account deletion by Admin
+            </summary>
+            <returns>Deletes a single user</returns>
+            <response code="200">Deletes a single user from the database</response>
+            <response code="401">Returns unauthorized access response</response>
+        </member>
         <member name="M:BallBuddies.Presentation.Controllers.AttendanceController.GetEventAttendances(System.Guid)">
             <summary>
             Gets all the attendance for an event
@@ -11,14 +43,6 @@
             <param name="eventId"></param>
             <returns>New user registered</returns>
             <response code="200">Returns all the attendance for an event</response>
-            <response code="401">Unauthorized access</response>
-        </member>
-        <member name="M:BallBuddies.Presentation.Controllers.AttendanceController.GetCurrentUserAttendances">
-            <summary>
-            Gets all events a user is attending
-            </summary>
-            <returns>New user registered</returns>
-            <response code="200">Returns 200 status code response</response>
             <response code="401">Unauthorized access</response>
         </member>
         <member name="M:BallBuddies.Presentation.Controllers.AttendanceController.AddEventAttendance(BallBuddies.Models.Dtos.Request.AttendanceRequestDto)">
@@ -57,21 +81,21 @@
             <response code="200">Returns Login successful</response>
             <response code="401">Returns unauthorized access</response>
         </member>
-        <member name="M:BallBuddies.Presentation.Controllers.CommentsController.GetAllEventComments(System.Guid)">
+        <member name="M:BallBuddies.Presentation.Controllers.CommentController.GetAllEventComments(System.Guid)">
             <summary>
             Gets all comments for an event
             </summary>
             <returns>A list of event comments</returns>
             <response code="200">Returns a list of event comments</response>
         </member>
-        <member name="M:BallBuddies.Presentation.Controllers.CommentsController.GetEventComment(System.Guid,System.Guid)">
+        <member name="M:BallBuddies.Presentation.Controllers.CommentController.GetEventComment(System.Guid,System.Guid)">
             <summary>
             Gets single comment for an event
             </summary>
             <returns>A single event comment</returns>
             <response code="200">Returns a single event comment</response>
         </member>
-        <member name="M:BallBuddies.Presentation.Controllers.CommentsController.CreateCommentForEvent(System.Guid,BallBuddies.Models.Dtos.Request.CommentRequestDto)">
+        <member name="M:BallBuddies.Presentation.Controllers.CommentController.CreateCommentForEvent(System.Guid,BallBuddies.Models.Dtos.Request.CommentRequestDto)">
             <summary>
             Create comment for an event
             </summary>
@@ -79,7 +103,7 @@
             <response code="200">Returns a created event comment</response>
             <response code="400">Returns comment request dto is null</response> 
         </member>
-        <member name="M:BallBuddies.Presentation.Controllers.CommentsController.DeleteCommentForEvent(System.Guid,System.Guid)">
+        <member name="M:BallBuddies.Presentation.Controllers.CommentController.DeleteCommentForEvent(System.Guid,System.Guid)">
             <summary>
             Delete comment for an event
             </summary>
@@ -87,7 +111,7 @@
             <response code="200">Returns no content</response>
             <response code="500">Returns Event does not exist in the database</response>
         </member>
-        <member name="M:BallBuddies.Presentation.Controllers.EventsController.GetEvents(BallBuddies.Models.RequestFeatures.EventParameters)">
+        <member name="M:BallBuddies.Presentation.Controllers.EventController.GetEvents(BallBuddies.Models.RequestFeatures.EventParameters)">
             <summary>
             Gets a list of all events
             </summary>
@@ -95,7 +119,7 @@
             <response code="200">Returns all the events in the database</response>
             <response code="401">Returns unauthorized access response</response>
         </member>
-        <member name="M:BallBuddies.Presentation.Controllers.EventsController.GetEvent(System.Guid)">
+        <member name="M:BallBuddies.Presentation.Controllers.EventController.GetEvent(System.Guid)">
             <summary>
             Gets an event by ID
             </summary>
@@ -104,7 +128,7 @@
             /// <response code="200">Returns a single event with the Id</response>
             <response code="401">Returns unauthorized access response</response>
         </member>
-        <member name="M:BallBuddies.Presentation.Controllers.EventsController.CreateEvent(BallBuddies.Models.Dtos.Request.EventRequestDto)">
+        <member name="M:BallBuddies.Presentation.Controllers.EventController.CreateEvent(BallBuddies.Models.Dtos.Request.EventRequestDto)">
             <summary>
             Creates a new event
             </summary>
@@ -115,7 +139,7 @@
             <response code="401">Returns unauthorized access response</response>
             <response code="422">If the model is invalid</response>
         </member>
-        <member name="M:BallBuddies.Presentation.Controllers.EventsController.UpdateEvent(System.Guid,BallBuddies.Models.Dtos.Request.EventUpdateRequestDto)">
+        <member name="M:BallBuddies.Presentation.Controllers.EventController.UpdateEvent(System.Guid,BallBuddies.Models.Dtos.Request.EventUpdateRequestDto)">
             <summary>
             Updates an event
             </summary>
@@ -126,7 +150,7 @@
             <response code="401">Returns unauthorized access response</response>
             <response code="200">Returns success message</response>
         </member>
-        <member name="M:BallBuddies.Presentation.Controllers.EventsController.DeleteEvent(System.Guid)">
+        <member name="M:BallBuddies.Presentation.Controllers.EventController.DeleteEvent(System.Guid)">
             <summary>
             Deletes an event
             </summary>
@@ -144,23 +168,15 @@
             <response code="200">Returns the access token and refresh token</response>
             <response code="500">Returns invalid client request</response>
         </member>
-        <member name="M:BallBuddies.Presentation.Controllers.UsersController.GetUsers">
+        <member name="M:BallBuddies.Presentation.Controllers.UserController.GetCurrentUserAttendances">
             <summary>
-            Gets a list of all users
+            Gets all events a user is attending
             </summary>
-            <returns>The user list</returns>
-            <response code="200">Returns all the users in the database</response>
-            <response code="401">Returns unauthorized access response</response>
+            <returns>New user registered</returns>
+            <response code="200">Returns 200 status code response</response>
+            <response code="401">Unauthorized access</response>
         </member>
-        <member name="M:BallBuddies.Presentation.Controllers.UsersController.GetUser(System.String)">
-            <summary>
-            Gets a user by Id
-            </summary>
-            <returns>A single user</returns>
-            <response code="200">Returns a single user from the database</response>
-            <response code="401">Returns unauthorized access response</response>
-        </member>
-        <member name="M:BallBuddies.Presentation.Controllers.UsersController.UpdateUser(BallBuddies.Models.Dtos.Request.UserModelRequestDto)">
+        <member name="M:BallBuddies.Presentation.Controllers.UserController.UpdateUser(BallBuddies.Models.Dtos.Request.UserModelRequestDto)">
             <summary>
             Updates a user
             </summary>
@@ -168,25 +184,9 @@
             <response code="200">Updates a single user in the database</response>
             <response code="401">Returns unauthorized access response</response>
         </member>
-        <member name="M:BallBuddies.Presentation.Controllers.UsersController.UpdateUserRoles(System.String,BallBuddies.Models.Dtos.Request.UserRolesDto)">
-            <summary>
-            Updates a user's roles
-            </summary>
-            <returns>Updates a single user's roles</returns>
-            <response code="200">Updates a single user's role in the database</response>
-            <response code="401">Returns unauthorized access response</response>
-        </member>
-        <member name="M:BallBuddies.Presentation.Controllers.UsersController.DeleteUser">
+        <member name="M:BallBuddies.Presentation.Controllers.UserController.DeleteUser">
             <summary>
             Self account deletion by user
-            </summary>
-            <returns>Deletes a single user</returns>
-            <response code="200">Deletes a single user from the database</response>
-            <response code="401">Returns unauthorized access response</response>
-        </member>
-        <member name="M:BallBuddies.Presentation.Controllers.UsersController.DeleteUser(System.String)">
-            <summary>
-            User account deletion by Admin
             </summary>
             <returns>Deletes a single user</returns>
             <response code="200">Deletes a single user from the database</response>

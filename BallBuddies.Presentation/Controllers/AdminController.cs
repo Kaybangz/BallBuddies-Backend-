@@ -1,20 +1,20 @@
 ﻿using BallBuddies.Models.Dtos.Request;
-using BallBuddies.Models.Dtos.Response;
 using BallBuddies.Services.ActionFilters;
 using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace BallBuddies.Presentation.Controllers
 {
-
     [ApiController]
-    [Route("api/users")]
+    [Route("api/admin")]
     [ApiExplorerSettings(GroupName = "v1")]
-    public class UsersController: ControllerBase
+    [Authorize(Roles = "Admin")]
+    public class AdminController: ControllerBase
     {
         private readonly IServiceManager _service;
-        public UsersController(IServiceManager service) => _service = service;
+        public AdminController(IServiceManager service) => _service = service;
 
 
 
@@ -24,16 +24,16 @@ namespace BallBuddies.Presentation.Controllers
         /// <returns>The user list</returns>
         /// <response code="200">Returns all the users in the database</response>
         /// <response code="401">Returns unauthorized access response</response>
-        [HttpGet]
+        [HttpGet(Name = "GetUsers")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
-        /*[Authorize(Roles = "Admin")]*/
         public async Task<IActionResult> GetUsers()
         {
             var users = await _service.UserService.GetAllUsersWithRolesAsync(trackChanges: false);
 
             return Ok(users);
         }
+
 
 
 
@@ -57,29 +57,6 @@ namespace BallBuddies.Presentation.Controllers
             return Ok(user);
         }
 
-        /// <summary>
-        /// Updates a user
-        /// </summary>
-        /// <returns>Updates a single user</returns>
-        /// <response code="200">Updates a single user in the database</response>
-        /// <response code="401">Returns unauthorized access response</response>
-        [HttpPut("update", Name = "UpdateUser")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(401)]
-        [ServiceFilter(typeof(ValidationFilterAttribute))]
-        [Authorize(Roles = "User")]
-        public async Task<ActionResult> UpdateUser(
-            [FromBody] UserModelRequestDto userModelRequestDto)
-        {
-            if (userModelRequestDto == null)
-                return BadRequest("User model request data is invalid.");
-
-            await _service.UserService.UpdateUserAsync(userModelRequestDto, trackChanges: true);
-
-            return NoContent();
-        }
-
-
 
 
         /// <summary>
@@ -92,36 +69,13 @@ namespace BallBuddies.Presentation.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateUserRoles(string id,
-           [FromBody] UserRolesDto userRolesDto )
+           [FromBody] UserRolesDto userRolesDto)
         {
             if (userRolesDto == null)
                 return BadRequest("User model request data is invalid.");
 
             await _service.UserService.UpdateUserRolesAsync(id, userRolesDto, trackChanges: true);
-
-            return NoContent() ;
-        }
-
-
-
-
-
-
-        /// <summary>
-        /// Self account deletion by user
-        /// </summary>
-        /// <returns>Deletes a single user</returns>
-        /// <response code="200">Deletes a single user from the database</response>
-        /// <response code="401">Returns unauthorized access response</response>
-        [HttpDelete("delete-account", Name = "DeleteUser")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(401)]
-        [Authorize(Roles = "User")]
-        public async Task<IActionResult> DeleteUser()
-        {
-            await _service.UserService.UserSelfDeleteAsync(trackChanges: false);
 
             return NoContent();
         }
@@ -138,7 +92,6 @@ namespace BallBuddies.Presentation.Controllers
         [HttpDelete(Name = "DeleteUserByAdmin")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(string userId)
         {
             await _service.UserService.DeleteUserAsync(userId, trackChanges: false);

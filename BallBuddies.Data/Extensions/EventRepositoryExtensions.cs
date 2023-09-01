@@ -4,17 +4,17 @@ namespace BallBuddies.Data.Extensions
 {
     public static class EventRepositoryExtensions
     {
-        public static IQueryable<Event> FilterEventsByPrice(this IQueryable<Event> query,
+       /* public static IQueryable<Event> FilterEventsByPrice(this IQueryable<Event> query,
             decimal minPrice,
             decimal maxPrice,
             DateTime currentDate,
             DateTime nextWeekDate,
-            DateTime nextMonthDate) => 
-            query.Where(e => (e.Price >= minPrice && e.Price <= maxPrice) &&
-                             (e.EventStartDate.Equals(currentDate)) &&
-                             (e.EventStartDate.Equals(nextWeekDate)) &&
-                             (e.EventStartDate.Equals(nextMonthDate))
-            );
+            DateTime nextMonthDate)
+        {
+            if 
+        }
+            */
+
 
         public static IQueryable<Event> Search(this IQueryable<Event> query,
             string searchTerm)

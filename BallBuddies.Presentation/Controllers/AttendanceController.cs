@@ -36,6 +36,14 @@ namespace BallBuddies.Presentation.Controllers
         }
 
 
+
+        /// <summary>
+        /// Gets number of attendance for an event
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <returns>201 status code</returns>
+        /// <response code="201">Returns 201 response</response>
+        /// <response code="401">Unauthorized access</response>
         [HttpGet("{eventId}/attendances/count", Name = "GetAttendanceNumber")]
         [AllowAnonymous]
         public async Task<IActionResult> GetAttendanceNumber(Guid eventId)
@@ -47,26 +55,6 @@ namespace BallBuddies.Presentation.Controllers
 
             return Ok(attendanceNumber);
         }
-
-
-
-        /// <summary>
-        /// Gets all events a user is attending
-        /// </summary>
-        /// <returns>New user registered</returns>
-        /// <response code="200">Returns 200 status code response</response>
-        /// <response code="401">Unauthorized access</response>
-        [HttpGet("{userId}/attendances", Name = "GetUserAttendances")]
-        [Authorize(Roles = "User")]
-        public async Task<IActionResult> GetCurrentUserAttendances()
-        {
-            var currentUserAttendances = await _service
-                .AttendanceService
-                .GetUserAttendanceAsync(trackChanges: false);
-
-            return Ok(currentUserAttendances);
-        }
-
 
 
 

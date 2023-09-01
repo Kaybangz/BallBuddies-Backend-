@@ -9,11 +9,11 @@ namespace BallBuddies.Presentation.Controllers
     [ApiController]
     [Route("api/events/{eventId}/comments")]
     [ApiExplorerSettings(GroupName = "v1")]
-    public class CommentsController: ControllerBase
+    public class CommentController: ControllerBase
     {
         private readonly IServiceManager _service;
 
-        public CommentsController(IServiceManager service) => _service = service;
+        public CommentController(IServiceManager service) => _service = service;
 
 
 
