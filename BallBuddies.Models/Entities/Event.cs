@@ -18,6 +18,7 @@ namespace BallBuddies.Models.Entities
         public decimal Price { get; set; }
         public string? EventImageUrl { get; set; }
 
+        [Required(ErrorMessage = "Specify number of slots")]
         public uint Slots { get; set; }  
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Location is required")]

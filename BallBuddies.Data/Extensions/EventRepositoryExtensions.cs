@@ -1,23 +1,42 @@
 ﻿using BallBuddies.Models.Entities;
+using BallBuddies.Models.Enums;
 
 namespace BallBuddies.Data.Extensions
 {
     public static class EventRepositoryExtensions
     {
-       /* public static IQueryable<Event> FilterEventsByPrice(this IQueryable<Event> query,
-            decimal minPrice,
-            decimal maxPrice,
-            DateTime currentDate,
-            DateTime nextWeekDate,
-            DateTime nextMonthDate)
+        public static IQueryable<Event> FilterEventsByPrice(this IQueryable<Event> query,
+            decimal? minPrice,
+            decimal? maxPrice,
+            int? minSlots,
+            int? maxSlots
+            /*SportCategory category*/
+            /*DateTime? currentDate,
+            DateTime? nextWeekDate,
+            DateTime nextMonthDate*/)
         {
-            if 
+            if(minPrice.HasValue)
+                query = query.Where(e => e.Price >= minPrice);
+
+            if(maxPrice.HasValue)
+                query = query.Where(e => e.Price <= maxPrice);
+
+            if(minSlots.HasValue)
+                query = query.Where(e => e.Slots >= minSlots);
+
+            if(maxSlots.HasValue)
+                query = query.Where(e => e.Slots  <= maxSlots);
+
+            
+
+
+            return query;
         }
-            */
+            
 
 
         public static IQueryable<Event> Search(this IQueryable<Event> query,
-            string searchTerm)
+            string? searchTerm)
         {
             if (string.IsNullOrWhiteSpace(searchTerm))
                 return query;

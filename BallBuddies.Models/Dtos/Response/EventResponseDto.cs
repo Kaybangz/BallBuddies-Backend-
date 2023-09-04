@@ -10,6 +10,7 @@ namespace BallBuddies.Models.Dtos.Response
         string Description,
         decimal Price,
         string EventImageUrl,
+        uint Slots,
         string Venue,
         string State,
         string City,

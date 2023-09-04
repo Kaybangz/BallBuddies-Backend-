@@ -24,7 +24,7 @@ namespace BallBuddies.Presentation.Controllers
         /// <returns>The user list</returns>
         /// <response code="200">Returns all the users in the database</response>
         /// <response code="401">Returns unauthorized access response</response>
-        [HttpGet(Name = "GetUsers")]
+        [HttpGet("getusers", Name = "GetUsers")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         public async Task<IActionResult> GetUsers()
@@ -43,7 +43,7 @@ namespace BallBuddies.Presentation.Controllers
         /// <returns>A single user</returns>
         /// <response code="200">Returns a single user from the database</response>
         /// <response code="401">Returns unauthorized access response</response>
-        [HttpGet("{id}", Name = "GetSingleUser")]
+        [HttpGet("getusers/{id}", Name = "GetSingleUser")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         /*[Authorize(Roles = "Admin")]*/
@@ -65,7 +65,7 @@ namespace BallBuddies.Presentation.Controllers
         /// <returns>Updates a single user's roles</returns>
         /// <response code="200">Updates a single user's role in the database</response>
         /// <response code="401">Returns unauthorized access response</response>
-        [HttpPut("{id}/roles", Name = "UpdateUserRoles")]
+        [HttpPut("getusers/{id}/roles", Name = "UpdateUserRoles")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
@@ -89,7 +89,7 @@ namespace BallBuddies.Presentation.Controllers
         /// <returns>Deletes a single user</returns>
         /// <response code="200">Deletes a single user from the database</response>
         /// <response code="401">Returns unauthorized access response</response>
-        [HttpDelete(Name = "DeleteUserByAdmin")]
+        [HttpDelete("getuser/{id}/delete", Name = "DeleteUserByAdmin")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         public async Task<IActionResult> DeleteUser(string userId)

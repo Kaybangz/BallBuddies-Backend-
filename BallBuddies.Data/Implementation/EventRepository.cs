@@ -24,6 +24,10 @@ namespace BallBuddies.Data.Implementation
             bool trackChanges)
         {
             var events = await FindAll(trackChanges)
+                .FilterEventsByPrice(eventParameters.MinPrice,
+                                     eventParameters.MaxPrice,
+                                     eventParameters.MinSlots,
+                                     eventParameters.MaxSlots)
                 .Search(eventParameters.SearchTerm)
                 .OrderBy(e => e.Name)
                 .Skip((eventParameters.PageNumber - 1) * eventParameters.PageSize)
