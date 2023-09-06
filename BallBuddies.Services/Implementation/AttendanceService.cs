@@ -62,6 +62,7 @@ namespace BallBuddies.Services.Implementation
 
             await _unitOfWork.Attendance.AddEventAttendance(newAttendance);
 
+
             await _unitOfWork.SaveAsync();
 
             return _mapper.Map<AttendanceResponseDto>(newAttendance);

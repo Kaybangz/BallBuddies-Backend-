@@ -24,5 +24,7 @@ namespace BallBuddies.Models.RequestFeatures
                 _pageSize = value; 
             } 
         }
+
+        public string? OrderBy { get; set; }
     }
 }

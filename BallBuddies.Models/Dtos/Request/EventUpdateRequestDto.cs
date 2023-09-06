@@ -19,9 +19,11 @@ namespace BallBuddies.Models.Dtos.Request
         public decimal Price { get; set; }
         public string? EventImageUrl { get; set; }
 
+        public uint Slots { get; set; }
+
         [Required(AllowEmptyStrings = false, ErrorMessage = "Location is required")]
         [MaxLength(150, ErrorMessage = "Cannot exceed 150 characters")]
-        public string Location { get; set; } = null!;
+        public string Venue { get; set; } = null!;
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "State is required")]
         [MaxLength(150, ErrorMessage = "Cannot exceed 150 characters")]
@@ -30,7 +32,8 @@ namespace BallBuddies.Models.Dtos.Request
         [Required(AllowEmptyStrings = false, ErrorMessage = "City is required")]
         [MaxLength(150, ErrorMessage = "Cannot exceed 150 characters")]
         public string City { get; set; } = null!;
-        public DateTime EventDate { get; set; }
+        public DateTime EventStartDate { get; set; }
+        public DateTime EventEndDate { get; set; }
         public SportCategory Category { get; set; }
     }
 }

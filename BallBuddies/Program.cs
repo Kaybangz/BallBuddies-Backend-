@@ -4,6 +4,8 @@ using BallBuddies.Services.Extensions;
 using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using NLog;
 
@@ -38,6 +40,20 @@ namespace BallBuddies
             builder.Services.AddHttpContextAccessor();
 
 
+            NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter() =>
+                new ServiceCollection()
+                .AddLogging()
+                .AddMvc()
+                .AddNewtonsoftJson()
+                .Services
+                .BuildServiceProvider()
+                .GetRequiredService<IOptions<MvcOptions>>()
+                .Value
+                .InputFormatters
+                .OfType<NewtonsoftJsonPatchInputFormatter>()
+                .First();
+
+
             builder.Services.Configure<ApiBehaviorOptions>(options => 
             options.SuppressModelStateInvalidFilter = true
             ) ;
@@ -45,10 +61,13 @@ namespace BallBuddies
             {
                 config.RespectBrowserAcceptHeader = true;
                 config.ReturnHttpNotAcceptable = true;
+                config.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
             }).AddXmlDataContractSerializerFormatters()
             .AddCustomCSVFormatter()
             .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
+
             builder.Services.AddScoped<ValidationFilterAttribute>();
+
             builder.Services.AddControllers()
                 .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
             

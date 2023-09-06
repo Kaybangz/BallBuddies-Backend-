@@ -8,8 +8,8 @@ namespace BallBuddies.Data.Extensions
         public static IQueryable<Event> FilterEventsByPrice(this IQueryable<Event> query,
             decimal? minPrice,
             decimal? maxPrice,
-            int? minSlots,
-            int? maxSlots
+            uint? minSlots,
+            uint? maxSlots
             /*SportCategory category*/
             /*DateTime? currentDate,
             DateTime? nextWeekDate,
@@ -25,9 +25,7 @@ namespace BallBuddies.Data.Extensions
                 query = query.Where(e => e.Slots >= minSlots);
 
             if(maxSlots.HasValue)
-                query = query.Where(e => e.Slots  <= maxSlots);
-
-            
+                query = query.Where(e => e.Slots  <= maxSlots);   
 
 
             return query;

@@ -1,8 +1,10 @@
-﻿using BallBuddies.Models.Dtos.Request;
+﻿using Azure;
+using BallBuddies.Models.Dtos.Request;
 using BallBuddies.Models.RequestFeatures;
 using BallBuddies.Services.ActionFilters;
 using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -154,6 +156,36 @@ namespace BallBuddies.Presentation.Controllers
 
             return NoContent();
 
+        }
+
+
+
+        /// <summary>
+        /// Partially updates an event
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="patchDoc"></param>
+        /// <returns>No content</returns>
+        /// <response code="404">Returns NotFound error</response>
+        /// <response code="401">Returns unauthorized access response</response>
+        /// <response code="200">Returns success message</response>
+        [HttpPatch("{id:guid}")]
+        public async Task<IActionResult> PatchEventAsync(Guid id, 
+            [FromBody] JsonPatchDocument<EventUpdateRequestDto> patchDoc)
+        {
+            if (patchDoc is null)
+                return BadRequest("Patch doc object sent from client is null.");
+
+            var result = await _service.EventService.GetEventForPatch(id,
+                compTrackChanges: false,
+                empTrackChanges: true );
+
+            patchDoc.ApplyTo(result.eventToPatch);
+
+            await _service.EventService.SaveChangesForPatch(result.eventToPatch,
+                result.eventEntity);
+
+            return NoContent();
         }
     }
 }

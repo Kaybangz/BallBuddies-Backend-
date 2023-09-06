@@ -17,8 +17,13 @@ namespace BallBuddies.Presentation.Controllers
         public UserController(IServiceManager service) => _service = service;
 
 
-
-        [HttpGet("{userId}/events", Name = "Current_user_events")]
+        /// <summary>
+        /// Gets all events created by a user
+        /// </summary>
+        /// <returns>New user registered</returns>
+        /// <response code="200">Returns 200 status code response</response>
+        /// <response code="401">Unauthorized access</response>
+        [HttpGet("events", Name = "Current_user_events")]
         [Authorize(Roles = "User, Admin")]
         public async Task<IActionResult> GetCurrentUserEvents()
         {
@@ -35,7 +40,7 @@ namespace BallBuddies.Presentation.Controllers
         /// <returns>New user registered</returns>
         /// <response code="200">Returns 200 status code response</response>
         /// <response code="401">Unauthorized access</response>
-        [HttpGet("{userId}/attendances", Name = "GetUserAttendances")]
+        [HttpGet("attendances", Name = "GetUserAttendances")]
         [Authorize(Roles = "User")]
         public async Task<IActionResult> GetCurrentUserAttendances()
         {
@@ -80,7 +85,7 @@ namespace BallBuddies.Presentation.Controllers
         /// <returns>Deletes a single user</returns>
         /// <response code="200">Deletes a single user from the database</response>
         /// <response code="401">Returns unauthorized access response</response>
-        [HttpDelete("delete-account", Name = "DeleteUser")]
+        [HttpDelete("delete", Name = "DeleteUser")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [Authorize(Roles = "User")]

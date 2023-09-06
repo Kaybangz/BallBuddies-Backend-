@@ -13,7 +13,7 @@ using System.Security.Claims;
 
 namespace BallBuddies.Services.Implementation
 {
-    public class EventService: IEventService
+    public class EventService : IEventService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILoggerManager _logger;
@@ -118,6 +118,36 @@ namespace BallBuddies.Services.Implementation
         }
 
 
+
+
+
+        public async Task<(EventUpdateRequestDto eventToPatch,
+            Event eventEntity)> GetEventForPatch(Guid eventId,
+            bool compTrackChanges, bool empTrackChanges)
+        {
+            /* var userId = _httpContextAccessor
+                 .HttpContext
+                 ?.User
+                 .FindFirst(ClaimTypes.NameIdentifier)
+                 ?.Value;*/
+
+
+            var eventEntity = await CheckIfEventExists(eventId, empTrackChanges);
+
+
+            /*if (existingEvent.CreatedByUserId != userId)
+                throw new UnauthorizedAccessException("You do not have permission to " +
+                    "update this event.");*/
+
+            var eventToPatch = _mapper.Map<EventUpdateRequestDto>(eventEntity);
+
+            return (eventToPatch, eventEntity);
+        }
+
+
+
+
+
         public async Task<IEnumerable<EventResponseDto>> GetEventsCreatedByUserAsync(bool trackChanges)
         {
             var userId = _httpContextAccessor
@@ -134,6 +164,14 @@ namespace BallBuddies.Services.Implementation
 
         }
 
+
+
+        public async Task SaveChangesForPatch(EventUpdateRequestDto eventToPatch,
+            Event eventEntity)
+        {
+            _mapper.Map(eventToPatch, eventEntity);
+            await _unitOfWork.SaveAsync();
+        }
 
 
 

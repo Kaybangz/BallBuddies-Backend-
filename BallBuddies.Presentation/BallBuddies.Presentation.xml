@@ -177,6 +177,14 @@
             <response code="200">Returns the access token and refresh token</response>
             <response code="500">Returns invalid client request</response>
         </member>
+        <member name="M:BallBuddies.Presentation.Controllers.UserController.GetCurrentUserEvents">
+            <summary>
+            Gets all events created by a user
+            </summary>
+            <returns>New user registered</returns>
+            <response code="200">Returns 200 status code response</response>
+            <response code="401">Unauthorized access</response>
+        </member>
         <member name="M:BallBuddies.Presentation.Controllers.UserController.GetCurrentUserAttendances">
             <summary>
             Gets all events a user is attending

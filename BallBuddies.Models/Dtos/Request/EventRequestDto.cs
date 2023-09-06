@@ -36,8 +36,5 @@ namespace BallBuddies.Models.Dtos.Request
         public DateTime EventEndDate { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public SportCategory Category { get; set; }
-
-
-        /*public string CreatedByUserId { get; set; } = null!;*/
     }
 }
