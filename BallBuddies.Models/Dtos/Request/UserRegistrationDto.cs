@@ -22,6 +22,11 @@ namespace BallBuddies.Models.Dtos.Request
         public string Password { get; init; } = null!;
 
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Confirm password is required")]
+        [MaxLength(15, ErrorMessage = "Password characters must match")]
+        public string ConfirmPassword { get; init; } = null!;
+
+
         public virtual ICollection<string>? Roles { get; init; }
 
     }

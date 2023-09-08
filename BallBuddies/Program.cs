@@ -57,6 +57,8 @@ namespace BallBuddies
             builder.Services.Configure<ApiBehaviorOptions>(options => 
             options.SuppressModelStateInvalidFilter = true
             ) ;
+
+
             builder.Services.AddControllers(config =>
             {
                 config.RespectBrowserAcceptHeader = true;

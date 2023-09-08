@@ -68,8 +68,12 @@ namespace BallBuddies.Services.Implementation
                 .Any(u => u.PhoneNumber == userRegistrationDto.PhoneNumber);
 
             if (IsPhoneAlreadyRegistered)
-                throw new Exception($"Phone number belongs to an existing user");
+                throw new InvalidOperationException($"Phone number belongs to an existing user");    
 
+
+            if (!userRegistrationDto.Password.Equals(userRegistrationDto.ConfirmPassword))
+                throw new InvalidOperationException("Both passwords must match");
+            
 
             var user = _mapper.Map<User>(userRegistrationDto);
 
