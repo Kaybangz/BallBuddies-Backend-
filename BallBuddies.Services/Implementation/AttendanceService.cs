@@ -47,12 +47,15 @@ namespace BallBuddies.Services.Implementation
 
             var eventId = attendanceRequestDto.EventId;
 
-            await CheckIfEventExist(eventId, trackChanges);
+            var existingEvent = await CheckIfEventExist(eventId, trackChanges);
 
             if(await _unitOfWork.Attendance.IsUserAttendingEvent(userId, eventId))
             {
                 throw new Exception("User is already attending this event");
             }
+
+            if (existingEvent.Slots <= 0)
+                throw new Exception("No slots available for this event");
 
             var newAttendance = new Attendance
             {
@@ -61,6 +64,8 @@ namespace BallBuddies.Services.Implementation
             };
 
             await _unitOfWork.Attendance.AddEventAttendance(newAttendance);
+
+            existingEvent.Slots--;
 
 
             await _unitOfWork.SaveAsync();
@@ -82,7 +87,7 @@ namespace BallBuddies.Services.Implementation
 
             var eventId = attendanceRequestDto.EventId;
 
-            await CheckIfEventExist(eventId, trackChanges);
+            var existingEvent = await CheckIfEventExist(eventId, trackChanges);
 
             if (!await _unitOfWork.Attendance.IsUserAttendingEvent(userId, eventId))
             {
@@ -95,6 +100,8 @@ namespace BallBuddies.Services.Implementation
                 throw new Exception("Attendance record not found.");
 
             _unitOfWork.Attendance.RemoveEventAttendance(attendance);
+
+            existingEvent.Slots++;
 
             await _unitOfWork.SaveAsync();
         }
