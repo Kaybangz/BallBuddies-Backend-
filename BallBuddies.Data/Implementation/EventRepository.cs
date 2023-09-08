@@ -29,16 +29,13 @@ namespace BallBuddies.Data.Implementation
                                      eventParameters.MinSlots,
                                      eventParameters.MaxSlots)
                 .Search(eventParameters.SearchTerm)
-                .OrderBy(e => e.Name)
-                .Skip((eventParameters.PageNumber - 1) * eventParameters.PageSize)
-                .Take(eventParameters.PageSize)
+                .Sort(eventParameters.OrderBy)
                 .ToListAsync();
 
             var count = await FindAll(trackChanges)
                 .CountAsync();
 
-            return new PagedList<Event>(events,
-                count,
+            return PagedList<Event>.ToPagedList(events,
                 eventParameters.PageNumber,
                 eventParameters.PageSize);
         } 
