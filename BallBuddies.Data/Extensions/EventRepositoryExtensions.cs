@@ -12,7 +12,8 @@ namespace BallBuddies.Data.Extensions
             decimal? minPrice,
             decimal? maxPrice,
             uint? minSlots,
-            uint? maxSlots
+            uint? maxSlots,
+            SportCategory? category
             )
         {
             if(minPrice.HasValue)
@@ -25,7 +26,10 @@ namespace BallBuddies.Data.Extensions
                 query = query.Where(e => e.Slots >= minSlots);
 
             if(maxSlots.HasValue)
-                query = query.Where(e => e.Slots  <= maxSlots);   
+                query = query.Where(e => e.Slots  <= maxSlots); 
+            
+            if(category.HasValue)
+                query = query.Where(e =>e.Category >= category.Value);
 
 
             return query;

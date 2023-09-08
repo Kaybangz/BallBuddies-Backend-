@@ -27,7 +27,8 @@ namespace BallBuddies.Data.Implementation
                 .FilterEventsByPrice(eventParameters.MinPrice,
                                      eventParameters.MaxPrice,
                                      eventParameters.MinSlots,
-                                     eventParameters.MaxSlots)
+                                     eventParameters.MaxSlots,
+                                     eventParameters.Category)
                 .Search(eventParameters.SearchTerm)
                 .Sort(eventParameters.OrderBy)
                 .ToListAsync();
