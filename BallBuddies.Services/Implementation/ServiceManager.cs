@@ -26,7 +26,9 @@ namespace BallBuddies.Services.Implementation
             IMapper mapper,
             IHttpContextAccessor httpContextAccessor,
             UserManager<User> userManager,
-            IOptions<JwtConfiguration> configuration)
+            RoleManager<IdentityRole> roleManager,
+            IOptions<JwtConfiguration> configuration,
+            SignInManager<User> signInManager)
         {
 
             _userService = new Lazy<IUserService>(() => 
@@ -42,7 +44,7 @@ namespace BallBuddies.Services.Implementation
             new CommentService(unitOfWork, logger, mapper, httpContextAccessor));
 
             _authenticationService = new Lazy<IAuthenticationService>(() =>
-            new AuthenticationService(logger, mapper, userManager, configuration));
+            new AuthenticationService(logger, mapper, userManager, roleManager, configuration, signInManager));
         }
 
 

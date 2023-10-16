@@ -78,7 +78,7 @@
             <param name="userRegistrationDto"></param>
             <returns>New user registered</returns>
             <response code="200">Returns access and refresh tokens</response>
-            <response code="422">Returns password required </response>
+            <response code="422">Returns password required</response>
             <response code="400">Returns duplicate username</response>
         </member>
         <member name="M:BallBuddies.Presentation.Controllers.AuthenticationController.AuthenticateUser(BallBuddies.Models.Dtos.Request.UserAuthenticationDto)">

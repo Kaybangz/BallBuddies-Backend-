@@ -10,7 +10,7 @@ namespace BallBuddies.Presentation.Controllers
     [ApiController]
     [Route("api/admin")]
     [ApiExplorerSettings(GroupName = "v1")]
-    [Authorize(Roles = "Admin")]
+    /*[Authorize(Roles = "Admin")]*/
     public class AdminController: ControllerBase
     {
         private readonly IServiceManager _service;

@@ -35,6 +35,7 @@ namespace BallBuddies
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
+            builder.Services.AddAuthorization();
             builder.Services.AddMemoryCache();
             builder.Services.ConfigureRateLimitingOptions();
             builder.Services.AddHttpContextAccessor();
@@ -122,7 +123,8 @@ namespace BallBuddies
             });
 
 
-            builder.Services.AddAuthentication();
+            /*builder.Services.AddAuthentication();*/
+            
 
 
             var app = builder.Build();

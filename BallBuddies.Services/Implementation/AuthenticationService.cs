@@ -6,7 +6,6 @@ using BallBuddies.Models.Entities;
 using BallBuddies.Models.Exceptions;
 using BallBuddies.Services.Interface;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -21,21 +20,28 @@ namespace BallBuddies.Services.Implementation
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IOptions<JwtConfiguration> _configuration;
         private readonly JwtConfiguration _jwtConfiguration;
+        private readonly SignInManager<User> _signInManager;
 
         private User? _user;
 
         public AuthenticationService(ILoggerManager logger,
             IMapper mapper,
             UserManager<User> userManager,
-            IOptions<JwtConfiguration> configuration)
+            RoleManager<IdentityRole> roleManager,
+            IOptions<JwtConfiguration> configuration,
+            SignInManager<User> signInManager)
         {
             _logger = logger;
             _mapper = mapper;
             _userManager = userManager;
+            _roleManager = roleManager;
             _configuration = configuration;
             _jwtConfiguration = _configuration.Value;
+            _signInManager = signInManager;
+
         }
 
         public async Task<TokenDto> CreateToken(bool populateExp)
@@ -54,7 +60,7 @@ namespace BallBuddies.Services.Implementation
                 _user.RefreshTokenExpiryTime = DateTime.Now.AddDays(7);
 
             await _userManager.UpdateAsync(_user);
-
+            
             var accessToken = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
             return new TokenDto(accessToken, refreshToken);
@@ -76,12 +82,13 @@ namespace BallBuddies.Services.Implementation
             
 
             var user = _mapper.Map<User>(userRegistrationDto);
+ 
 
             var result = await _userManager.CreateAsync(user, userRegistrationDto.Password);
 
             if (result.Succeeded)
             {
-                await _userManager.AddToRolesAsync(user, userRegistrationDto.Roles);
+                await _userManager.AddToRoleAsync(user, "User");
             }
 
             return result;
@@ -92,12 +99,34 @@ namespace BallBuddies.Services.Implementation
         {
             _user = await _userManager.FindByNameAsync(userAuth.UserName);
 
-            var result = (_user != null && await _userManager.CheckPasswordAsync(_user, userAuth.Password));
+            var result = (_user != null 
+                && await _userManager.CheckPasswordAsync(_user, userAuth.Password) 
+                && (await _signInManager.PasswordSignInAsync(_user, userAuth.Password, false, false)).Succeeded);
+
+            /*if (!result)
+            {
+                _logger.LogWarn($"{nameof(ValidateUser)}: Authentication failed. \nInvalid username or password.");
+                throw new InvalidOperationException($"{nameof(ValidateUser)}: Authentication failed. \nInvalid username or password.");
+            }*/
 
             if (!result)
-                _logger.LogWarn($"{nameof(ValidateUser)}: Authentication failed. \nWrong username or password.");
+                throw new UnauthorizedAccessException("Invalid username or password.");
+                
 
             return result;
+        }
+
+
+        public async Task LogOut()
+        {
+            try
+            {
+                await _signInManager.SignOutAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new LogoutException("Failed to log out user.", ex);
+            }
         }
 
 
@@ -209,9 +238,13 @@ namespace BallBuddies.Services.Implementation
                 throw new RefreshTokenBadRequest();
             }
 
+            await _signInManager.RefreshSignInAsync(user);
+
             _user = user;
 
             return await CreateToken(populateExp: false);
         }
+
+        
     }
 }

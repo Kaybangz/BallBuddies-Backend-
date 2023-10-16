@@ -1,5 +1,4 @@
-﻿
-using AspNetCoreRateLimit;
+﻿using AspNetCoreRateLimit;
 using BallBuddies.Data.Context;
 using BallBuddies.Data.Implementation;
 using BallBuddies.Data.Interface;
@@ -23,6 +22,9 @@ namespace BallBuddies.Services.Extensions
     {
         public static void ConfigureUserManager(this IServiceCollection services) =>
             services.AddScoped<UserManager<User>>();
+
+        /*public static void ConfigureSigninManager(this IServiceCollection services) =>
+            services.AddSignInManager<User>();*/
 
         public static void ConfigureUnitOfWork(this IServiceCollection services) =>
             services.AddScoped<IUnitOfWork, UnitOfWork>();
