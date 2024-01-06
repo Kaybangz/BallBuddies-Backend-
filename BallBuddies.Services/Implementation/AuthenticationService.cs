@@ -60,7 +60,7 @@ namespace BallBuddies.Services.Implementation
                 _user.RefreshTokenExpiryTime = DateTime.Now.AddDays(7);
 
             await _userManager.UpdateAsync(_user);
-            
+
             var accessToken = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
             return new TokenDto(accessToken, refreshToken);
@@ -74,15 +74,15 @@ namespace BallBuddies.Services.Implementation
                 .Any(u => u.PhoneNumber == userRegistrationDto.PhoneNumber);
 
             if (IsPhoneAlreadyRegistered)
-                throw new InvalidOperationException($"Phone number belongs to an existing user");    
+                throw new InvalidOperationException($"Phone number belongs to an existing user");
 
 
             if (!userRegistrationDto.Password.Equals(userRegistrationDto.ConfirmPassword))
                 throw new InvalidOperationException("Both passwords must match");
-            
+
 
             var user = _mapper.Map<User>(userRegistrationDto);
- 
+
 
             var result = await _userManager.CreateAsync(user, userRegistrationDto.Password);
 
@@ -99,23 +99,16 @@ namespace BallBuddies.Services.Implementation
         {
             _user = await _userManager.FindByNameAsync(userAuth.UserName);
 
-            var result = (_user != null 
-                && await _userManager.CheckPasswordAsync(_user, userAuth.Password) 
+            var result = (_user != null
+                && await _userManager.CheckPasswordAsync(_user, userAuth.Password)
                 && (await _signInManager.PasswordSignInAsync(_user, userAuth.Password, false, false)).Succeeded);
-
-            /*if (!result)
-            {
-                _logger.LogWarn($"{nameof(ValidateUser)}: Authentication failed. \nInvalid username or password.");
-                throw new InvalidOperationException($"{nameof(ValidateUser)}: Authentication failed. \nInvalid username or password.");
-            }*/
 
             if (!result)
                 throw new UnauthorizedAccessException("Invalid username or password.");
-                
+
 
             return result;
         }
-
 
         public async Task LogOut()
         {
@@ -128,7 +121,6 @@ namespace BallBuddies.Services.Implementation
                 throw new LogoutException("Failed to log out user.", ex);
             }
         }
-
 
         private SigningCredentials GetSigningCredentials()
         {
@@ -154,7 +146,7 @@ namespace BallBuddies.Services.Implementation
 
             var roles = await _userManager.GetRolesAsync(_user);
 
-            foreach(var role in roles)
+            foreach (var role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
@@ -177,18 +169,16 @@ namespace BallBuddies.Services.Implementation
             return tokenOptions;
         }
 
-
         private string GenerateRefreshToken()
         {
             var randomNumber = new byte[32];
 
-            using(var rng = RandomNumberGenerator.Create())
+            using (var rng = RandomNumberGenerator.Create())
             {
                 rng.GetBytes(randomNumber);
                 return Convert.ToBase64String(randomNumber);
             }
         }
-
 
         private ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
         {
@@ -213,7 +203,7 @@ namespace BallBuddies.Services.Implementation
 
             var jwtSecurityToken = securityToken as JwtSecurityToken;
 
-            if(jwtSecurityToken == null ||
+            if (jwtSecurityToken == null ||
                 !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,
                 StringComparison.InvariantCultureIgnoreCase))
             {
@@ -245,6 +235,6 @@ namespace BallBuddies.Services.Implementation
             return await CreateToken(populateExp: false);
         }
 
-        
+
     }
 }

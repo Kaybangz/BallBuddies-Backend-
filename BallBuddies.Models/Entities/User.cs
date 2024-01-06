@@ -1,5 +1,4 @@
-﻿using BallBuddies.Models.Enums;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace BallBuddies.Models.Entities
 {

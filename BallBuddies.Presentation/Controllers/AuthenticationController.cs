@@ -10,7 +10,7 @@ namespace BallBuddies.Presentation.Controllers
     [ApiController]
     [Route("api/authentication")]
     [ApiExplorerSettings(GroupName = "v1")]
-    public class AuthenticationController: ControllerBase
+    public class AuthenticationController : ControllerBase
     {
         private readonly IServiceManager _service;
 
@@ -37,7 +37,7 @@ namespace BallBuddies.Presentation.Controllers
 
             if (!result.Succeeded)
             {
-                foreach(var error in result.Errors)
+                foreach (var error in result.Errors)
                 {
                     ModelState.TryAddModelError(error.Code, error.Description);
                 }
@@ -47,9 +47,6 @@ namespace BallBuddies.Presentation.Controllers
 
             return StatusCode(201);
         }
-
-
-
 
         /// <summary>
         /// Logs in a user
@@ -77,17 +74,13 @@ namespace BallBuddies.Presentation.Controllers
             });
         }
 
-
-
-
-
-        /*/// <summary>
+        //// <summary>
         /// Logs out a user
         /// </summary>
         /// <returns>A generated access token and refresh token</returns>
         /// <response code="200">Returns Logout successful</response>
         /// <response code="401">Returns unauthorized access</response>
-        [HttpPost("Logout", Name = "Logout")]
+        /*[HttpPost("Logout", Name = "Logout")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [Authorize]

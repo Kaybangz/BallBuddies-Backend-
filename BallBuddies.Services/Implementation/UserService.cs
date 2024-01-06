@@ -19,7 +19,6 @@ namespace BallBuddies.Services.Implementation
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
-
         public UserService(IUnitOfWork unitOfWork,
             UserManager<User> userManager,
             ILoggerManager logger,
@@ -33,10 +32,7 @@ namespace BallBuddies.Services.Implementation
             _httpContextAccessor = httpContextAccessor;
         }
 
-
-
-
-        public async Task UserSelfDeleteAsync( bool trackChanges)
+        public async Task UserSelfDeleteAsync(bool trackChanges)
         {
             var userId = _httpContextAccessor
                 .HttpContext
@@ -44,23 +40,19 @@ namespace BallBuddies.Services.Implementation
                 .FindFirst(ClaimTypes.NameIdentifier)
                 ?.Value;
 
-
             var existingUser = await _userManager.FindByIdAsync(userId);
-
 
             await _userManager.DeleteAsync(existingUser);
 
             await _unitOfWork.SaveAsync();
         }
-
-
         public async Task<IEnumerable<UserModelResponseDto>> GetAllUsersWithRolesAsync(bool trackChanges)
         {
             var users = await _userManager.Users.ToListAsync();
 
             var userDtos = new List<UserModelResponseDto>();
 
-            foreach(var user in users)
+            foreach (var user in users)
             {
                 var userRoles = await _userManager.GetRolesAsync(user);
 
@@ -71,12 +63,8 @@ namespace BallBuddies.Services.Implementation
                 userDtos.Add(userDto);
             }
 
-
             return userDtos;
         }
-
-
-
         public async Task<UserModelResponseDto> GetUserWithRolesAsync(string userId, bool trackChanges)
         {
             var user = await _unitOfWork.User.GetUser(userId, trackChanges);
@@ -89,7 +77,6 @@ namespace BallBuddies.Services.Implementation
             var userDto = _mapper.Map<UserModelResponseDto>(user);
 
             userDto.Roles = userRoles.ToList();
-            
 
             return userDto;
         }
@@ -108,7 +95,6 @@ namespace BallBuddies.Services.Implementation
 
             var existingUser = await _userManager.FindByIdAsync(userId);
 
-
             var updatedUser = _mapper.Map(userModelRequestDto, existingUser);
 
             await _userManager.UpdateAsync(updatedUser);
@@ -116,34 +102,27 @@ namespace BallBuddies.Services.Implementation
             await _unitOfWork.SaveAsync();
         }
 
-
-
-        public async Task<bool> UpdateUserRolesAsync(string userId, UserRolesDto userRolesDto , bool trackChanges)
+        public async Task<bool> UpdateUserRolesAsync(string userId, UserRolesDto userRolesDto, bool trackChanges)
         {
             var user = await FindUserAsync(userId);
 
             var existingRoles = await _userManager.GetRolesAsync(user);
 
-
             var rolesToAdd = userRolesDto.Roles.Except(existingRoles);
 
             var rolesToRemove = existingRoles.Except(userRolesDto.Roles);
 
-
             await _userManager.AddToRolesAsync(user, rolesToAdd);
             await _userManager.RemoveFromRolesAsync(user, rolesToRemove);
 
-
             return true;
-
-
         }
 
         public async Task<User> FindUserAsync(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
 
-            if(user is null)
+            if (user is null)
                 throw new UserNotFoundException(userId);
 
             return user;
@@ -152,7 +131,6 @@ namespace BallBuddies.Services.Implementation
         public async Task DeleteUserAsync(string userId, bool trackChanges)
         {
             var user = await FindUserAsync(userId);
-
 
             await _userManager.DeleteAsync(user);
 

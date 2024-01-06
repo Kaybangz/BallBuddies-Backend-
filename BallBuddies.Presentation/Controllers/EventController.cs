@@ -1,5 +1,4 @@
-﻿using Azure;
-using BallBuddies.Models.Dtos.Request;
+﻿using BallBuddies.Models.Dtos.Request;
 using BallBuddies.Models.RequestFeatures;
 using BallBuddies.Services.ActionFilters;
 using BallBuddies.Services.Interface;
@@ -17,11 +16,7 @@ namespace BallBuddies.Presentation.Controllers
     public class EventController : ControllerBase
     {
         private readonly IServiceManager _service;
-
         public EventController(IServiceManager service) => _service = service;
-
-
-
 
         /// <summary>
         /// Gets a list of all events
@@ -47,13 +42,9 @@ namespace BallBuddies.Presentation.Controllers
                 JsonSerializer
                 .Serialize(pagedResult.metaData));
 
-
-
             return Ok(pagedResult.eventResponseDto);
 
         }
-
-
 
         /// <summary>
         /// Gets an event by ID
@@ -74,9 +65,6 @@ namespace BallBuddies.Presentation.Controllers
             return Ok(myEvent);
         }
 
-
-
-
         /// <summary>
         /// Creates a new event
         /// </summary>
@@ -93,21 +81,17 @@ namespace BallBuddies.Presentation.Controllers
         [ProducesResponseType(401)]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [Authorize(Roles = "User")]
-        public async Task<IActionResult> CreateEvent( [FromBody] EventRequestDto eventRequestDto)
+        public async Task<IActionResult> CreateEvent([FromBody] EventRequestDto eventRequestDto)
         {
             if (eventRequestDto is null)
                 return BadRequest("Event data is invalid.");
 
-            var createdEvent =  await _service.EventService.CreateEventAsync(eventRequestDto, trackChanges: true);
+            var createdEvent = await _service.EventService.CreateEventAsync(eventRequestDto, trackChanges: true);
 
             return CreatedAtRoute("GetSingleEvent", new { id = createdEvent.Id },
                 createdEvent);
 
         }
-
-
-
-
 
         /// <summary>
         /// Updates an event
@@ -127,15 +111,13 @@ namespace BallBuddies.Presentation.Controllers
         public async Task<IActionResult> UpdateEvent(Guid id,
             [FromBody] EventUpdateRequestDto eventUpdateRequestDto)
         {
-            if(eventUpdateRequestDto is null)
+            if (eventUpdateRequestDto is null)
                 return BadRequest("Event data is invalid.");
 
             await _service.EventService.UpdateEventAsync(id, eventUpdateRequestDto, trackChanges: true);
 
             return NoContent();
         }
-
-
 
         /// <summary>
         /// Deletes an event
@@ -158,8 +140,6 @@ namespace BallBuddies.Presentation.Controllers
 
         }
 
-
-
         /// <summary>
         /// Partially updates an event
         /// </summary>
@@ -170,7 +150,7 @@ namespace BallBuddies.Presentation.Controllers
         /// <response code="401">Returns unauthorized access response</response>
         /// <response code="200">Returns success message</response>
         [HttpPatch("{id:guid}")]
-        public async Task<IActionResult> PatchEventAsync(Guid id, 
+        public async Task<IActionResult> PatchEventAsync(Guid id,
             [FromBody] JsonPatchDocument<EventUpdateRequestDto> patchDoc)
         {
             if (patchDoc is null)
@@ -178,7 +158,7 @@ namespace BallBuddies.Presentation.Controllers
 
             var result = await _service.EventService.GetEventForPatch(id,
                 compTrackChanges: false,
-                empTrackChanges: true );
+                empTrackChanges: true);
 
             patchDoc.ApplyTo(result.eventToPatch);
 
